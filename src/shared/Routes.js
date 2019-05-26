@@ -12,7 +12,6 @@ export default [
         path: '/',
         exact: true
       },
-      // ,
       {
         ...DashBoardPage,
         path: '/dashboard'
