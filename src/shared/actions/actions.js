@@ -1,11 +1,10 @@
 import axios from 'axios';
 import dateAndTime from 'date-and-time';
-
-const clientFetchingReference = 'togetherinpolitics.com';
+import { clientFetchingReference } from '../clientEnv';
 
 export const FETCH_EXAMPLE = 'FETCH_EXAMPLE';
 export const fetchExample = () => async dispatch => {
-  const res = await axios.get(`http://${clientFetchingReference}:5000/api/`);
+  const res = await axios.get(`http://${clientFetchingReference}/api/`);
 
   dispatch({
     type: FETCH_EXAMPLE,
@@ -15,9 +14,7 @@ export const fetchExample = () => async dispatch => {
 
 export const FETCH_DATA = 'FETCH_DATA';
 export const fetchData = () => async dispatch => {
-  const res = await axios.get(
-    `http://${clientFetchingReference}:5000/api/mysql`
-  );
+  const res = await axios.get(`http://${clientFetchingReference}/api/mysql`);
 
   dispatch({
     type: FETCH_DATA,
@@ -28,7 +25,7 @@ export const fetchData = () => async dispatch => {
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
 export const fetchLatestDate = () => async dispatch => {
   const res = await axios.get(
-    `http://${clientFetchingReference}:5000/api/latest_date`
+    `http://${clientFetchingReference}/api/latest_date`
   );
 
   const latestDateParsed = dateAndTime.parse(
@@ -57,7 +54,7 @@ export const fetchTodayRankings = (
   get_latest = false
 ) => async dispatch => {
   const res = await axios.post(
-    `http://${clientFetchingReference}:5000/api/ranking`,
+    `http://${clientFetchingReference}/api/ranking`,
     {
       year,
       month,
@@ -80,7 +77,7 @@ export const fetchTodayIndicators = (
   getLatest = false
 ) => async dispatch => {
   const res = await axios.post(
-    `http://${clientFetchingReference}:5000/api/today_indicator`,
+    `http://${clientFetchingReference}/api/today_indicator`,
     {
       year,
       month,
@@ -102,7 +99,7 @@ export const fetchDashboardData = ({
   range
 }) => async dispatch => {
   const res = await axios.post(
-    `http://${clientFetchingReference}:5000/api/dashboard_data`,
+    `http://${clientFetchingReference}/api/dashboard_data`,
     {
       community,
       indicator,
