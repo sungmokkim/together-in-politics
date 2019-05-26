@@ -1,11 +1,11 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import express from 'express';
 import apiRouter from './api/router/apiRouter';
 import renderer from './helpers/renderer';
 import createStore from './helpers/createStore';
 import { matchRoutes } from 'react-router-config';
 import Routes from '../shared/Routes';
-import { fetchedFromServer } from '../shared/actions/actions';
 
 const app = express();
 
