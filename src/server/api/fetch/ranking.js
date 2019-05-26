@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 let dateAndTime = require('date-and-time');
-import env from '../../env';
+import env from '../../helpers/serverEnv';
 
 const fetchTodayRankings = ({ year, month, date, get_latest }, callback) => {
   const { host, user, password, database, todayDataTable } = env.mysql;

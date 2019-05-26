@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-import env from '../../env';
+import env from '../../helpers/serverEnv';
 
 const fetchTodayIndicator = ({ year, month, date, get_latest }, callback) => {
   const { host, user, password, database, todayDataTable } = env.mysql;
