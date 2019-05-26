@@ -17,6 +17,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "axios": "^0.18.0",
+    "core-js": "^3.1.2",
     "date-and-time": "^0.6.3",
     "express": "^4.16.4",
     "mongodb": "^3.2.3",
@@ -30,6 +31,7 @@
     "react-select": "^2.4.3",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.13.2",
     "serialize-javascript": "^1.7.0"
   },
   "devDependencies": {
@@ -40,7 +42,7 @@
     "@babel/preset-stage-0": "^7.0.0",
     "babel-loader": "^8.0.5",
     "npm-run-all": "^4.1.5",
-    "webpack": "^4.30.0",
+    "webpack": "^4.32.2",
     "webpack-cli": "^3.3.1",
     "webpack-node-externals": "^1.7.2"
   }
