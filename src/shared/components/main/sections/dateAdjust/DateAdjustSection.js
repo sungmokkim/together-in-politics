@@ -8,32 +8,32 @@ import {
 import { getAndMap } from './DateModule';
 
 class DateAdjust extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+  state = {
+    year: this.props.dashboardManager.currentDate.year,
+    month: this.props.dashboardManager.currentDate.month,
+    date: this.props.dashboardManager.currentDate.date,
+    name: null,
+    value: null
+  };
 
-    this.state = {
+  componentDidMount() {
+    this.setState({
+      ...this.state,
       year: this.props.dashboardManager.currentDate.year,
       month: this.props.dashboardManager.currentDate.month,
-      date: this.props.dashboardManager.currentDate.date,
-      name: null,
-      value: null
-    };
-  }
-  componentDidMount() {}
-
-  handleSubmit(event) {
-    event.preventDefault();
+      date: this.props.dashboardManager.currentDate.date
+    });
   }
 
-  handleChange(event) {
+  handleChange = event => {
     const {
       changeCurrentDate,
       fetchTodayIndicators,
       fetchTodayRankings
     } = this.props;
+
     const { latestDate } = this.props.dashboardManager;
+
     const latestDateNewName = {
       latestYear: latestDate.year,
       latestMonth: latestDate.month,
@@ -42,47 +42,36 @@ class DateAdjust extends Component {
 
     this.setState(
       {
-        year: this.props.dashboardManager.currentDate.year,
-        month: this.props.dashboardManager.currentDate.month,
-        date: this.props.dashboardManager.currentDate.date,
-        name: event.target.name,
-        value: event.target.value
+        ...this.state,
+        [event.target.name]: event.target.value
       },
       () => {
-        this.setState(
-          {
-            ...this.state,
-            [this.state.name]: this.state.value
-          },
-          () => {
-            const currentStateNew = {
-              currentYear: this.state.year,
-              currentMonth: this.state.month,
-              currentDate: this.state.date
-            };
+        const currentStateNew = {
+          currentYear: this.state.year,
+          currentMonth: this.state.month,
+          currentDate: this.state.date
+        };
 
-            getAndMap(latestDateNewName, currentStateNew, 'valid').then(
-              ({ year, month, date }) => {
-                changeCurrentDate(year, month, date);
-                this.setState({ year, month, date }, () => {
-                  fetchTodayRankings(
-                    this.state.year,
-                    this.state.month,
-                    this.state.date
-                  );
-                  fetchTodayIndicators(
-                    this.state.year,
-                    this.state.month,
-                    this.state.date
-                  );
-                });
-              }
-            );
+        getAndMap(latestDateNewName, currentStateNew, 'valid').then(
+          ({ year, month, date }) => {
+            changeCurrentDate(year, month, date);
+            this.setState({ year, month, date }, () => {
+              fetchTodayRankings(
+                this.state.year,
+                this.state.month,
+                this.state.date
+              );
+              fetchTodayIndicators(
+                this.state.year,
+                this.state.month,
+                this.state.date
+              );
+            });
           }
         );
       }
     );
-  }
+  };
 
   render() {
     const { latestDate, currentDate } = this.props.dashboardManager;
@@ -101,7 +90,7 @@ class DateAdjust extends Component {
     return (
       <section className='section-global'>
         <div className='date-adj-container'>
-          <form onSubmit={this.handleSubmit}>
+          <div>
             <select
               name='year'
               id='year'
@@ -129,18 +118,18 @@ class DateAdjust extends Component {
               {getAndMap(latestDateNewName, currentDateNewName, 'date')}
             </select>
             <span>일</span>
-          </form>
+          </div>
         </div>
       </section>
     );
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     dashboardManager: state.dashboardManager
   };
-}
+};
 
 export default connect(
   mapStateToProps,

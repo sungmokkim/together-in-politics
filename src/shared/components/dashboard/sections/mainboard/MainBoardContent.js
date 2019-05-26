@@ -7,14 +7,9 @@ import { fetchDashboardData } from '../../../../actions/actions';
 import serialize from 'serialize-javascript';
 
 class MainBoardContent extends Component {
-  constructor() {
-    super();
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(selectedOption) {
+  handleChange = selectedOption => {
     this.props.handleClick('range', selectedOption);
-  }
+  };
 
   render() {
     const {

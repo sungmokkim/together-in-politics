@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-import env from '../../env';
+import env from '../../helpers/serverEnv';
 import dateAndTime from 'date-and-time';
 
 const fetchDashboardData = (

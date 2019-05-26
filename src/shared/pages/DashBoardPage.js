@@ -20,17 +20,17 @@ class DashBoardPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     data: state.dashboardData,
     dashboardManager: state.dashboardManager
   };
-}
+};
 
-function fetchDataFromServerSide(store) {
+const fetchDataFromServerSide = store => {
   const { active } = store.getState()['dashboardManager'];
   return [store.dispatch(fetchDashboardData(active))];
-}
+};
 
 export default {
   component: connect(

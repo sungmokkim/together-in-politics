@@ -1,7 +1,8 @@
 import ReactGA from 'react-ga';
+import { googleAnalyticsID } from './clientEnv';
 
 export const initGA = () => {
-  ReactGA.initialize('** GOOGLE ANALYTICS ID **');
+  ReactGA.initialize(googleAnalyticsID);
 };
 
 export const logPageView = () => {

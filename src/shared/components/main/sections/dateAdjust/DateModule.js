@@ -131,7 +131,7 @@ export const getAndMap = (
         validDateArray.indexOf(currentDateNumber) > -1
           ? currentDateNumber
           : validDateArray[validDateArray.length - 1];
-      console.log(validDateNumber);
+
       const validDateString =
         validDateNumber.toString().length > 1
           ? validDateNumber.toString()

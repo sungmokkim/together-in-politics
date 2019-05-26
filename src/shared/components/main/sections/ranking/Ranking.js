@@ -44,9 +44,6 @@ class Ranking extends Component {
     });
     return (
       <React.Fragment>
-        {/* <div>
-          <SmallTitle title='클린 커뮤니티 순위' />
-        </div> */}
         <table className='ranking-table'>
           <thead>
             <tr>
