@@ -1,0 +1,41 @@
+import React, { Component } from 'react';
+import MainBoardSection from '../components/dashboard/sections/mainboard/MainboardSection';
+import { connect } from 'react-redux';
+import {
+  fetchData,
+  fetchDashboardData,
+  resetCurrentRange
+} from '../actions/actions';
+
+class DashBoardPage extends Component {
+  componentDidMount() {
+    this.props.resetCurrentRange(() => {
+      if (!this.props.data.length) {
+        this.props.fetchDashboardData(this.props.dashboardManager.active);
+      }
+    });
+  }
+  render() {
+    return <MainBoardSection />;
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    data: state.dashboardData,
+    dashboardManager: state.dashboardManager
+  };
+}
+
+function fetchDataFromServerSide(store) {
+  const { active } = store.getState()['dashboardManager'];
+  return [store.dispatch(fetchDashboardData(active))];
+}
+
+export default {
+  component: connect(
+    mapStateToProps,
+    { resetCurrentRange, fetchDashboardData }
+  )(DashBoardPage),
+  fetchDataFromServerSide
+};
