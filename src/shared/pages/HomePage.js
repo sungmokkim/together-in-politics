@@ -37,8 +37,6 @@ class HomePage extends Component {
   }
 
   render() {
-    const { latestDate } = this.props.dashboardManager;
-
     return (
       <React.Fragment>
         <HeroSection />
@@ -51,14 +49,14 @@ class HomePage extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     today: state.today,
     dashboardManager: state.dashboardManager
   };
-}
+};
 
-function fetchDataFromServerSide(store) {
+const fetchDataFromServerSide = store => {
   const { currentDate } = store.getState()['dashboardManager'];
 
   return [
@@ -72,7 +70,7 @@ function fetchDataFromServerSide(store) {
     ),
     store.dispatch(fetchLatestDate())
   ];
-}
+};
 
 export default {
   component: connect(

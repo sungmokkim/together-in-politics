@@ -7,14 +7,9 @@ import { changeActive, fetchDashboardData } from '../../../../actions/actions';
 import { initializeChart, drawChart } from './ChartDrawing';
 
 class MainBoard extends Component {
-  constructor() {
-    super();
-
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.state = {
-      chart: null
-    };
-  }
+  state = {
+    chart: null
+  };
 
   componentDidMount() {
     const chart = initializeChart();
@@ -40,7 +35,7 @@ class MainBoard extends Component {
     );
   }
 
-  handleButtonClick(type, value) {
+  handleButtonClick = (type, value) => {
     this.props.changeActive(type, value, () => {
       if (type === 'community' || type === 'range') {
         console.log(type);
@@ -48,7 +43,7 @@ class MainBoard extends Component {
         this.props.fetchDashboardData(this.props.dashboardManager.active);
       }
     });
-  }
+  };
 
   render() {
     return (

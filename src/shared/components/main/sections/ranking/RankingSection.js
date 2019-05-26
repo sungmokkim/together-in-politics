@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Loading from '../../../common/Loading';
 
 class RankingSection extends Component {
-  componentDidMount() {}
   render() {
     const { rankings } = this.props.today;
     const { communities } = this.props.dashboardManager;
@@ -39,10 +38,10 @@ class RankingSection extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     today: state.today,
     dashboardManager: state.dashboardManager
   };
-}
+};
 export default connect(mapStateToProps)(RankingSection);
