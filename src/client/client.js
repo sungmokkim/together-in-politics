@@ -1,8 +1,9 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { renderRoutes, matchRoutes } from 'react-router-config';
+import { renderRoutes } from 'react-router-config';
 import Routes from '../shared/Routes';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -22,5 +23,3 @@ ReactDOM.hydrate(
 
   document.getElementById('root')
 );
-
-ReactDOM.render();
