@@ -10,15 +10,16 @@ import cors from 'cors';
 
 const app = express();
 
-app.use(express.static('public'));
-app.use(express.json());
-app.use('/api', apiRouter);
-
 var corsOptions = {
   origin: 'https://www.togetherinpolitics.com',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-app.get('*', cors(corsOptions), (req, res) => {
+app.use(cors(corsOptions));
+app.use(express.static('public'));
+app.use(express.json());
+app.use('/api', apiRouter);
+
+app.get('*', (req, res) => {
   const store = createStore();
 
   const promises = matchRoutes(Routes, req.path)
