@@ -5,5 +5,6 @@ export default {
     password: '**MYSQL PASSWORD **',
     database: '**MYSQL DB **',
     todayDataTable: '**MYSQL TABLENAME **'
-  }
+  },
+  ga: '** GOOGLE ANALYTICS ID **'
 };

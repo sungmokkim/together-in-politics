@@ -1,6 +1,7 @@
 import ReactGA from 'react-ga';
-import { googleAnalyticsID } from './clientEnv';
+import env from '../server/helpers/serverEnv';
 
+const googleAnalyticsID = env.ga;
 export const initGA = () => {
   ReactGA.initialize(googleAnalyticsID);
 };
