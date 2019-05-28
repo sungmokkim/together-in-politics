@@ -4,7 +4,7 @@ import fetchTodayIndicator from '../fetch/todayIndicator';
 import fetchTodayRankings from '../fetch/ranking';
 import fetchDashboardData from '../fetch/dashboardData';
 import fetchLatestDate from '../fetch/latestDate';
-
+import fetchPeriodData from '../fetch/periodData';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -34,6 +34,12 @@ router.post('/dashboard_data', (req, res) => {
     fetchDashboardData(latest, req.body, results => {
       res.json(results);
     });
+  });
+});
+
+router.post('/period_data', (req, res) => {
+  fetchPeriodData(req.body, results => {
+    res.json(results);
   });
 });
 
