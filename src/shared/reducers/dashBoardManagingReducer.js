@@ -5,24 +5,63 @@ import {
   RESET_CURRENT_RANGE,
   FETCH_LATEST_DATE
 } from '../actions/actions';
-import dateAndTime from 'date-and-time';
 
 const initialState = {
-  activeCommunity: 'ilbe',
-  activeIndicator: '관심 지수',
   active: {
-    community: 'ilbe',
-    indicator: 'popularity',
-    range: { value: '3개월', duration: 'months', number: 3, label: '3개월' }
+    community: 'mlbpark',
+    indicator: 'anti_ratio',
+    range: {
+      label: '1년',
+      value: '1년',
+      duration: 'years',
+      number: 1,
+      split: 7
+    }
   },
-
+  period: [
+    { display: '1년차' },
+    { display: '2년차' },
+    { display: '3년차' },
+    { display: '4년차' },
+    { display: '5년차' }
+  ],
   rangeOptions: [
-    { label: '2년', value: '2년', duration: 'years', number: 2 },
-    { label: '1년', value: '1년', duration: 'years', number: 1 },
-    { label: '6개월', value: '6개월', duration: 'months', number: 6 },
-    { label: '3개월', value: '3개월', duration: 'months', number: 3 },
-    { label: '1개월', value: '1개월', duration: 'months', number: 1 },
-    { label: '7일', value: '7일', duration: 'days', number: 7 }
+    {
+      label: '2년',
+      value: '2년',
+      duration: 'years',
+      number: 2,
+      split: 7
+    },
+    {
+      label: '1년',
+      value: '1년',
+      duration: 'years',
+      number: 1,
+      split: 7
+    },
+    {
+      label: '6개월',
+      value: '6개월',
+      duration: 'months',
+      number: 6,
+      split: 7
+    },
+    {
+      label: '3개월',
+      value: '3개월',
+      duration: 'months',
+      number: 3,
+      split: 10
+    },
+    {
+      label: '1개월',
+      value: '1개월',
+      duration: 'months',
+      number: 1,
+      split: 10
+    },
+    { label: '7일', value: '7일', duration: 'days', number: 7, split: 10 }
   ],
 
   currentDate: {
@@ -43,10 +82,10 @@ const initialState = {
     cook: '82cook',
     ygosu: '와이고수'
   },
-  indicatorList: ['관심 지수', '민심 지수', '최빈 단어'],
+
   dashboardIndicators: {
-    '관심 지수': 'popularity',
     '민심 지수': 'anti_ratio',
+    '관심 지수': 'popularity',
     '민심 랭킹': 'real_rank'
   },
   todayIndicators: {

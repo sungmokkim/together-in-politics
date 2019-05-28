@@ -8,13 +8,7 @@ import {
 } from '../actions/actions';
 
 class DashBoardPage extends Component {
-  componentDidMount() {
-    this.props.resetCurrentRange(() => {
-      if (!this.props.data.length) {
-        this.props.fetchDashboardData(this.props.dashboardManager.active);
-      }
-    });
-  }
+  componentDidMount() {}
   render() {
     return <MainBoardSection />;
   }

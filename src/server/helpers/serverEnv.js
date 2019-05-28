@@ -4,7 +4,8 @@ export default {
     user: '**MYSQL USERNAME **',
     password: '**MYSQL PASSWORD **',
     database: '**MYSQL DB **',
-    todayDataTable: '**MYSQL TABLENAME **'
+    todayDataTable: '**MYSQL TABLENAME **',
+    monthlyDataTable: '**MYSQL TABLENAME **'
   },
   ga: '** GOOGLE ANALYTICS ID **'
 };

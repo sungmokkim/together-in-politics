@@ -2,26 +2,6 @@ import axios from 'axios';
 import dateAndTime from 'date-and-time';
 import { clientFetchingReference } from '../clientEnv';
 
-export const FETCH_EXAMPLE = 'FETCH_EXAMPLE';
-export const fetchExample = () => async dispatch => {
-  const res = await axios.get(`https://${clientFetchingReference}/api/`);
-
-  dispatch({
-    type: FETCH_EXAMPLE,
-    payload: res.data
-  });
-};
-
-export const FETCH_DATA = 'FETCH_DATA';
-export const fetchData = () => async dispatch => {
-  const res = await axios.get(`https://${clientFetchingReference}/api/mysql`);
-
-  dispatch({
-    type: FETCH_DATA,
-    payload: res.data
-  });
-};
-
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
 export const fetchLatestDate = () => async dispatch => {
   const res = await axios.get(
@@ -99,7 +79,7 @@ export const fetchDashboardData = ({
   range
 }) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/dashboard_data`,
+    `http://${clientFetchingReference}/api/dashboard_data`,
     {
       community,
       indicator,
@@ -107,10 +87,34 @@ export const fetchDashboardData = ({
     }
   );
 
+  const editedData = res.data.map(dt => {
+    return {
+      ...dt,
+      real_rank: dt['total_community'] - dt['rank'] + 1
+    };
+  });
+
   dispatch({
     type: FETCH_DASHBOARD_DATA,
+    payload: editedData
+  });
+
+  return editedData;
+};
+
+export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
+export const fetchPeriodData = community => async dispatch => {
+  const res = await axios.post(
+    `http://${clientFetchingReference}/api/period_data`,
+    { community }
+  );
+
+  dispatch({
+    type: FETCH_PERIOD_DATA,
     payload: res.data
   });
+
+  return res.data;
 };
 
 export const FETCHED_FROM_SERVER = 'FETCHED_FROM_SERVER';

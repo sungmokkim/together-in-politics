@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changeActive } from '../../../../actions/actions';
 import Select from 'react-select';
 import { fetchDashboardData } from '../../../../actions/actions';
-import serialize from 'serialize-javascript';
+import { Line, HorizontalBar } from 'react-chartjs-2';
 
 class MainBoardContent extends Component {
   handleChange = selectedOption => {
@@ -41,14 +41,39 @@ class MainBoardContent extends Component {
     return (
       <React.Fragment>
         <ul>{indicatorsMapped}</ul>
-        <div>{`${active.indicator} and ${active.community}`}</div>
-        <canvas id='chart-canvas' width='800px' height='500px' />
+
+        {/* <canvas id='chart-canvas' width='800px' height='500px' /> */}
+        <Line
+          data={this.props.lineChartData}
+          width={800}
+          height={400}
+          options={{
+            scales: {
+              yAxes: [
+                {
+                  // ,
+                  ticks: {
+                    reverse: active.indicator === 'real_rank' ? true : false
+                    // max: 1,
+                    // min: 0,
+                    // stepSize: 0.1
+                  }
+                }
+              ]
+            }
+          }}
+        />
 
         <Select
           name='range'
           value={active.range}
           onChange={this.handleChange}
           options={rangeOptions}
+        />
+
+        <HorizontalBar
+          data={this.props.barChartData}
+          options={{ scales: { xAxes: [{ ticks: { beginAtZero: true } }] } }}
         />
       </React.Fragment>
     );

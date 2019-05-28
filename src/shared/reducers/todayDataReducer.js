@@ -1,5 +1,4 @@
 import {
-  FETCH_DATA,
   FETCH_TODAY_INDICATORS,
   FETCH_TODAY_RANKINGS
 } from '../actions/actions';
@@ -12,11 +11,6 @@ const initalState = {
 
 export default (state = initalState, action) => {
   switch (action.type) {
-    case FETCH_DATA:
-      return {
-        ...state,
-        data: action.payload
-      };
     case FETCH_TODAY_INDICATORS:
       return {
         ...state,
