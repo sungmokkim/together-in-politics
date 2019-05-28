@@ -79,7 +79,7 @@ export const fetchDashboardData = ({
   range
 }) => async dispatch => {
   const res = await axios.post(
-    `http://${clientFetchingReference}/api/dashboard_data`,
+    `https://${clientFetchingReference}/api/dashboard_data`,
     {
       community,
       indicator,
@@ -105,7 +105,7 @@ export const fetchDashboardData = ({
 export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
 export const fetchPeriodData = community => async dispatch => {
   const res = await axios.post(
-    `http://${clientFetchingReference}/api/period_data`,
+    `https://${clientFetchingReference}/api/period_data`,
     { community }
   );
 
