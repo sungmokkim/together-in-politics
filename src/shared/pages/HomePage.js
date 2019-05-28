@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   fetchTodayIndicators,
-  fetchData,
   fetchTodayRankings,
   changeCurrentDate,
   resetCurrentDate,
@@ -76,7 +75,6 @@ export default {
   component: connect(
     mapStateToProps,
     {
-      fetchData,
       fetchTodayIndicators,
       fetchTodayRankings,
       changeCurrentDate,
