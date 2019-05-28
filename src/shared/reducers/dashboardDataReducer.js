@@ -1,15 +1,20 @@
-import { FETCH_DASHBOARD_DATA } from '../actions/actions';
+import { FETCH_DASHBOARD_DATA, FETCH_PERIOD_DATA } from '../actions/actions';
 
-export default (state = [], action) => {
+const initialState = {
+  dashboardData: [],
+  periodData: []
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_DASHBOARD_DATA:
-      const editedData = action.payload.map(dt => {
-        return {
-          ...dt,
-          real_rank: dt['total_community'] - dt['rank'] + 1
-        };
-      });
-      return editedData;
+      return { ...state, dashboardData: action.payload };
+
+    case FETCH_PERIOD_DATA:
+      return {
+        ...state,
+        periodData: action.payload
+      };
     default:
       return state;
   }
