@@ -1,12 +1,13 @@
 // -------------------------------------------------------
-@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans|Noto+Sans+KR|Oswald');
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans|Noto+Sans+KR:400,700|Oswald');
 $big-font: 'Black Han Sans', sans-serif;
 $main-font: 'Noto Sans KR', sans-serif;
 $eng-big-font: 'Oswald', sans-serif;
 // -------------------------------------------------------
 
 // color variables
-$primary-color: rgb(240, 84, 84);
+// $primary-color: rgb(240, 84, 84);
+$primary-color: #edb5bf;
 
 // regular color adjustment
 $red: #f75467;
@@ -47,6 +48,7 @@ $orange: rgb(207, 152, 48);
 // Resets
 body,
 * {
+  color: black;
   font-size: 10px;
   padding: 0;
   margin: 0;
@@ -228,6 +230,110 @@ hr.section-seperator {
   }
 }
 
+@mixin btn-common($color) {
+  border-radius: 30px;
+  padding: 1.3rem 2rem;
+
+  cursor: pointer;
+
+  // width: 400px;
+  // display: flex;
+
+  &:hover {
+    background: darken($color, 8%);
+  }
+}
+
+.menu-btn {
+  // border: 1px solid black;
+  @include btn-common(white);
+  transition: 0.5s ease-in;
+}
+
+.indicator-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .indicator-btn {
+    @include btn-common(white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    transition: 0.5s ease-in;
+    .initial-display-wrapper {
+      .indicator-mark {
+        font-size: 2rem;
+        font-weight: bold;
+        color: $primary-color;
+        margin: 0 0.7rem;
+      }
+      .active-element {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .selector-container {
+    margin: 0 1.3rem;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s ease-in;
+    background: pink;
+    &:hover {
+      background: darken(pink, 15%);
+    }
+  }
+
+  .normal {
+    border-radius: 30px;
+    padding: 1rem 1.5rem;
+
+    .normal-element {
+      font-size: 1.3em;
+    }
+  }
+  .circle {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .circle-element {
+    font-size: 2rem;
+  }
+}
+
+.hover-description {
+  background: lighten(pink, 8%);
+  transition: 0.2s ease-in-out;
+  opacity: 0;
+  border-radius: 30px;
+  padding: 1rem 1.7rem;
+  font-size: 1.2rem;
+}
+
+// animations
+
+.selection-fade-in {
+  animation: selection-fade-in 0.3s ease-in forwards;
+}
+
+@keyframes selection-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-70%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
 // -------------------------------------------------------
 
 // Status-Colors
@@ -258,10 +364,10 @@ hr.section-seperator {
     justify-content: space-between;
     align-items: center;
   }
-  background: black;
+  // background: black;
   width: 100%;
   a {
-    color: white;
+    // color: white;
     text-decoration: none;
   }
 
@@ -270,7 +376,7 @@ hr.section-seperator {
   }
   .nav-title {
     font-family: $big-font;
-    color: white;
+    // color: white;
     font-size: 3rem;
   }
 
@@ -282,7 +388,7 @@ hr.section-seperator {
 
     span {
       font-size: 1.6rem;
-      margin: 0 3rem;
+      margin: 0 1rem;
       font-weight: bold;
     }
   }
@@ -443,12 +549,13 @@ hr.section-seperator {
 .date-adj-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  position: relative;
 
-  span {
-    font-size: 2rem;
-    margin-right: 20px;
-  }
+  // span {
+  //   font-size: 2rem;
+  //   margin-right: 20px;
+  // }
 
   select {
     width: 7rem;
@@ -461,7 +568,7 @@ hr.section-seperator {
   display: flex;
 
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
 
   @include large {
     flex-direction: column;
@@ -469,7 +576,13 @@ hr.section-seperator {
 
   .mainboard-menu-container {
     margin: 0 0;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // span {
+    //   font-size: 2rem;
+    //   margin-right: 20px;
+    // }
     @include large {
       display: flex;
       align-items: center;
@@ -515,7 +628,7 @@ hr.section-seperator {
 }
 
 footer {
-  background: black;
+  // background: black;
   width: 100%;
   height: 90px;
 
