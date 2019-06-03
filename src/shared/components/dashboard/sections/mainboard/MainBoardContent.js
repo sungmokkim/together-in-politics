@@ -1,80 +1,86 @@
 import React, { Component } from 'react';
-import IndicatorSelectButton from '../../../common/IndicatorSelectButton';
 import { connect } from 'react-redux';
 import { changeActive } from '../../../../actions/actions';
-import Select from 'react-select';
 import { fetchDashboardData } from '../../../../actions/actions';
-import { Line, HorizontalBar } from 'react-chartjs-2';
+import { Line, HorizontalBar, Bar } from 'react-chartjs-2';
+
+let width;
 
 class MainBoardContent extends Component {
+  state = {
+    containerWidth: null
+  };
   handleChange = selectedOption => {
     this.props.handleClick('range', selectedOption);
   };
 
-  render() {
-    const {
-      active,
-      dashboardIndicators,
-      rangeOptions
-    } = this.props.dashboardManager;
-
-    const indicatorsMapped = Object.keys(dashboardIndicators).map(
-      indicatorName => {
+  componentDidMount() {
+    try {
+      const containerWidth = document.getElementById(
+        'mainboard-content-container'
+      ).offsetWidth;
+      this.setState({
+        ...this.state,
+        containerWidth: containerWidth
+      });
+    } catch (error) {}
+  }
+  getBarChart = () => {
+    if (this.state.containerWidth) {
+      if (this.state.containerWidth >= 900) {
         return (
-          <li key={dashboardIndicators[indicatorName]}>
-            <IndicatorSelectButton
-              title={indicatorName}
-              activate={dashboardIndicators[indicatorName]}
-              type='indicator'
-              isActive={
-                active.indicator === dashboardIndicators[indicatorName]
-                  ? true
-                  : false
-              }
-              handleClick={this.props.handleClick}
-            />
-          </li>
+          <Bar
+            data={this.props.barChartData}
+            options={{
+              maintainAspectRatio: false,
+              scales: { yAxes: [{ ticks: { beginAtZero: true } }] }
+            }}
+          />
+        );
+      } else {
+        return (
+          <HorizontalBar
+            data={this.props.barChartData}
+            options={{
+              maintainAspectRatio: false,
+              scales: { xAxes: [{ ticks: { beginAtZero: true } }] }
+            }}
+          />
         );
       }
-    );
+    } else {
+      return;
+    }
+  };
+
+  render() {
+    const { active } = this.props.dashboardManager;
 
     return (
       <React.Fragment>
-        <ul>{indicatorsMapped}</ul>
-
-        {/* <canvas id='chart-canvas' width='800px' height='500px' /> */}
-        <Line
-          data={this.props.lineChartData}
-          width={800}
-          height={400}
-          options={{
-            scales: {
-              yAxes: [
-                {
-                  // ,
-                  ticks: {
-                    reverse: active.indicator === 'real_rank' ? true : false
-                    // max: 1,
-                    // min: 0,
-                    // stepSize: 0.1
+        <div className='line-chart'>
+          <Line
+            data={this.props.lineChartData}
+            options={{
+              maintainAspectRatio: false,
+              scales: {
+                yAxes: [
+                  {
+                    // ,
+                    ticks: {
+                      reverse: active.indicator === 'real_rank' ? true : false
+                      // max: 1,
+                      // min: 0,
+                      // stepSize: 0.1
+                    }
                   }
-                }
-              ]
-            }
-          }}
-        />
+                ]
+              }
+            }}
+          />
+        </div>
 
-        <Select
-          name='range'
-          value={active.range}
-          onChange={this.handleChange}
-          options={rangeOptions}
-        />
-
-        <HorizontalBar
-          data={this.props.barChartData}
-          options={{ scales: { xAxes: [{ ticks: { beginAtZero: true } }] } }}
-        />
+        <div className='bar-chart'>{this.getBarChart()}</div>
       </React.Fragment>
     );
   }
