@@ -13,10 +13,8 @@ class RankingSection extends Component {
       const reverseRank = rankings.length + 1;
       return {
         rank: reverseRank - rank['rank_today'],
-        community: communities[rank['name']],
-        score: rank['anti_ratio']
-          ? ((1 - rank['anti_ratio']) * 100).toFixed(2)
-          : rank['anti_ratio'],
+        community: communities[rank['name']].korean,
+        score: ((1 - rank['anti_ratio']) * 100).toFixed(2),
         rankChange: rank['rank_yesterday']
           ? reverseRank -
             rank['rank_yesterday'] -
@@ -31,7 +29,7 @@ class RankingSection extends Component {
 
     return (
       <section className='section-global'>
-        <SectionTitle title='RANKING' />
+        {/* <SectionTitle title='RANKING' /> */}
         <div className='ranking-container'>{renderContent()}</div>
       </section>
     );

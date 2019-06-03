@@ -4,7 +4,7 @@ import MainBoard from './MainBoard';
 class MainBoardSection extends Component {
   render() {
     return (
-      <section className='section-global section-max-width'>
+      <section className='section-global'>
         <MainBoard />
       </section>
     );

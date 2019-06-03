@@ -24,7 +24,7 @@ const fetchLatestDate = callback => {
       callback(results);
     }
   });
-  console.log('latestdate');
+
   connection.end();
 };
 
