@@ -15,23 +15,23 @@ class IndicatorBtn extends Component {
         community: {
           toMap: this.mapSelections,
           icon: 'fas fa-tasks',
-          shortNames: this.props.dashboardManager.communitiesShortNames,
-          longNames: this.props.dashboardManager.communities,
-          shape: 'circle'
+          names: this.props.dashboardManager.communities,
+          shape: 'circle',
+          toggle: this.toggleSelection
         },
         indicator: {
           toMap: this.mapSelections,
           icon: 'fas fa-tachometer-alt',
-          shortNames: this.props.dashboardManager.dashboardIndicatorsShortNames,
-          longNames: this.props.dashboardManager.dashboardIndicatorsName,
-          shape: 'normal'
+          names: this.props.dashboardManager.dashboardIndicatorsName,
+          shape: 'normal',
+          toggle: this.toggleSelection
         },
         range: {
           toMap: this.mapSelections,
           icon: 'far fa-clock',
-          shortNames: this.props.dashboardManager.dashboardIndicatorsShortNames,
-          longNames: this.props.dashboardManager.dashboardIndicatorsName,
-          shape: 'normal'
+          names: this.props.dashboardManager.rangeOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
         }
       }
     };
@@ -62,18 +62,20 @@ class IndicatorBtn extends Component {
   };
 
   mapSelections = () => {
-    const { shortNames, shape } = this.state.switch[this.props.type];
+    const { names, shape } = this.state.switch[this.props.type];
     return this.state.toggle
-      ? Object.keys(shortNames).map(shortName => {
+      ? Object.keys(names).map(targetName => {
           return (
             <span
-              key={shortName}
+              key={targetName}
               className={`selector-container ${shape} selection-fade-in`}
               onClick={() => {
-                this.handleSelectionClick(shortName);
+                this.handleSelectionClick(
+                  this.props.type === 'range' ? names[targetName] : targetName
+                );
               }}
               onMouseOver={e => {
-                this.getMousePosition(e, shortName);
+                this.getMousePosition(e, targetName);
               }}
               onMouseLeave={() => {
                 this.setState({
@@ -83,8 +85,8 @@ class IndicatorBtn extends Component {
                 });
               }}
             >
-              <span key={shortName} className={`${shape}-element`}>
-                {shortNames[shortName]}
+              <span key={targetName} className={`${shape}-element`}>
+                {names[targetName].koreanShort}
               </span>
             </span>
           );
@@ -102,15 +104,18 @@ class IndicatorBtn extends Component {
   };
 
   render() {
-    const { active } = this.props.dashboardManager;
+    const activeValue =
+      this.props.type === 'range'
+        ? this.props.dashboardManager.active.range.index
+        : this.props.dashboardManager.active[this.props.type];
     return (
       <span className='indicator-btn-wrapper'>
         <span
-          className='indicator-btn'
+          className={`indicator-btn ${this.state.toggle ? 'btn-fade-out' : ''}`}
           style={{
             opacity: this.state.opacity
           }}
-          onClick={this.toggleSelection}
+          onClick={this.state.switch[this.props.type].toggle}
         >
           <span className='initial-display-wrapper'>
             <i
@@ -123,28 +128,28 @@ class IndicatorBtn extends Component {
               style={{ display: this.state.toggle ? 'none' : 'inline' }}
             >
               {`${
-                this.state.switch[this.props.type]['longNames'][
-                  active[this.props.type]
-                ]
+                this.state.switch[this.props.type]['names'][activeValue].korean
               }`}
             </span>
           </span>
         </span>
+
         {this.state.switch[this.props.type].toMap()}
+
         <span
           style={{
             opacity: this.state.hover ? 1 : 0,
             position: 'absolute',
-            top: this.state.clientY + 20,
+            top: this.state.clientY - 35,
             left: this.state.clientX
           }}
           className='hover-description'
         >
-          {
-            this.state.switch[this.props.type]['longNames'][
-              this.state.currentlyHovered
-            ]
-          }
+          {this.state.currentlyHovered
+            ? this.state.switch[this.props.type].names[
+                this.state.currentlyHovered
+              ].korean
+            : null}
         </span>
       </span>
     );
