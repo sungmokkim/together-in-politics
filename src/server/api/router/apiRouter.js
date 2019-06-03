@@ -5,6 +5,9 @@ import fetchTodayRankings from '../fetch/ranking';
 import fetchDashboardData from '../fetch/dashboardData';
 import fetchLatestDate from '../fetch/latestDate';
 import fetchPeriodData from '../fetch/periodData';
+import fetchFreeboardPosts from '../fetch/freeboardPosts';
+import insertFreeboardPost from '../insert/freeboardPost';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -40,6 +43,18 @@ router.post('/dashboard_data', (req, res) => {
 router.post('/period_data', (req, res) => {
   fetchPeriodData(req.body, results => {
     res.json(results);
+  });
+});
+
+router.post('/insert_freeboard', (req, res) => {
+  insertFreeboardPost(req, rs => {
+    res.json(rs);
+  });
+});
+
+router.get('/freeboard', (req, res) => {
+  fetchFreeboardPosts(rs => {
+    res.json(rs);
   });
 });
 
