@@ -7,7 +7,8 @@ $eng-big-font: 'Oswald', sans-serif;
 
 // color variables
 // $primary-color: rgb(240, 84, 84);
-$primary-color: #edb5bf;
+// $primary-color: #edb5bf;
+$primary-color: #a8d1e7;
 
 // regular color adjustment
 $red: #f75467;
@@ -20,7 +21,7 @@ $orange: rgb(207, 152, 48);
 //Viewports
 
 @mixin large {
-  @media (max-width: 1200px) {
+  @media (max-width: 1000px) {
     @content;
   }
 }
@@ -68,7 +69,14 @@ body,
     font-size: 6px;
   }
 }
+body {
+  background: #f5f5f5;
+}
 
+body,
+html {
+  height: 100%;
+}
 ul {
   list-style: none;
 }
@@ -79,12 +87,12 @@ ul {
 
 .section-global {
   padding: 3rem;
-  width: 1200px;
+  width: 1000px;
   margin: 0 auto;
   box-sizing: border-box;
 
   @include large {
-    width: 800px;
+    width: 750px;
   }
 
   @include medium {
@@ -100,20 +108,32 @@ ul {
   @include small {
     max-width: 420px;
     width: 100%;
+    padding: 1rem 2.3rem;
   }
 }
 
-.section-max-width {
-  @include medium {
-    display: flex;
-    flex-direction: column;
-    height: 90vh;
-  }
-}
+// .section-max-width {
+//   @include medium {
+//     display: flex;
+//     flex-direction: column;
+//     height: 90vh;
+//   }
+// }
 
 // -------------------------------------------------------
 
 // Common Components
+
+#bg {
+  background-color: $primary-color;
+  clip-path: polygon(0 0, 100% 0, 100% 42%, 0 62%);
+  // transform: skewY(-12deg);
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
 hr.section-seperator {
   width: 70%;
   // width: 1200px;
@@ -141,7 +161,7 @@ hr.section-seperator {
 }
 
 .small-title {
-  font-family: $big-font;
+  // font-family: $big-font;
   margin: 1.5rem;
   font-size: 5rem;
 
@@ -238,6 +258,7 @@ hr.section-seperator {
 
   // width: 400px;
   // display: flex;
+  background: white;
 
   &:hover {
     background: darken($color, 8%);
@@ -262,6 +283,7 @@ hr.section-seperator {
     align-items: center;
     max-width: 100%;
     transition: 0.5s ease-in;
+
     .initial-display-wrapper {
       .indicator-mark {
         font-size: 2rem;
@@ -282,9 +304,9 @@ hr.section-seperator {
     justify-content: center;
     align-items: center;
     transition: 0.3s ease-in;
-    background: pink;
+    background: white;
     &:hover {
-      background: darken(pink, 15%);
+      background: darken(white, 15%);
     }
   }
 
@@ -322,6 +344,22 @@ hr.section-seperator {
   animation: selection-fade-in 0.3s ease-in forwards;
 }
 
+.btn-fade-out {
+  animation: fade-out 0.3s ease-in alternate-reverse;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(80%);
+  }
+}
+
 @keyframes selection-fade-in {
   0% {
     opacity: 0;
@@ -353,9 +391,20 @@ hr.section-seperator {
   color: $red;
 }
 
+.status-number {
+  color: gray;
+}
+
 // -------------------------------------------------------
 
 // sections
+
+.site-title {
+  font-size: 10rem;
+  font-family: $big-font;
+  text-align: center;
+  color: white;
+}
 
 .main-nav-wrapper {
   .main-nav-container {
@@ -363,6 +412,11 @@ hr.section-seperator {
     // position: relative;
     justify-content: space-between;
     align-items: center;
+
+    @include small {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
   }
   // background: black;
   width: 100%;
@@ -436,13 +490,14 @@ hr.section-seperator {
   justify-content: space-between;
   flex-direction: row;
 
-  @include small {
+  @include large {
     flex-direction: column;
   }
   .indicator-card {
-    // border: 1px solid rgb(223, 222, 222);
-    // border-radius: 5%;
-
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background: white;
+    border-radius: 15px;
+    width: 120%;
     &:hover {
       .small-title::after {
         background: $primary-color;
@@ -451,24 +506,67 @@ hr.section-seperator {
       }
     }
     display: inline-block;
-    padding: 1rem;
-    margin: 2rem;
+    padding: 2.5rem;
+    margin: 1rem;
 
     text-align: center;
 
+    @include large {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 3rem 3rem;
+      margin: 2rem;
+      align-items: center;
+    }
+
+    .indicator-title-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .emotion {
+        font-size: 4.5rem;
+        margin-right: 2rem;
+
+        @include large {
+          margin-right: 3rem;
+        }
+      }
+
+      div {
+        text-align: left;
+        .indicator-title {
+          font-size: 3rem;
+          text-align: left;
+        }
+
+        .active-community {
+          color: darken(lightgray, 20%);
+          font-size: 1.7rem;
+        }
+      }
+    }
+
+    .fa-font {
+      color: $primary-color;
+    }
     .indicator-content {
       font-family: $big-font;
 
       .value {
-        font-size: 6rem;
+        font-size: 5rem;
+        font-weight: bold;
       }
 
       .metric {
-        font-size: 3rem;
+        font-size: 1.7rem;
       }
 
       .status {
         font-size: 2rem;
+        text-align: right;
       }
     }
   }
@@ -481,7 +579,11 @@ hr.section-seperator {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 3rem;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background: white;
+  border-radius: 15px;
 
   &:hover {
     .small-title::after {
@@ -499,7 +601,8 @@ hr.section-seperator {
       th {
         border-bottom: 0.3px grey solid;
         padding: 1rem;
-        font-size: 1.6rem;
+        font-size: 1.9rem;
+        margin-bottom: 100px;
       }
     }
 
@@ -510,8 +613,8 @@ hr.section-seperator {
         }
 
         td {
-          font-size: 1.6rem;
-          height: 6rem;
+          font-size: 1.8rem;
+          height: 8rem;
           padding: 1rem;
         }
       }
@@ -550,8 +653,13 @@ hr.section-seperator {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  position: relative;
+  // position: relative;
+  flex-direction: row;
+  @include small {
+    flex-direction: column;
 
+    height: 23rem;
+  }
   // span {
   //   font-size: 2rem;
   //   margin-right: 20px;
@@ -560,6 +668,16 @@ hr.section-seperator {
   select {
     width: 7rem;
     height: 30px;
+  }
+
+  .calendar {
+    background: white;
+    padding: 10px;
+    max-width: 100%;
+    transition: 0.4s ease-in-out;
+    opacity: 0;
+    border-radius: 30px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   }
 }
 
@@ -578,15 +696,13 @@ hr.section-seperator {
     margin: 0 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    // span {
-    //   font-size: 2rem;
-    //   margin-right: 20px;
-    // }
-    @include large {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    margin-bottom: 3rem;
+
+    @include small {
+      flex-direction: column;
+      height: 25rem;
     }
 
     ul {
@@ -607,8 +723,11 @@ hr.section-seperator {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 
+    @include large {
+      flex-direction: column;
+    }
     margin: 1rem;
     ul li {
       float: left;
@@ -644,5 +763,53 @@ footer {
     font-family: $big-font;
     color: white;
     font-size: 2rem;
+  }
+}
+
+.bar-chart {
+  canvas {
+    width: 200px !important;
+    height: 600px !important;
+
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+    margin-top: 1rem;
+    @include large {
+      width: 750px !important;
+      height: 500px !important;
+    }
+    @include medium {
+      width: 100% !important;
+      height: 300px !important;
+    }
+  }
+}
+
+.line-chart {
+  canvas {
+    width: 700px !important;
+    height: 600px !important;
+
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+    margin-top: 1rem;
+    margin-right: 2rem;
+
+    @include large {
+      width: 750px !important;
+      height: 500px !important;
+      margin-right: 0;
+      margin-bottom: 3rem;
+    }
+
+    @include medium {
+      width: 100% !important;
+      height: 500px !important;
+      margin-right: 0;
+    }
   }
 }
