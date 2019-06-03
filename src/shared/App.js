@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { renderRoutes, matchRoutes } from 'react-router-config';
+import { renderRoutes } from 'react-router-config';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import SiteTitle from './components/common/SiteTitle';
@@ -12,7 +12,7 @@ const App = ({ route }) => {
     <React.Fragment>
       <div id='bg' />
       <Header />
-      <SiteTitle />
+      {/* <SiteTitle /> */}
       {renderRoutes(route.routes)}
       {/* <Footer /> */}
     </React.Fragment>
