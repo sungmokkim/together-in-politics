@@ -7,8 +7,8 @@ $eng-big-font: 'Oswald', sans-serif;
 
 // color variables
 // $primary-color: rgb(240, 84, 84);
-// $primary-color: #edb5bf;
-$primary-color: #a8d1e7;
+$primary-color: #edb5bf;
+// $primary-color: #a8d1e7;
 
 // regular color adjustment
 $red: #f75467;
@@ -112,14 +112,6 @@ ul {
   }
 }
 
-// .section-max-width {
-//   @include medium {
-//     display: flex;
-//     flex-direction: column;
-//     height: 90vh;
-//   }
-// }
-
 // -------------------------------------------------------
 
 // Common Components
@@ -127,7 +119,7 @@ ul {
 #bg {
   background-color: $primary-color;
   clip-path: polygon(0 0, 100% 0, 100% 42%, 0 62%);
-  // transform: skewY(-12deg);
+  // background: url('./img/mainimage.jpg') no-repeat;
   position: absolute;
   z-index: -1;
   width: 100%;
@@ -338,26 +330,11 @@ hr.section-seperator {
   font-size: 1.2rem;
 }
 
+//----------------------------------------------------------------------------------------
 // animations
 
 .selection-fade-in {
   animation: selection-fade-in 0.3s ease-in forwards;
-}
-
-.btn-fade-out {
-  animation: fade-out 0.3s ease-in alternate-reverse;
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(80%);
-  }
 }
 
 @keyframes selection-fade-in {
@@ -369,6 +346,39 @@ hr.section-seperator {
   100% {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+
+.btn-fade-out {
+  animation: btn-fade-out 0.3s ease-in alternate-reverse;
+}
+
+@keyframes btn-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(80%);
+  }
+}
+
+.error-animation {
+  animation: error-animation 0.1s alternate;
+  animation-iteration-count: 6;
+}
+
+@keyframes error-animation {
+  0% {
+    opacity: 1;
+    transform: translateX(-3%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(3%);
   }
 }
 
@@ -430,8 +440,8 @@ hr.section-seperator {
   }
   .nav-title {
     font-family: $big-font;
-    // color: white;
-    font-size: 3rem;
+    color: white;
+    font-size: 3.5rem;
   }
 
   .nav-menu-container {
@@ -743,6 +753,70 @@ hr.section-seperator {
     //     height: 800px;
     //   }
     // }
+  }
+}
+
+.freeboard-form {
+  .input-area {
+    display: flex;
+    flex-direction: column;
+
+    .user-password {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .text-input-area {
+      width: 100%;
+      padding: 2rem;
+      font-size: 2rem;
+      cursor: text;
+      border-radius: 15px;
+      resize: none;
+    }
+  }
+
+  .submit-btn-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .error-code {
+      width: 100%;
+    }
+
+    .submit-btn {
+      width: 100%;
+    }
+  }
+}
+
+.freeboard-post-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .post-container {
+    background: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    border-radius: 15px;
+    font-size: 2rem;
+    padding: 1.5rem 3rem;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    .user-area {
+      font-size: 1.7rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .text-area {
+      font-size: 2rem;
+    }
   }
 }
 
