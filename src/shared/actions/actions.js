@@ -176,3 +176,40 @@ export const resetCurrentRange = callback => async dispatch => {
 
   callback ? callback() : null;
 };
+
+export const INSERT_IN_FREEBOARD = 'INSERT_IN_FREEBOARD';
+export const insertInFreeboard = ({
+  text,
+  userName,
+  password
+}) => async dispatch => {
+  const res = await axios.post(
+    `https://${clientFetchingReference}/api/insert_freeboard`,
+    {
+      text,
+      userName,
+      password
+    }
+  );
+
+  dispatch({
+    type: INSERT_IN_FREEBOARD,
+    payload: res.data
+  });
+
+  return res.data;
+};
+
+export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
+export const fetchFreeboard = () => async dispatch => {
+  const res = await axios.get(
+    `https://${clientFetchingReference}/api/freeboard`
+  );
+
+  dispatch({
+    type: FETCH_FREEBOARD,
+    payload: res.data
+  });
+
+  return res.data;
+};
