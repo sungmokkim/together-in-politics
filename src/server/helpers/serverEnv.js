@@ -7,5 +7,13 @@ export default {
     todayDataTable: '**MYSQL TABLENAME **',
     monthlyDataTable: '**MYSQL TABLENAME **'
   },
-  ga: '** GOOGLE ANALYTICS ID **'
+  ga: '** GOOGLE ANALYTICS ID **',
+  mongodb: {
+    host: '**MONGODB HOST **',
+    port: '**MONGODB PORT **',
+    user: '**MONGODB USER **',
+    mongopw: '**MONGODB PW **',
+    database: '**MONGODB DB**',
+    freeBoardCollection: '**MONGODB COLL**'
+  }
 };
