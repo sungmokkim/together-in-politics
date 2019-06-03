@@ -6,15 +6,15 @@ export default () => {
     <nav className='main-nav-wrapper'>
       <div className='section-global main-nav-container'>
         <Link to='/'>
-          <span className='nav-title'>모두의 정치</span>
+          <span className='nav-title' />
         </Link>
 
         <div className='nav-menu-container'>
           <NavLink exact to='/'>
-            <span>Home </span>
+            <span className='menu-btn'>Home </span>
           </NavLink>
           <NavLink to='/dashboard'>
-            <span>Graphs</span>
+            <span className='menu-btn'>Graphs</span>
           </NavLink>
 
           {/* <NavLink to='/test'>
