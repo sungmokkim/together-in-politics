@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import SectionTitle from '../../../common/SectionTitle';
 import { connect } from 'react-redux';
 import MainBoardMenu from './MainBoardMenu';
 import MainBoardContent from './MainBoardContent';
 import {
   changeActive,
   fetchDashboardData,
-  fetchPeriodData
+  fetchPeriodData,
+  fetchTodayIndicators
 } from '../../../../actions/actions';
-import { initializeChart, drawChart } from './ChartDrawing';
 
 class MainBoard extends Component {
   state = {
@@ -177,6 +176,16 @@ class MainBoard extends Component {
         this.props
           .fetchPeriodData(this.props.dashboardManager.active.community)
           .then(fetchedData => this.updateBarChart(fetchedData));
+
+        if (type === 'community') {
+          this.props.fetchTodayIndicators(
+            this.props.dashboardManager.currentDate.year,
+            this.props.dashboardManager.currentDate.month,
+            this.props.dashboardManager.currentDate.date,
+            false,
+            this.props.dashboardManager.active.community
+          );
+        }
       }
     });
   };
@@ -184,12 +193,15 @@ class MainBoard extends Component {
   render() {
     return (
       <React.Fragment>
-        <SectionTitle title='DASHBOARD' />
+        {/* <SectionTitle title='DASHBOARD' /> */}
         <div className='mainboard-wrapper'>
           <div className='mainboard-menu-container'>
             <MainBoardMenu handleClick={this.handleButtonClick} />
           </div>
-          <div className='mainboard-content-container'>
+          <div
+            className='mainboard-content-container'
+            id='mainboard-content-container'
+          >
             <MainBoardContent
               handleClick={this.handleButtonClick}
               lineChartData={this.state.lineChartData}
@@ -210,5 +222,5 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { changeActive, fetchDashboardData, fetchPeriodData }
+  { changeActive, fetchDashboardData, fetchPeriodData, fetchTodayIndicators }
 )(MainBoard);

@@ -10,18 +10,24 @@ import {
 import HeroSection from '../components/main/sections/hero/HeroSection';
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
 import RankingSection from '../components/main/sections/ranking/RankingSection';
-import DateAdjustSection from '../components/main/sections/dateAdjust/DateAdjustSection';
+import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 
 class HomePage extends Component {
   componentDidMount() {
     const { rankings } = this.props.today;
-    const { latestDate } = this.props.dashboardManager;
+    const { latestDate, active } = this.props.dashboardManager;
 
     if (!rankings.length) {
       if (!latestDate.year) {
         //there was no data fetching from server side
         this.props.fetchLatestDate().then(({ year, month, date }) => {
-          this.props.fetchTodayIndicators(year, month, date);
+          this.props.fetchTodayIndicators(
+            year,
+            month,
+            date,
+            false,
+            active.community
+          );
           this.props.fetchTodayRankings(year, month, date);
         });
       } else {
@@ -38,10 +44,10 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
-        <HeroSection />
-        <DateAdjustSection />
+        {/* <HeroSection /> */}
+        <AdjustSection />
         <IndicatorSection />
-        <hr className='section-seperator global-width global-center' />
+        {/* <hr className='section-seperator global-width global-center' /> */}
         <RankingSection />
       </React.Fragment>
     );
@@ -56,7 +62,7 @@ const mapStateToProps = state => {
 };
 
 const fetchDataFromServerSide = store => {
-  const { currentDate } = store.getState()['dashboardManager'];
+  const { currentDate, active } = store.getState()['dashboardManager'];
 
   return [
     store.dispatch(
@@ -64,7 +70,8 @@ const fetchDataFromServerSide = store => {
         currentDate.year,
         currentDate.month,
         currentDate.date,
-        true
+        true,
+        active.community
       )
     ),
     store.dispatch(fetchLatestDate())

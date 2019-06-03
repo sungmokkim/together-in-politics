@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
-import CommunitySelectButton from '../../../common/CommunitySelectButton';
+
 import { connect } from 'react-redux';
+import IndicatorBtn from '../../../common/IndicatorBtn';
 
 class MainBoardMenu extends Component {
   render() {
-    const { active, communities } = this.props.dashboardManager;
-
-    const communitiesMapped = Object.keys(communities).map(comm => {
-      return (
-        <li key={comm}>
-          <CommunitySelectButton
-            title={communities[comm]}
-            activate={comm}
-            isActive={active.community === comm ? true : false}
-            handleClick={this.props.handleClick}
-            type='community'
-          />
-        </li>
-      );
-    });
-    return <ul>{communitiesMapped}</ul>;
+    return (
+      <React.Fragment>
+        <IndicatorBtn handleClick={this.props.handleClick} type='community' />
+        <IndicatorBtn handleClick={this.props.handleClick} type='indicator' />
+        <IndicatorBtn handleClick={this.props.handleClick} type='range' />
+      </React.Fragment>
+    );
   }
 }
 function mapStateToProps(state) {
