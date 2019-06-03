@@ -27,8 +27,8 @@ const renderer = (req, store) => {
 
         
           <link rel="stylesheet" href="style.css">
-         
-          
+          <link rel="stylesheet" href="calendarStyle.css">
+       
           <title>모두의 정치</title>
 
   
@@ -43,7 +43,7 @@ const renderer = (req, store) => {
           )}</script>
   
           <script src = "bundle.js"></script>
-       
+
       </body>
   </html>
     `;
