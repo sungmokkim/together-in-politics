@@ -54,7 +54,8 @@ export const fetchTodayIndicators = (
   year,
   month,
   date,
-  getLatest = false
+  getLatest = false,
+  community = null
 ) => async dispatch => {
   const res = await axios.post(
     `https://${clientFetchingReference}/api/today_indicator`,
@@ -62,7 +63,8 @@ export const fetchTodayIndicators = (
       year,
       month,
       date,
-      get_latest: getLatest
+      get_latest: getLatest,
+      community
     }
   );
 
@@ -149,6 +151,12 @@ export const changeCurrentDate = (
   });
 
   callback ? callback() : null;
+
+  return {
+    year,
+    month,
+    date
+  };
 };
 
 export const RESET_CURRENT_DATE = 'RESET_CURRENT_DATE';
