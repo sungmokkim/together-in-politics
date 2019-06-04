@@ -16,7 +16,7 @@ const insertFreeboardPost = (req, callback) => {
   // Connection URL
 
   const { text, userName, password } = req.body;
-  const ip = req.headers['X-Real-IP'] || req.connection.remoteAddress;
+  const ip = req.headers['x-real-ip'] || req.connection.remoteAddress;
 
   const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
 
