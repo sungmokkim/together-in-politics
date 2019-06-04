@@ -34,7 +34,8 @@ const fetchFreeboardPosts = callback => {
         text: 1,
         comments: 1,
         ip: 1,
-        post_date: 1
+        post_date: 1,
+        admin: 1
       })
       .sort({ _id: -1 })
 

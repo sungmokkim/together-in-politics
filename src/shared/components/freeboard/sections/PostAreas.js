@@ -11,9 +11,11 @@ class PostAreas extends Component {
     return this.props.freeboard.data.map(post => {
       return (
         <div key={post._id} className='post-container'>
-          <span className='user-area'>{post.user}</span>
+          <span className='user-area'>
+            {post.user} <span>{post.admin ? '운영자' : null}</span>
+          </span>
 
-          <span className='text-area'> {post.text}</span>
+          <span className='text-area'>{post.text}</span>
         </div>
       );
     });
