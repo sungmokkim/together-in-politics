@@ -5,10 +5,12 @@ $main-font: 'Noto Sans KR', sans-serif;
 $eng-big-font: 'Oswald', sans-serif;
 // -------------------------------------------------------
 
-// color variables
+//  variables
 // $primary-color: rgb(240, 84, 84);
 $primary-color: #edb5bf;
 // $primary-color: #a8d1e7;
+
+$box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
 // regular color adjustment
 $red: #f75467;
@@ -113,7 +115,144 @@ ul {
 }
 
 // -------------------------------------------------------
+// mixins
 
+@mixin upper-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 5rem;
+  margin-bottom: 1.5rem;
+}
+
+@mixin user-area {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: $primary-color;
+  }
+  .user-admin {
+    margin-left: 1rem;
+    background: $primary-color;
+    padding: 0.3rem 1rem;
+    color: white;
+    border-radius: 10px;
+  }
+}
+
+@mixin date-and-ip-area {
+  display: flex;
+  flex-direction: column;
+
+  .post-date {
+    font-size: 1.4rem;
+
+    text-align: right;
+  }
+  .user-ip {
+    font-size: 1.2rem;
+    color: gray;
+    text-align: right;
+  }
+}
+
+@mixin lower-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+@mixin input-form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0rem;
+
+  .user-and-password {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+
+    input {
+      padding: 1rem 0rem;
+      font-size: 1.8rem;
+      width: 30rem;
+      margin-right: 4rem;
+    }
+
+    @include medium-small {
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .text-input-area {
+    textarea {
+      width: 100%;
+      padding: 1rem 0rem;
+      font-size: 2rem;
+      cursor: text;
+
+      resize: none;
+    }
+  }
+
+  .submit-btn-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 8rem;
+    align-items: center;
+
+    @include medium-small {
+      flex-direction: column;
+      min-height: 15rem;
+    }
+    .error-code-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      .error-code {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+
+    .submit-btn {
+      width: 40%;
+      background: white;
+      color: black;
+      padding: 3rem;
+      height: 3rem;
+      border: none;
+      border-radius: 15px;
+      border: 0.2px solid $primary-color;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+}
+//--------------------------------------------------------
 // Common Components
 
 #bg {
@@ -132,6 +271,22 @@ hr.section-seperator {
   margin: 0 auto;
 
   color: lightgrey;
+}
+
+input[type='text'],
+input[type='password'],
+textarea {
+  // font-size: 1.5rem;
+  // @include medium {
+  //   font-size: 2.3rem;
+  // }
+  border: none;
+  border-bottom: 1.5px solid lighten($primary-color, 20%);
+  transition: 0.4s ease-in;
+
+  &:focus {
+    border-bottom: 1.5px solid $primary-color;
+  }
 }
 
 .section-title-container {
@@ -275,7 +430,7 @@ hr.section-seperator {
     align-items: center;
     max-width: 100%;
     transition: 0.5s ease-in;
-
+    box-shadow: $box-shadow;
     .initial-display-wrapper {
       .indicator-mark {
         font-size: 2rem;
@@ -349,6 +504,34 @@ hr.section-seperator {
   }
 }
 
+.opacity-fade-in {
+  animation: opacity-fade-in 0.3s ease-in forwards;
+}
+
+@keyframes opacity-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.opacity-fade-out {
+  animation: opacity-fade-out 0.3s ease-in forwards;
+}
+
+@keyframes opacity-fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .btn-fade-out {
   animation: btn-fade-out 0.3s ease-in alternate-reverse;
 }
@@ -379,6 +562,16 @@ hr.section-seperator {
   100% {
     opacity: 1;
     transform: translateX(3%);
+  }
+}
+
+@keyframes refresh-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 
@@ -504,7 +697,7 @@ hr.section-seperator {
     flex-direction: column;
   }
   .indicator-card {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: $box-shadow;
     background: white;
     border-radius: 15px;
     width: 120%;
@@ -591,7 +784,7 @@ hr.section-seperator {
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: $box-shadow;
   background: white;
   border-radius: 15px;
 
@@ -687,7 +880,7 @@ hr.section-seperator {
     transition: 0.4s ease-in-out;
     opacity: 0;
     border-radius: 30px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: $box-shadow;
   }
 }
 
@@ -799,27 +992,246 @@ hr.section-seperator {
 
   .post-container {
     background: white;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: $box-shadow;
     border-radius: 15px;
-    font-size: 2rem;
-    padding: 1.5rem 3rem;
+    font-size: 1.8rem;
+    padding: 2.4rem 3rem;
     margin: 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    .user-area {
-      font-size: 1.7rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+    &:hover {
+      background: darken(white, 10%);
+    }
+    .upper-container {
+      @include upper-container();
+
+      .user-area {
+        @include user-area();
+      }
+
+      .date-and-ip-area {
+        @include date-and-ip-area();
+      }
     }
 
-    .text-area {
-      font-size: 2rem;
+    .lower-container {
+      @include lower-container();
+
+      .text-area {
+        font-size: 2rem;
+      }
+
+      .comment-count {
+        font-size: 1.5rem;
+        min-width: 4rem;
+        max-width: 4.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        i {
+          color: $blue;
+          font-size: 1.5rem;
+        }
+        margin-left: 1.3rem;
+      }
     }
   }
 }
 
+.hot-post-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .post-container {
+    background: white;
+    width: 30%;
+    box-shadow: $box-shadow;
+    border-radius: 15px;
+    font-size: 2rem;
+    padding: 2.4rem 3rem;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+    &:hover {
+      background: darken(white, 10%);
+    }
+    .upper-container {
+      @include upper-container();
+
+      .user-area {
+        @include user-area();
+        font-size: 1.5rem;
+
+        i {
+          font-size: 1.5rem;
+          color: $red;
+        }
+      }
+
+      .date-and-ip-area {
+        @include date-and-ip-area();
+      }
+    }
+
+    .lower-container {
+      @include lower-container();
+
+      .text-area {
+        font-size: 1.8rem;
+      }
+
+      .comment-count {
+        font-size: 1.5rem;
+        min-width: 4rem;
+        max-width: 4.5rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        i {
+          color: $blue;
+          font-size: 1.5rem;
+        }
+        margin-left: 1.2rem;
+      }
+    }
+  }
+}
+
+.single-post-overlay {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  .single-post-relative {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .single-post-wrapper {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      width: 80%;
+
+      .single-post-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: white;
+        box-shadow: $box-shadow;
+        border-radius: 15px;
+        font-size: 2rem;
+        padding: 2.4rem 3rem;
+        min-height: 350px;
+        margin-bottom: 10rem;
+
+        .post-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: left;
+          align-items: left;
+
+          .upper-container {
+            @include upper-container();
+
+            .user-area {
+              @include user-area();
+            }
+
+            .date-and-ip-area {
+              @include date-and-ip-area();
+            }
+          }
+
+          .lower-container {
+            @include lower-container();
+            margin-bottom: 4rem;
+
+            .text-area {
+              font-size: 2.8rem;
+              line-height: 4.5rem;
+            }
+          }
+        }
+
+        .comment-container {
+          margin-bottom: 2rem;
+          .comment-count {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            color: darken(lightgrey, 60%);
+          }
+          .no-comment {
+            color: darken(lightgrey, 30%);
+            font-size: 1.3rem;
+          }
+          .comment-area {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            .upper-container {
+              @include upper-container();
+              margin-bottom: 0.5rem;
+
+              .user-area {
+                @include user-area();
+                i {
+                  font-size: 1.8rem;
+                  color: $primary-color;
+                  margin-right: 1.3rem;
+                }
+
+                font-size: 2rem;
+              }
+
+              .date-and-ip-area {
+                @include date-and-ip-area();
+              }
+            }
+
+            .lower-container {
+              @include lower-container();
+
+              .text-area {
+                font-size: 1.8rem;
+              }
+            }
+          }
+        }
+
+        .input-form {
+          @include input-form();
+        }
+
+        .new-post-form {
+          @include input-form();
+        }
+      }
+    }
+  }
+}
+
+.writing-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
 footer {
   // background: black;
   width: 100%;
@@ -847,7 +1259,7 @@ footer {
 
     background-color: white;
     border-radius: 15px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: $box-shadow;
 
     margin-top: 1rem;
     @include large {
@@ -868,7 +1280,7 @@ footer {
 
     background-color: white;
     border-radius: 15px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: $box-shadow;
 
     margin-top: 1rem;
     margin-right: 2rem;
