@@ -200,16 +200,105 @@ export const insertInFreeboard = ({
   return res.data;
 };
 
+export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT';
+export const updateNewComment = ({
+  inputId,
+  comment,
+  userName,
+  password
+}) => async dispatch => {
+  const res = await axios.post(
+    `https://${clientFetchingReference}/api/new_comment`,
+    {
+      inputId,
+      comment,
+      userName,
+      password
+    }
+  );
+
+  dispatch({
+    type: UPDATE_NEW_COMMENT,
+    payload: res.data
+  });
+
+  return res.data;
+};
+
 export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
 export const fetchFreeboard = () => async dispatch => {
   const res = await axios.get(
     `https://${clientFetchingReference}/api/freeboard`
   );
 
-  dispatch({
-    type: FETCH_FREEBOARD,
-    payload: res.data
+  const editedData = res.data.map(dt => {
+    const ipArray = dt.ip.split('.');
+    ipArray.splice(-2, 2, '*', '*');
+    const newIp = ipArray.join('.');
+
+    return {
+      ...dt,
+      ip: dt.admin ? 'together.in.politics.com' : newIp
+    };
   });
 
-  return res.data;
+  dispatch({
+    type: FETCH_FREEBOARD,
+    payload: editedData
+  });
+
+  return editedData;
+};
+
+export const FETCH_HOT_POSTS = 'FETCH_HOT_POSTS';
+export const fetchHotPosts = () => async dispatch => {
+  const res = await axios.get(
+    `https://${clientFetchingReference}/api/hot_posts`
+  );
+
+  const editedData = res.data.map(dt => {
+    const ipArray = dt.ip.split('.');
+    ipArray.splice(-2, 2, '*', '*');
+    const newIp = ipArray.join('.');
+
+    return {
+      ...dt,
+      ip: dt.admin ? 'together.in.politics.com' : newIp
+    };
+  });
+
+  dispatch({
+    type: FETCH_HOT_POSTS,
+    payload: editedData
+  });
+
+  return editedData;
+};
+
+export const FETCH_COMMENTS = 'FETCH_COMMENTS';
+export const fetchComments = postId => async dispatch => {
+  const res = await axios.post(
+    `https://${clientFetchingReference}/api/comments`,
+    {
+      postId
+    }
+  );
+
+  const editedData = res.data[0].comments.map(comment => {
+    const ipArray = comment.ip.split('.');
+    ipArray.splice(-2, 2, '*', '*');
+    const newIp = ipArray.join('.');
+
+    return {
+      ...comment,
+      ip: comment.admin ? 'together.in.politics.com' : newIp
+    };
+  });
+
+  dispatch({
+    type: FETCH_COMMENTS,
+    payload: editedData
+  });
+
+  return editedData;
 };
