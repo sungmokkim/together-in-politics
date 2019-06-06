@@ -15,15 +15,13 @@ class MainBoardContent extends Component {
   };
 
   componentDidMount() {
-    try {
-      const containerWidth = document.getElementById(
-        'mainboard-content-container'
-      ).offsetWidth;
-      this.setState({
-        ...this.state,
-        containerWidth: containerWidth
-      });
-    } catch (error) {}
+    const containerWidth = document.getElementById(
+      'mainboard-content-container'
+    ).offsetWidth;
+    this.setState({
+      ...this.state,
+      containerWidth: containerWidth
+    });
   }
   getBarChart = () => {
     if (this.state.containerWidth) {
