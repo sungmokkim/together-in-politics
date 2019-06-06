@@ -1,14 +1,13 @@
 import { combineReducers } from 'redux';
 
-import manageReducer from './manageReducer';
+import siteManagingReducer from './siteManagingReducer';
 import dashBoardManagingReducer from './dashBoardManagingReducer';
 import todayDataReducer from './todayDataReducer';
 import dashboardDataReducer from './dashboardDataReducer';
 import freeBoardManagingReducer from './freeBoardManagingReducer';
 
 export default combineReducers({
-  manage: manageReducer,
-
+  siteManager: siteManagingReducer,
   dashboardManager: dashBoardManagingReducer,
   today: todayDataReducer,
   dashboardData: dashboardDataReducer,
