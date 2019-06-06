@@ -1,177 +1,210 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { insertInFreeboard, fetchFreeboard } from '../../../actions/actions';
 
 class WritingArea extends Component {
   state = {
-    inputs: {
-      text: '',
-      userName: '',
-      password: ''
-    },
-    inputErrorCodes: {
-      text: null,
-      userName: null,
-      password: null
-    },
-    submitErrorCodes: {},
-    errorAnimation: null
+    modalDisplay: 'none',
+    fullWidth: 0,
+    rotation: 'forwards'
   };
-
-  handleChange = e => {
-    const { inputIsTooLong } = this.props.freeboard.errorCodes;
-
-    const { maxLength, minLength } = this.props.freeboard;
-
-    if (e.target.value.length <= maxLength[e.target.name]) {
-      this.setState({
-        ...this.state,
-        inputs: {
-          ...this.state.inputs,
-          [e.target.name]: e.target.value
-        },
-        inputErrorCodes: {
-          ...this.state.inputErrorCodes,
-          [e.target.name]: null
-        },
-        errorAnimation: null,
-
-        submitErrorCodes: {
-          ...this.state.submitErrorCodes,
-          [e.target.name]:
-            e.target.value.length >= minLength[e.target.name]
-              ? null
-              : this.state.submitErrorCodes[e.target.name]
-        }
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        inputs: {
-          ...this.state.inputs,
-          [e.target.name]: e.target.value.slice(0, maxLength[e.target.name])
-        },
-
-        inputErrorCodes: {
-          ...this.state.inputErrorCodes,
-          [e.target.name]: inputIsTooLong['korean'][e.target.name]
-        },
-        errorAnimation: 'error-animation'
-      });
-    }
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { minLength, errorCodes } = this.props.freeboard;
-    const inputErrors = Object.keys(this.state.inputErrorCodes).filter(idx => {
-      return this.state.inputErrorCodes[idx];
+  componentDidMount() {
+    const fullWidth = document.getElementById('root').offsetWidth;
+    this.setState({
+      ...this.state,
+      fullWidth,
+      modalDisplay: 'none'
     });
+  }
 
-    if (inputErrors.length) {
-      return;
-    }
-
-    const submissionErrors = Object.keys(this.state.inputs).filter(idx => {
-      return this.state.inputs[idx].length < minLength[idx];
-    });
-
-    if (submissionErrors.length) {
-      const submitErrorObj = {};
-
-      submissionErrors.forEach(idx => {
-        submitErrorObj[idx] = errorCodes.inputIsTooShort['korean'][idx];
-      });
-
-      this.setState({
+  controlModalDisplay = async () => {
+    this.setState(
+      {
         ...this.state,
-        submitErrorCodes: submitErrorObj,
-        errorAnimation: 'error-animation'
-      });
-      return;
-    } else {
-      this.props.insertInFreeboard(this.state.inputs).then(rs => {
-        if (rs.ok === 1) {
-          this.props.fetchFreeboard();
+        modalDisplay: 'block'
+      },
+      async () => {
+        await setTimeout(() => {
           this.setState({
             ...this.state,
-            submitErrorCodes: {},
-            errorAnimation: null,
-            inputs: {
-              ...this.state.inputs,
-              text: '',
-              password: ''
-            },
-            inputErrorCodes: {
-              text: null,
-              userName: null,
-              password: null
-            }
+            modalDisplay: 'none'
           });
-        }
-      });
-    }
+        }, 300);
+      }
+    );
+  };
+
+  toggleNewPostArea = () => {
+    return (
+      <div
+        className={`single-post-overlay ${
+          this.props.modalIsOpen ? 'opacity-fade-in' : 'opacity-fade-out'
+        }`}
+        style={{
+          display: this.props.modalIsOpen ? 'block' : this.state.modalDisplay
+        }}
+        onClick={e => {
+          if (
+            e.target.className === 'single-post-overlay opacity-fade-in' ||
+            e.target.className === 'single-post-relative' ||
+            e.target.className === 'single-post-wrapper'
+          ) {
+            this.controlModalDisplay().then(() => {
+              this.props.handleClosingModal();
+            });
+          }
+        }}
+      >
+        <div className='single-post-relative'>
+          <div
+            className='single-post-wrapper'
+            id='single-post-wrapper'
+            style={{
+              marginLeft: 0 - (this.state.fullWidth * 0.8) / 2
+            }}
+          >
+            <div className='single-post-container'>
+              <form className='input-form' onSubmit={this.props.handleSubmit}>
+                <div className='user-and-password'>
+                  <input
+                    type='text'
+                    name='userName'
+                    placeholder={
+                      this.props.freeboard.placeHolders.userName['korean']
+                    }
+                    value={this.props.inputs.userName}
+                    onChange={this.props.handleChange}
+                  />
+                  <input
+                    type='password'
+                    name='password'
+                    placeholder={
+                      this.props.freeboard.placeHolders.password['korean']
+                    }
+                    value={this.props.inputs.password}
+                    onChange={this.props.handleChange}
+                  />
+                </div>
+
+                <div className='text-input-area'>
+                  <textarea
+                    name='text'
+                    cols='20'
+                    rows='5'
+                    value={this.props.inputs.text}
+                    onChange={this.props.handleChange}
+                    placeholder={
+                      this.props.freeboard.placeHolders.text['korean']
+                    }
+                  />
+                </div>
+
+                <div className='submit-btn-area'>
+                  <span
+                    className={`error-code-container status-very-bad ${
+                      this.props.errorAnimation
+                    }`}
+                  >
+                    {Object.keys(this.props.inputErrorCodes)
+                      .filter(idx => {
+                        return idx !== 'comment';
+                      })
+                      .map(idx => {
+                        return (
+                          <span
+                            key={idx}
+                            className='error-code status-very-bad'
+                          >
+                            {this.props.inputErrorCodes[idx]}
+                          </span>
+                        );
+                      })}
+                    {Object.keys(this.props.submitErrorCodes)
+                      .filter(idx => {
+                        return idx !== 'comment';
+                      })
+                      .map(idx => {
+                        return (
+                          <span
+                            key={idx}
+                            className='error-code status-very-bad'
+                          >
+                            {this.props.submitErrorCodes[idx]}
+                          </span>
+                        );
+                      })}
+                  </span>
+                  <button className='submit-btn'>
+                    {this.props.freeboard.submit['korean']}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  delayStoppingRotation = () => {
+    this.setState(
+      {
+        ...this.state,
+        rotation: 'infinite'
+      },
+      async () => {
+        await setTimeout(() => {
+          this.setState({
+            ...this.state,
+            rotation: 'forwards'
+          });
+        }, 1000);
+      }
+    );
   };
   render() {
     return (
-      <div className='section-global'>
-        <form className='freeboard-form' onSubmit={this.handleSubmit}>
-          <div className='input-area'>
-            <div className='user-password'>
-              <input
-                type='text'
-                name='userName'
-                placeholder={
-                  this.props.freeboard.placeHolders.userName['korean']
-                }
-                value={this.state.inputs.userName}
-                onChange={this.handleChange}
-              />
-              <input
-                type='password'
-                name='password'
-                placeholder='비번'
-                value={this.state.inputs.password}
-                onChange={this.handleChange}
-              />
-            </div>
-            <textarea
-              className='text-input-area'
-              name='text'
-              cols='30'
-              rows='5'
-              value={this.state.inputs.text}
-              onChange={this.handleChange}
-              placeholder={this.props.freeboard.placeHolders.text['korean']}
-            />
-          </div>
-
-          <div className='submit-btn-area'>
-            <span
-              className={`error-code status-very-bad ${
-                this.state.errorAnimation
-              }`}
-            >
-              {Object.keys(this.state.inputErrorCodes).map(idx => {
-                return (
-                  <span key={idx} className='error-code status-very-bad'>
-                    {this.state.inputErrorCodes[idx]}
-                  </span>
-                );
-              })}
-              {Object.keys(this.state.submitErrorCodes).map(idx => {
-                return (
-                  <span key={idx} className='error-code status-very-bad'>
-                    {this.state.submitErrorCodes[idx]}
-                  </span>
-                );
-              })}
+      <div className='section-global writing-area'>
+        <span className='indicator-btn-wrapper' style={{ marginRight: '2rem' }}>
+          <span
+            className='indicator-btn'
+            onClick={() => {
+              this.props.handleOpeningModal();
+            }}
+          >
+            <span className='initial-display-wrapper'>
+              <i className='fas fa-pen  active-element indicator-mark' />
             </span>
-            <button className='submit-btn'>
-              {this.props.freeboard.submit['korean']}
-            </button>
-          </div>
-        </form>
+          </span>
+        </span>
+
+        <span className='indicator-btn-wrapper'>
+          <span
+            className='indicator-btn'
+            onClick={() => {
+              this.delayStoppingRotation();
+              this.props.handleRefresh('posts');
+            }}
+          >
+            <span className='initial-display-wrapper'>
+              <i
+                className={`fas fa-sync-alt active-element indicator-mark `}
+                style={{
+                  animation: `refresh-rotation 1s ease-in-out ${
+                    this.props.loading ? 'infinite' : this.state.rotation
+                  }`
+                }}
+              />
+            </span>
+          </span>
+        </span>
+
+        <span
+          className='indicator-btn'
+          onClick={() => {
+            this.props.handleRefresh('posts');
+          }}
+        />
+        {this.toggleNewPostArea()}
       </div>
     );
   }
@@ -181,7 +214,4 @@ const mapStateToProps = state => {
     freeboard: state.freeboard
   };
 };
-export default connect(
-  mapStateToProps,
-  { insertInFreeboard, fetchFreeboard }
-)(WritingArea);
+export default connect(mapStateToProps)(WritingArea);
