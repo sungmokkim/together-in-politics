@@ -6,7 +6,11 @@ import fetchDashboardData from '../fetch/dashboardData';
 import fetchLatestDate from '../fetch/latestDate';
 import fetchPeriodData from '../fetch/periodData';
 import fetchFreeboardPosts from '../fetch/freeboardPosts';
+import fetchComments from '../fetch/comments';
+import fetchHotPosts from '../fetch/hotPosts';
+
 import insertFreeboardPost from '../insert/freeboardPost';
+import updateNewComment from '../update/newComment';
 
 const router = express.Router();
 
@@ -46,14 +50,32 @@ router.post('/period_data', (req, res) => {
   });
 });
 
+router.post('/comments', (req, res) => {
+  fetchComments(req.body, results => {
+    res.json(results);
+  });
+});
+
 router.post('/insert_freeboard', (req, res) => {
   insertFreeboardPost(req, rs => {
     res.json(rs);
   });
 });
 
+router.post('/new_comment', (req, res) => {
+  updateNewComment(req, rs => {
+    res.json(rs);
+  });
+});
+
 router.get('/freeboard', (req, res) => {
   fetchFreeboardPosts(rs => {
+    res.json(rs);
+  });
+});
+
+router.get('/hot_posts', (req, res) => {
+  fetchHotPosts(rs => {
     res.json(rs);
   });
 });

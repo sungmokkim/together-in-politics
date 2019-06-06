@@ -12,7 +12,7 @@ const {
   freeBoardCollection
 } = env.mongodb;
 
-const fetchFreeboardPosts = callback => {
+const fetchHotPosts = callback => {
   // Connection URL
 
   const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
@@ -21,7 +21,12 @@ const fetchFreeboardPosts = callback => {
   const dbName = `${database}`;
 
   const client = new MongoClient(url, { useNewUrlParser: true });
-  // const newTime = dateAndTime.addHours(new Date(), -2);
+
+  const newTime = dateAndTime.addDays(new Date(), -7);
+
+  //   const date = dateAndTime.format(new Date(), 'YYYY-MM-DD', true);
+  //   const today = dateAndTime.parse(date, 'YYYY-MM-DD', true);
+  //   const todayPlusOne = dateAndTime.addDays(today, 1);
   client.connect(err => {
     assert.equal(null, err);
 
@@ -29,9 +34,7 @@ const fetchFreeboardPosts = callback => {
     const collection = db.collection(`${freeBoardCollection}`);
     collection
       .aggregate([
-        // {
-        //   $match: { post_date: { $gt: newTime } }
-        // },
+        { $match: { post_date: { $gt: newTime }, admin: false } },
         {
           $project: {
             _id: 1,
@@ -50,8 +53,8 @@ const fetchFreeboardPosts = callback => {
           }
         }
       ])
-      .sort({ _id: -1 })
-
+      .sort({ comments: -1 })
+      .limit(3)
       .toArray((err, result) => {
         assert.equal(null, err);
         callback(result);
@@ -59,4 +62,4 @@ const fetchFreeboardPosts = callback => {
   });
 };
 
-export default fetchFreeboardPosts;
+export default fetchHotPosts;

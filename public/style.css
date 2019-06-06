@@ -97,6 +97,21 @@ hr.section-seperator {
   color: lightgrey;
 }
 
+input[type='text'],
+input[type='password'],
+textarea {
+  border: none;
+  border-bottom: 1.5px solid white;
+  -webkit-transition: 0.4s ease-in;
+  transition: 0.4s ease-in;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+textarea:focus {
+  border-bottom: 1.5px solid #edb5bf;
+}
+
 .section-title-container {
   text-align: center;
 }
@@ -252,6 +267,8 @@ hr.section-seperator {
   max-width: 100%;
   -webkit-transition: 0.5s ease-in;
   transition: 0.5s ease-in;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .indicator-btn-wrapper .indicator-btn:hover {
@@ -350,6 +367,52 @@ hr.section-seperator {
   }
 }
 
+.opacity-fade-in {
+  -webkit-animation: opacity-fade-in 0.3s ease-in forwards;
+          animation: opacity-fade-in 0.3s ease-in forwards;
+}
+
+@-webkit-keyframes opacity-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacity-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.opacity-fade-out {
+  -webkit-animation: opacity-fade-out 0.3s ease-in forwards;
+          animation: opacity-fade-out 0.3s ease-in forwards;
+}
+
+@-webkit-keyframes opacity-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes opacity-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .btn-fade-out {
   animation: btn-fade-out 0.3s ease-in alternate-reverse;
 }
@@ -410,6 +473,28 @@ hr.section-seperator {
     opacity: 1;
     -webkit-transform: translateX(3%);
             transform: translateX(3%);
+  }
+}
+
+@-webkit-keyframes refresh-rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes refresh-rotation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
 
@@ -955,9 +1040,361 @@ hr.section-seperator {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 15px;
-  font-size: 2rem;
-  padding: 1.5rem 3rem;
+  font-size: 1.8rem;
+  padding: 2.4rem 3rem;
   margin: 2rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  cursor: pointer;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.freeboard-post-wrapper .post-container:hover {
+  background: #e6e6e6;
+}
+
+.freeboard-post-wrapper .post-container .upper-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  margin-bottom: 1.5rem;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .user-area {
+  font-size: 2rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .user-area i {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #edb5bf;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .user-area .user-admin {
+  margin-left: 1rem;
+  background: #edb5bf;
+  padding: 0.3rem 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .date-and-ip-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .date-and-ip-area .post-date {
+  font-size: 1.4rem;
+  text-align: right;
+}
+
+.freeboard-post-wrapper .post-container .upper-container .date-and-ip-area .user-ip {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: right;
+}
+
+.freeboard-post-wrapper .post-container .lower-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.freeboard-post-wrapper .post-container .lower-container .text-area {
+  font-size: 2rem;
+}
+
+.freeboard-post-wrapper .post-container .lower-container .comment-count {
+  font-size: 1.5rem;
+  min-width: 4rem;
+  max-width: 4.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 1.3rem;
+}
+
+.freeboard-post-wrapper .post-container .lower-container .comment-count i {
+  color: #4386f9;
+  font-size: 1.5rem;
+}
+
+.hot-post-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.hot-post-wrapper .post-container {
+  background: white;
+  width: 30%;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 15px;
+  font-size: 2rem;
+  padding: 2.4rem 3rem;
+  margin: 2rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: left;
+      -ms-flex-align: left;
+          align-items: left;
+  cursor: pointer;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.hot-post-wrapper .post-container:hover {
+  background: #e6e6e6;
+}
+
+.hot-post-wrapper .post-container .upper-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hot-post-wrapper .post-container .upper-container .user-area {
+  font-size: 2rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5rem;
+}
+
+.hot-post-wrapper .post-container .upper-container .user-area i {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #edb5bf;
+}
+
+.hot-post-wrapper .post-container .upper-container .user-area .user-admin {
+  margin-left: 1rem;
+  background: #edb5bf;
+  padding: 0.3rem 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.hot-post-wrapper .post-container .upper-container .user-area i {
+  font-size: 1.5rem;
+  color: #f75467;
+}
+
+.hot-post-wrapper .post-container .upper-container .date-and-ip-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.hot-post-wrapper .post-container .upper-container .date-and-ip-area .post-date {
+  font-size: 1.4rem;
+  text-align: right;
+}
+
+.hot-post-wrapper .post-container .upper-container .date-and-ip-area .user-ip {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: right;
+}
+
+.hot-post-wrapper .post-container .lower-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.hot-post-wrapper .post-container .lower-container .text-area {
+  font-size: 1.8rem;
+}
+
+.hot-post-wrapper .post-container .lower-container .comment-count {
+  font-size: 1.5rem;
+  min-width: 4rem;
+  max-width: 4.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 1.2rem;
+}
+
+.hot-post-wrapper .post-container .lower-container .comment-count i {
+  color: #4386f9;
+  font-size: 1.5rem;
+}
+
+.single-post-overlay {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.single-post-overlay .single-post-relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 80%;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: white;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 15px;
+  font-size: 2rem;
+  padding: 2.4rem 3rem;
+  min-height: 350px;
+  margin-bottom: 10rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -973,14 +1410,475 @@ hr.section-seperator {
           align-items: left;
 }
 
-.freeboard-post-wrapper .post-container .user-area {
-  font-size: 1.7rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  margin-bottom: 1.5rem;
 }
 
-.freeboard-post-wrapper .post-container .text-area {
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .user-area {
   font-size: 2rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .user-area i {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #edb5bf;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .user-area .user-admin {
+  margin-left: 1rem;
+  background: #edb5bf;
+  padding: 0.3rem 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .date-and-ip-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .date-and-ip-area .post-date {
+  font-size: 1.4rem;
+  text-align: right;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .upper-container .date-and-ip-area .user-ip {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: right;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .lower-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .post-container .lower-container .text-area {
+  font-size: 2.8rem;
+  line-height: 4.5rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container {
+  margin-bottom: 2rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-count {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #3a3a3a;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .no-comment {
+  color: #878787;
+  font-size: 1.3rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area {
+  font-size: 2rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area i {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #edb5bf;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area .user-admin {
+  margin-left: 1rem;
+  background: #edb5bf;
+  padding: 0.3rem 1rem;
+  color: white;
+  border-radius: 10px;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area i {
+  font-size: 1.8rem;
+  color: #edb5bf;
+  margin-right: 1.3rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .date-and-ip-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .date-and-ip-area .post-date {
+  font-size: 1.4rem;
+  text-align: right;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .date-and-ip-area .user-ip {
+  font-size: 1.2rem;
+  color: gray;
+  text-align: right;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .lower-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .lower-container .text-area {
+  font-size: 1.8rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2rem 0rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .user-and-password {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-bottom: 2rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .user-and-password input {
+  padding: 1rem 0rem;
+  font-size: 1.8rem;
+  width: 30rem;
+  margin-right: 4rem;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .user-and-password {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 2rem;
+  }
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .text-input-area textarea {
+  width: 100%;
+  padding: 1rem 0rem;
+  font-size: 2rem;
+  cursor: text;
+  resize: none;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-height: 8rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    min-height: 15rem;
+  }
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area .error-code-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area .error-code-container .error-code {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area .submit-btn {
+  width: 40%;
+  background: white;
+  color: black;
+  padding: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 15px;
+  border: 0.2px solid #edb5bf;
+  font-size: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area .submit-btn:hover {
+  background: #edb5bf;
+  color: white;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2rem 0rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .user-and-password {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-bottom: 2rem;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .user-and-password input {
+  padding: 1rem 0rem;
+  font-size: 1.8rem;
+  width: 30rem;
+  margin-right: 4rem;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .user-and-password {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-bottom: 2rem;
+  }
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .text-input-area textarea {
+  width: 100%;
+  padding: 1rem 0rem;
+  font-size: 2rem;
+  cursor: text;
+  resize: none;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-height: 8rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    min-height: 15rem;
+  }
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .error-code-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .error-code-container .error-code {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .submit-btn {
+  width: 40%;
+  background: white;
+  color: black;
+  padding: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 15px;
+  border: 0.2px solid #edb5bf;
+  font-size: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .submit-btn:hover {
+  background: #edb5bf;
+  color: white;
+}
+
+.writing-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
 }
 
 footer {

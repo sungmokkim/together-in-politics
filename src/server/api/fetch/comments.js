@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 import env from '../../helpers/serverEnv';
-import dateAndTime from 'date-and-time';
+const ObjectId = require('mongodb').ObjectID;
 
 const {
   host,
@@ -12,7 +12,7 @@ const {
   freeBoardCollection
 } = env.mongodb;
 
-const fetchFreeboardPosts = callback => {
+const fetchComments = ({ postId }, callback) => {
   // Connection URL
 
   const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
@@ -21,7 +21,7 @@ const fetchFreeboardPosts = callback => {
   const dbName = `${database}`;
 
   const client = new MongoClient(url, { useNewUrlParser: true });
-  // const newTime = dateAndTime.addHours(new Date(), -2);
+
   client.connect(err => {
     assert.equal(null, err);
 
@@ -29,27 +29,34 @@ const fetchFreeboardPosts = callback => {
     const collection = db.collection(`${freeBoardCollection}`);
     collection
       .aggregate([
-        // {
-        //   $match: { post_date: { $gt: newTime } }
-        // },
+        {
+          $match: { _id: ObjectId(postId) }
+        },
         {
           $project: {
-            _id: 1,
-            user: 1,
-            text: 1,
-            ip: 1,
-            post_date: {
-              $dateToString: {
-                format: '%Y.%m.%d %H:%M:%S',
-                date: '$post_date',
-                timezone: 'Asia/Seoul'
+            comments: {
+              $map: {
+                input: '$comments',
+                in: {
+                  _id: '$$this._id',
+                  user: '$$this.user',
+                  ip: '$$this.ip',
+                  comment: '$$this.comment',
+                  post_date: {
+                    $dateToString: {
+                      format: '%Y.%m.%d %H:%M:%S',
+                      date: '$$this.post_date',
+                      timezone: 'Asia/Seoul'
+                    }
+                  },
+                  admin: '$$this.admin'
+                }
               }
-            },
-            admin: 1,
-            comments: { $size: '$comments' }
+            }
           }
         }
       ])
+
       .sort({ _id: -1 })
 
       .toArray((err, result) => {
@@ -59,4 +66,4 @@ const fetchFreeboardPosts = callback => {
   });
 };
 
-export default fetchFreeboardPosts;
+export default fetchComments;
