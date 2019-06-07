@@ -859,7 +859,18 @@ textarea:focus {
   height: 30px;
 }
 
-.date-adj-container .calendar {
+.date-adj-container .calendar-wrapper {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.date-adj-container .calendar-wrapper .calendar {
   background: white;
   padding: 10px;
   max-width: 100%;
@@ -1190,14 +1201,13 @@ textarea:focus {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .hot-post-wrapper .post-container {
   background: white;
-  width: 30%;
+  width: 40%;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 15px;
@@ -1729,6 +1739,10 @@ textarea:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -1849,6 +1863,10 @@ textarea:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -1876,9 +1894,9 @@ textarea:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: right;
-      -ms-flex-pack: right;
-          justify-content: right;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 footer {

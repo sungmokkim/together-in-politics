@@ -240,6 +240,7 @@ ul {
       border: 0.2px solid $primary-color;
       font-size: 2rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -873,14 +874,24 @@ textarea {
     height: 30px;
   }
 
-  .calendar {
-    background: white;
-    padding: 10px;
-    max-width: 100%;
-    transition: 0.4s ease-in-out;
-    opacity: 0;
-    border-radius: 30px;
-    box-shadow: $box-shadow;
+  .calendar-wrapper {
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    .calendar {
+      background: white;
+      padding: 10px;
+      max-width: 100%;
+      transition: 0.4s ease-in-out;
+      opacity: 0;
+      border-radius: 30px;
+      box-shadow: $box-shadow;
+    }
   }
 }
 
@@ -1046,11 +1057,11 @@ textarea {
 .hot-post-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 
   .post-container {
     background: white;
-    width: 30%;
+    width: 40%;
     box-shadow: $box-shadow;
     border-radius: 15px;
     font-size: 2rem;
@@ -1230,7 +1241,7 @@ textarea {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-end;
 }
 footer {
   // background: black;
