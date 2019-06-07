@@ -78,6 +78,7 @@ class CalendarModule extends Component {
       clientY: e.clientY
     });
   };
+
   render() {
     const { year, month, date } = this.props.latestDate;
     const { currentDate } = this.props;
@@ -132,31 +133,45 @@ class CalendarModule extends Component {
             </span>
           </span>
         </span>
-        <span
-          className='calendar selection-fade-in'
-          style={{
-            display: this.state.toggled ? 'block' : 'none',
-            opacity: this.state.toggled ? 1 : 0,
-            position: 'absolute',
-            left: this.state.clientX - 120,
-            top: this.state.clientY + 15
+        <div
+          className='calendar-wrapper'
+          style={{ display: this.state.toggled ? 'block' : 'none' }}
+          onClick={e => {
+            if (e.target.className === 'calendar-wrapper') {
+              this.setState({
+                ...this.state,
+                toggled: false
+              });
+            }
           }}
         >
-          <DayPicker
-            onDayClick={this.handleDayClick}
-            selectedDays={
-              this.state.selectedDay
-                ? this.state.selectedDay
-                : new Date(2019, 1, 1)
-            }
-            disabledDays={disabledDays}
-            month={initialMonth}
-            modifiersStyles={modifiersStyles}
-            months={MONTHS}
-            weekdaysLong={WEEKDAYS_LONG}
-            weekdaysShort={WEEKDAYS_SHORT}
-          />
-        </span>
+          <span
+            className='calendar selection-fade-in'
+            style={{
+              display: this.state.toggled ? 'block' : 'none',
+              opacity: this.state.toggled ? 1 : 0,
+              position: 'fixed',
+              zIndex: '10',
+              left: this.state.clientX - 120,
+              top: this.state.clientY + 15
+            }}
+          >
+            <DayPicker
+              onDayClick={this.handleDayClick}
+              selectedDays={
+                this.state.selectedDay
+                  ? this.state.selectedDay
+                  : new Date(2019, 1, 1)
+              }
+              disabledDays={disabledDays}
+              month={initialMonth}
+              modifiersStyles={modifiersStyles}
+              months={MONTHS}
+              weekdaysLong={WEEKDAYS_LONG}
+              weekdaysShort={WEEKDAYS_SHORT}
+            />
+          </span>
+        </div>
       </React.Fragment>
     );
   }

@@ -5,6 +5,7 @@ class IndicatorBtn extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      body: null,
       opacity: 0,
       toggle: false,
       hover: false,
@@ -40,6 +41,7 @@ class IndicatorBtn extends Component {
   componentDidMount() {
     this.setState({
       ...this.state,
+      body: document.body,
       opacity: 1
     });
   }
@@ -103,7 +105,17 @@ class IndicatorBtn extends Component {
     });
   };
 
+  handleClickingBody = () => {
+    if (this.state.body) {
+      this.state.body.addEventListener('click', e => {
+        console.log(e.target);
+      });
+    }
+  };
   render() {
+    {
+      this.handleClickingBody();
+    }
     const activeValue =
       this.props.type === 'range'
         ? this.props.dashboardManager.active.range.index
@@ -139,7 +151,7 @@ class IndicatorBtn extends Component {
         <span
           style={{
             opacity: this.state.hover ? 1 : 0,
-            position: 'absolute',
+            position: 'fixed',
             top: this.state.clientY - 35,
             left: this.state.clientX
           }}

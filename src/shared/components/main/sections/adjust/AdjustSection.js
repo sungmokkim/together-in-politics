@@ -48,6 +48,7 @@ class DateAdjust extends Component {
       this.props.fetchDashboardData(this.props.dashboardManager.active);
     });
   };
+
   render() {
     const { latestDate, currentDate, active } = this.props.dashboardManager;
 
