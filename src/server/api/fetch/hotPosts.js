@@ -54,7 +54,7 @@ const fetchHotPosts = callback => {
         }
       ])
       .sort({ comments: -1 })
-      .limit(3)
+      .limit(2)
       .toArray((err, result) => {
         assert.equal(null, err);
         callback(result);
