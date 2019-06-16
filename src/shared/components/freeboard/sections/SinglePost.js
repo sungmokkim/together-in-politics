@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class SinglePost extends Component {
+  state = {
+    commentFormIsOn: false
+  };
+
   getAdmin = post => {
     return post.admin ? <span className='user-admin'>Admin</span> : null;
   };
@@ -22,6 +26,7 @@ class SinglePost extends Component {
         <div key={post._id} className='post-container'>
           <span className='upper-container' key={post._id}>
             <span className='user-area'>
+              <i className='fas fa-user' />
               {post.user}
               {this.getAdmin(post)}
             </span>
@@ -84,8 +89,30 @@ class SinglePost extends Component {
             </span>
           )}
         </div>
+        <span
+          className='indicator-btn-wrapper'
+          style={{ justifyContent: 'left' }}
+        >
+          <span
+            className='indicator-btn'
+            onClick={() => {
+              this.setState({
+                ...this.state,
+                commentFormIsOn: !this.state.commentFormIsOn
+              });
+            }}
+          >
+            {this.state.commentFormIsOn
+              ? this.props.freeboard.hideElement['korean']
+              : this.props.freeboard.writeComment['korean']}
+          </span>
+        </span>
 
-        <form className='input-form' onSubmit={this.props.handleSubmit}>
+        <form
+          className='input-form'
+          onSubmit={this.props.handleSubmit}
+          style={{ display: this.state.commentFormIsOn ? 'block' : 'none' }}
+        >
           <div className='user-and-password'>
             <input
               type='text'
