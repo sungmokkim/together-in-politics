@@ -61,6 +61,15 @@ const initialState = {
       korean: '댓글이 아직 없습니다. 댓글을 작성해주세요!'
     }
   },
+
+  writeComment: {
+    korean: '댓글 쓰기'
+  },
+
+  hideElement: {
+    korean: '숨기기'
+  },
+
   data: [],
   comments: [],
   hotPosts: []
