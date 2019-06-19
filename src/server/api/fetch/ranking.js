@@ -23,7 +23,7 @@ const fetchTodayRankings = ({ year, month, date, get_latest }, callback) => {
   const rankFieldName = `rank`;
   const tableName = todayDataTable;
 
-  const query = `select a.name, ((a.anti_count) * 1.5 / a.m_count) as anti_ratio, a.${rankFieldName} as rank_today, (select ${rankFieldName} from ${tableName} where ${dateFieldName} like ? and name like a.name and exists(select ${rankFieldName} from ${tableName} where ${dateFieldName} like ?)) as rank_yesterday from ${tableName} a where (a.${dateFieldName} like ?) order by rank_today desc `;
+  const query = `select a.name, ((a.anti_count) / a.m_count) as anti_ratio, a.${rankFieldName} as rank_today, (select ${rankFieldName} from ${tableName} where ${dateFieldName} like ? and name like a.name and exists(select ${rankFieldName} from ${tableName} where ${dateFieldName} like ?)) as rank_yesterday from ${tableName} a where (a.${dateFieldName} like ?) order by rank_today asc `;
 
   const queryVariables = [newDate, newDate, originalDate];
 

@@ -25,6 +25,7 @@ class DateAdjust extends Component {
   }
 
   handleDateChangeFromCalendar = ({ year, month, date }) => {
+    document.body.style.overflow = 'scroll';
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {

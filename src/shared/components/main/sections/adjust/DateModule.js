@@ -254,7 +254,6 @@ export const getValidDateFromInput = (
 };
 
 export const getAndMapDates = (yearInput, monthInput) => {
-  console.log(yearInput, monthInput);
   let fullDate = new Date(
     Date.UTC(parseInt(yearInput), parseInt(monthInput), 0)
   );

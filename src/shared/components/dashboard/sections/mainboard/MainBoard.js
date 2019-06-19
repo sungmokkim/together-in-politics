@@ -6,36 +6,24 @@ import {
   changeActive,
   fetchDashboardData,
   fetchPeriodData,
+  fetchBubbleData,
   fetchTodayIndicators
 } from '../../../../actions/actions';
 
 class MainBoard extends Component {
   state = {
     chart: null,
+    chartIsLoading: false,
+
     lineChartData: {
       labels: [],
-      datasets: [
-        {
-          data: [],
-          fill: false,
-          backgroundColor: '#5580A0',
-          borderColor: '#5580A0',
-          pointHoverBorderWidth: 10,
-          lineTension: 0.1
-        }
-      ]
+      dataArray: []
     },
     barChartData: {
       labels: [],
-      datasets: [
-        {
-          data: [],
-          fill: false,
-          backgroundColor: '#5580A0',
-          borderColor: '#5580A0'
-        }
-      ]
-    }
+      dataArray: []
+    },
+    bubbleChartData: []
   };
 
   updateLineChart = (inputData = null) => {
@@ -75,23 +63,15 @@ class MainBoard extends Component {
 
     this.setState({
       ...this.state,
+      chartIsLoading: false,
       lineChartData: {
-        ...this.state.lineChartData,
         labels: datesInArray,
-        datasets: [
-          {
-            ...this.state.lineChartData.datasets,
-
-            data: dataInArray
-          }
-        ]
+        dataArray: dataInArray
       }
     });
   };
 
   updateBarChart = (inputData = null) => {
-    const { period } = this.props.dashboardManager;
-
     let dataToMap;
 
     if (inputData) {
@@ -100,84 +80,107 @@ class MainBoard extends Component {
       dataToMap = this.props.data.periodData;
     }
 
-    const splitCount =
-      Math.floor(dataToMap.length / 12) === 0
-        ? Math.floor(dataToMap.length / 12)
-        : Math.floor(dataToMap.length / 12) + 1;
+    const datesInArray = dataToMap.map(data => {
+      let value;
 
-    const obj = {};
+      if (data.weeks) {
+        value = data.years + ' Week ' + data.weeks;
+      } else if (data.months) {
+        value = data.years + '-' + data.months;
+      } else {
+        value = data.years;
+      }
 
-    for (let i = 0; i < splitCount; i++) {
-      let arrSliced = dataToMap.slice(i * 12, (i + 1) * 12);
-
-      obj[i] =
-        arrSliced
-          .map(dt => dt.anti_count)
-          .reduce((acc, val) => {
-            return acc + val;
-          }) / arrSliced.length;
-    }
-
-    const datesInArray = Object.keys(obj).map(key => {
-      return period[key].display;
+      return value;
     });
-
-    const dataInArray = Object.keys(obj).map(key => {
-      return obj[key].toFixed(2);
+    const dataInArray = dataToMap.map(data => {
+      return data.anti_count.toFixed(2);
     });
 
     this.setState({
       ...this.state,
+      chartIsLoading: false,
       barChartData: {
-        ...this.state.barChartData,
         labels: datesInArray,
-        datasets: [
-          {
-            ...this.state.barChartData.datasets,
-
-            data: dataInArray
-          }
-        ]
+        dataArray: dataInArray
       }
     });
   };
 
-  componentDidMount() {
-    const { active } = this.props.dashboardManager;
+  updateBubbleChart = (inputData = null) => {
+    let dataToMap;
 
-    if (!this.props.data.dashboardData.length) {
-      this.props
-        .fetchDashboardData(this.props.dashboardManager.active)
-        .then(fetchedData => this.updateLineChart(fetchedData));
-      this.props
-        .fetchPeriodData(active.community)
-        .then(fetchedData => this.updateBarChart(fetchedData));
+    const { communities } = this.props.dashboardManager;
+    if (inputData) {
+      dataToMap = inputData;
     } else {
-      this.props
-        .fetchPeriodData(active.community)
-        .then(fetchedData => this.updateBarChart(fetchedData));
-      this.updateLineChart();
+      dataToMap = this.props.data.bubbleData;
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    const { active } = this.props.dashboardManager;
-    if (active !== prevProps.dashboardManager.active) {
-      this.updateLineChart();
-    }
+    const dataInArray = dataToMap.map(data => {
+      return {
+        label: [communities[data.name]['korean']],
+        backgroundColor: communities[data.name]['color'],
+        borderColor: communities[data.name]['color'],
+        title: communities[data.name]['korean'], //adding the title you want to show
+        data: [
+          {
+            x: (data.anti_ratio * 100).toFixed(2),
+            y: (data.popularity * 100).toFixed(1),
+            r: (data.w_count / 10000).toFixed(2)
+          }
+        ]
+      };
+    });
+
+    this.setState({
+      ...this.state,
+      chartIsLoading: false,
+      bubbleChartData: dataInArray
+    });
+  };
+  fetchAndUpdateCharts = () => {
+    const { active, latestDate } = this.props.dashboardManager;
+
+    this.setState(
+      {
+        ...this.state,
+        chartIsLoading: true
+      },
+      () => {
+        switch (active.chart.index) {
+          case 'bar':
+            this.props
+              .fetchPeriodData(active)
+              .then(fetchedData => this.updateBarChart(fetchedData));
+            return;
+          case 'line':
+            this.props
+              .fetchDashboardData(active)
+              .then(fetchedData => this.updateLineChart(fetchedData));
+            return;
+
+          case 'bubble':
+            this.props
+              .fetchBubbleData(active, latestDate)
+              .then(fetchedData => this.updateBubbleChart(fetchedData));
+            return;
+          default:
+            return;
+        }
+      }
+    );
+  };
+
+  componentDidMount() {
+    this.fetchAndUpdateCharts();
   }
 
   handleButtonClick = (type, value) => {
     this.props.changeActive(type, value, () => {
-      if (type === 'community' || type === 'range') {
-        this.props
-          .fetchDashboardData(this.props.dashboardManager.active)
-          .then(fetchedData => this.updateLineChart(fetchedData));
-        this.props
-          .fetchPeriodData(this.props.dashboardManager.active.community)
-          .then(fetchedData => this.updateBarChart(fetchedData));
-
-        if (type === 'community') {
+      switch (type) {
+        case 'community':
+          this.fetchAndUpdateCharts();
           this.props.fetchTodayIndicators(
             this.props.dashboardManager.currentDate.year,
             this.props.dashboardManager.currentDate.month,
@@ -185,7 +188,17 @@ class MainBoard extends Component {
             false,
             this.props.dashboardManager.active.community
           );
-        }
+          return;
+        case 'range':
+        case 'period':
+        case 'chart':
+        case 'bubblePeriod':
+          this.fetchAndUpdateCharts();
+          return;
+        default:
+          this.updateLineChart();
+          this.updateBarChart();
+          return;
       }
     });
   };
@@ -206,6 +219,8 @@ class MainBoard extends Component {
               handleClick={this.handleButtonClick}
               lineChartData={this.state.lineChartData}
               barChartData={this.state.barChartData}
+              bubbleChartData={this.state.bubbleChartData}
+              chartIsLoading={this.state.chartIsLoading}
             />
           </div>
         </div>
@@ -222,5 +237,11 @@ function mapStateToProps(state) {
 }
 export default connect(
   mapStateToProps,
-  { changeActive, fetchDashboardData, fetchPeriodData, fetchTodayIndicators }
+  {
+    changeActive,
+    fetchDashboardData,
+    fetchPeriodData,
+    fetchBubbleData,
+    fetchTodayIndicators
+  }
 )(MainBoard);

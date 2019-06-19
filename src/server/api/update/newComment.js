@@ -59,7 +59,6 @@ const updateNewComment = (req, callback) => {
               (err, result) => {
                 assert.equal(null, err);
 
-                console.log('Updated the document with the field a equal to 2');
                 callback(result);
               }
             );

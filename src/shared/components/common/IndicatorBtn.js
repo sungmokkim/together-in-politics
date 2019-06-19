@@ -27,10 +27,33 @@ class IndicatorBtn extends Component {
           shape: 'normal',
           toggle: this.toggleSelection
         },
+
+        chart: {
+          toMap: this.mapSelections,
+          icon: 'fas fa-chart-bar',
+          names: this.props.dashboardManager.chartName,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+
         range: {
           toMap: this.mapSelections,
           icon: 'far fa-clock',
           names: this.props.dashboardManager.rangeOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+        period: {
+          toMap: this.mapSelections,
+          icon: 'far fa-clock',
+          names: this.props.dashboardManager.periodOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+        bubblePeriod: {
+          toMap: this.mapSelections,
+          icon: 'far fa-clock',
+          names: this.props.dashboardManager.bubblePeriodOptions,
           shape: 'normal',
           toggle: this.toggleSelection
         }
@@ -73,7 +96,7 @@ class IndicatorBtn extends Component {
               className={`selector-container ${shape} selection-fade-in`}
               onClick={() => {
                 this.handleSelectionClick(
-                  this.props.type === 'range' ? names[targetName] : targetName
+                  this.props.valueIsObject ? names[targetName] : targetName
                 );
               }}
               onMouseOver={e => {
@@ -106,20 +129,20 @@ class IndicatorBtn extends Component {
   };
 
   handleClickingBody = () => {
-    if (this.state.body) {
-      this.state.body.addEventListener('click', e => {
-        console.log(e.target);
-      });
-    }
+    // if (this.state.body) {
+    //   this.state.body.addEventListener('click', e => {
+    //     console.log(e.target);
+    //   });
+    // }
   };
   render() {
     {
       this.handleClickingBody();
     }
-    const activeValue =
-      this.props.type === 'range'
-        ? this.props.dashboardManager.active.range.index
-        : this.props.dashboardManager.active[this.props.type];
+
+    const activeValue = this.props.valueIsObject
+      ? this.props.dashboardManager.active[this.props.type].index
+      : this.props.dashboardManager.active[this.props.type];
     return (
       <span className='indicator-btn-wrapper'>
         <span
@@ -148,7 +171,7 @@ class IndicatorBtn extends Component {
 
         {this.state.switch[this.props.type].toMap()}
 
-        <span
+        {/* <span
           style={{
             opacity: this.state.hover ? 1 : 0,
             position: 'fixed',
@@ -162,7 +185,7 @@ class IndicatorBtn extends Component {
                 this.state.currentlyHovered
               ].korean
             : null}
-        </span>
+        </span> */}
       </span>
     );
   }
