@@ -121,7 +121,6 @@ class PostAreas extends Component {
   };
 
   render() {
-    console.log(this.state.modalDisplay);
     return (
       <div className='section-global'>
         {this.toggleSinglePostArea()}
@@ -133,7 +132,8 @@ class PostAreas extends Component {
 
 const mapStateToProps = state => {
   return {
-    freeboard: state.freeboard
+    freeboard: state.freeboard,
+    siteManager: state.siteManager
   };
 };
 export default connect(

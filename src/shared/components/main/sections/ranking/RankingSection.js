@@ -12,13 +12,11 @@ class RankingSection extends Component {
     const rankData = rankings.map(rank => {
       const reverseRank = rankings.length + 1;
       return {
-        rank: reverseRank - rank['rank_today'],
+        rank: rank['rank_today'],
         community: communities[rank['name']].korean,
-        score: ((1 - rank['anti_ratio']) * 100).toFixed(2),
+        score: (rank['anti_ratio'] * 100).toFixed(2),
         rankChange: rank['rank_yesterday']
-          ? reverseRank -
-            rank['rank_yesterday'] -
-            (reverseRank - rank['rank_today'])
+          ? rank['rank_yesterday'] - rank['rank_today']
           : 'none'
       };
     });

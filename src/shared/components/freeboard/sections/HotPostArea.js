@@ -48,7 +48,6 @@ class HotPostArea extends Component {
     });
   };
   render() {
-    console.log(this.props.freeboard.hotPosts);
     return (
       <div className='section-global'>
         <div className='hot-post-wrapper'>{this.mapHotPosts()}</div>

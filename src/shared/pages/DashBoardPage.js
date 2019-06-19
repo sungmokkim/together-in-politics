@@ -19,6 +19,5 @@ export default {
   component: connect(
     null,
     { resetCurrentRange, fetchDashboardData }
-  )(DashBoardPage),
-  fetchDataFromServerSide
+  )(DashBoardPage)
 };

@@ -2,6 +2,7 @@ import axios from 'axios';
 import dateAndTime from 'date-and-time';
 import { clientFetchingReference } from '../clientEnv';
 
+// FETCH ----------------------------------------------------------------------------
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
 export const fetchLatestDate = () => async dispatch => {
   const res = await axios.get(
@@ -74,6 +75,7 @@ export const fetchTodayIndicators = (
   });
 };
 
+//      ***********DASHBOARD
 export const FETCH_DASHBOARD_DATA = 'FETCH_DASHBOARD_DATA';
 export const fetchDashboardData = ({
   community,
@@ -105,10 +107,10 @@ export const fetchDashboardData = ({
 };
 
 export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
-export const fetchPeriodData = community => async dispatch => {
+export const fetchPeriodData = ({ community, period }) => async dispatch => {
   const res = await axios.post(
     `https://${clientFetchingReference}/api/period_data`,
-    { community }
+    { community, period }
   );
 
   dispatch({
@@ -119,106 +121,18 @@ export const fetchPeriodData = community => async dispatch => {
   return res.data;
 };
 
-export const FETCHED_FROM_SERVER = 'FETCHED_FROM_SERVER';
-export const fetchedFromServer = () => async dispatch => {
-  dispatch({
-    type: FETCHED_FROM_SERVER,
-    payload: true
-  });
-};
-
-export const CHANGE_ACTIVE = 'CHANGE_ACTIVE';
-export const changeActive = (key, value, callback) => async dispatch => {
-  await dispatch({
-    type: CHANGE_ACTIVE,
-    key,
-    value
-  });
-
-  callback ? callback() : null;
-};
-
-export const CHANGE_CURRENT_DATE = 'CHANGE_CURRENT_DATE';
-export const changeCurrentDate = (
-  year,
-  month,
-  date,
-  callback
+export const FETCH_BUBBLE_DATA = 'FETCH_BUBBLE_DATA';
+export const fetchBubbleData = (
+  { bubblePeriod },
+  latestDate
 ) => async dispatch => {
-  await dispatch({
-    type: CHANGE_CURRENT_DATE,
-    payload: { year, month, date }
-  });
-
-  callback ? callback() : null;
-
-  return {
-    year,
-    month,
-    date
-  };
-};
-
-export const RESET_CURRENT_DATE = 'RESET_CURRENT_DATE';
-export const resetCurrentDate = callback => async dispatch => {
-  await dispatch({
-    type: RESET_CURRENT_DATE
-  });
-
-  callback ? callback() : null;
-};
-
-export const RESET_CURRENT_RANGE = 'RESET_CURRENT_RANGE';
-export const resetCurrentRange = callback => async dispatch => {
-  await dispatch({
-    type: RESET_CURRENT_RANGE
-  });
-
-  callback ? callback() : null;
-};
-
-export const INSERT_IN_FREEBOARD = 'INSERT_IN_FREEBOARD';
-export const insertInFreeboard = ({
-  text,
-  userName,
-  password
-}) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/insert_freeboard`,
-    {
-      text,
-      userName,
-      password
-    }
+    `https://${clientFetchingReference}/api/bubble_data`,
+    { latestDate: latestDate, period: bubblePeriod }
   );
 
   dispatch({
-    type: INSERT_IN_FREEBOARD,
-    payload: res.data
-  });
-
-  return res.data;
-};
-
-export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT';
-export const updateNewComment = ({
-  inputId,
-  comment,
-  userName,
-  password
-}) => async dispatch => {
-  const res = await axios.post(
-    `https://${clientFetchingReference}/api/new_comment`,
-    {
-      inputId,
-      comment,
-      userName,
-      password
-    }
-  );
-
-  dispatch({
-    type: UPDATE_NEW_COMMENT,
+    type: FETCH_BUBBLE_DATA,
     payload: res.data
   });
 
@@ -275,6 +189,7 @@ export const fetchHotPosts = () => async dispatch => {
   return editedData;
 };
 
+//          *********** FREEBOARD
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const fetchComments = postId => async dispatch => {
   const res = await axios.post(
@@ -301,4 +216,115 @@ export const fetchComments = postId => async dispatch => {
   });
 
   return editedData;
+};
+
+export const FETCHED_FROM_SERVER = 'FETCHED_FROM_SERVER';
+export const fetchedFromServer = () => async dispatch => {
+  dispatch({
+    type: FETCHED_FROM_SERVER,
+    payload: true
+  });
+};
+
+// CHANGE -----------------------------------------------------------
+export const CHANGE_ACTIVE = 'CHANGE_ACTIVE';
+export const changeActive = (key, value, callback) => async dispatch => {
+  await dispatch({
+    type: CHANGE_ACTIVE,
+    key,
+    value
+  });
+
+  callback ? callback() : null;
+};
+
+export const CHANGE_CURRENT_DATE = 'CHANGE_CURRENT_DATE';
+export const changeCurrentDate = (
+  year,
+  month,
+  date,
+  callback
+) => async dispatch => {
+  await dispatch({
+    type: CHANGE_CURRENT_DATE,
+    payload: { year, month, date }
+  });
+
+  callback ? callback() : null;
+
+  return {
+    year,
+    month,
+    date
+  };
+};
+
+// RESET ------------------------------------------------------------
+export const RESET_CURRENT_DATE = 'RESET_CURRENT_DATE';
+export const resetCurrentDate = callback => async dispatch => {
+  await dispatch({
+    type: RESET_CURRENT_DATE
+  });
+
+  callback ? callback() : null;
+};
+
+export const RESET_CURRENT_RANGE = 'RESET_CURRENT_RANGE';
+export const resetCurrentRange = callback => async dispatch => {
+  await dispatch({
+    type: RESET_CURRENT_RANGE
+  });
+
+  callback ? callback() : null;
+};
+
+//INSERT -------------------------------------------------------------
+
+export const INSERT_IN_FREEBOARD = 'INSERT_IN_FREEBOARD';
+export const insertInFreeboard = ({
+  text,
+  userName,
+  password
+}) => async dispatch => {
+  const res = await axios.post(
+    `https://${clientFetchingReference}/api/insert_freeboard`,
+    {
+      text,
+      userName,
+      password
+    }
+  );
+
+  dispatch({
+    type: INSERT_IN_FREEBOARD,
+    payload: res.data
+  });
+
+  return res.data;
+};
+
+// UPDATE----------------------------------------------------
+export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT';
+export const updateNewComment = ({
+  inputId,
+  comment,
+  userName,
+  password
+}) => async dispatch => {
+  const res = await axios.post(
+    `https://${clientFetchingReference}/api/new_comment`,
+    {
+      inputId,
+      comment,
+      userName,
+      password
+    }
+  );
+
+  dispatch({
+    type: UPDATE_NEW_COMMENT,
+    payload: res.data
+  });
+
+  return res.data;
 };

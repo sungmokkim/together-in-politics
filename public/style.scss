@@ -1,23 +1,23 @@
 // -------------------------------------------------------
-@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans|Noto+Sans+KR:400,700|Oswald');
-$big-font: 'Black Han Sans', sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Jua|Noto+Sans+KR:400,700|Oswald');
+$big-font: 'Jua', sans-serif;
 $main-font: 'Noto Sans KR', sans-serif;
-$eng-big-font: 'Oswald', sans-serif;
+$eng-big-font: 'Jua', sans-serif;
 // -------------------------------------------------------
 
 //  variables
-// $primary-color: rgb(240, 84, 84);
-$primary-color: #edb5bf;
-// $primary-color: #a8d1e7;
+
+$point-color: #f78886;
+$bg-color: #4d6e9b;
 
 $box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
 // regular color adjustment
 $red: #f75467;
 $blue: #4386f9;
-$green: rgb(26, 161, 26);
+$green: #03c03c;
 $lightblue: rgb(75, 164, 194);
-$orange: rgb(207, 152, 48);
+$orange: #f6ac5b;
 // -------------------------------------------------------
 
 //Viewports
@@ -56,6 +56,7 @@ body,
   padding: 0;
   margin: 0;
   font-family: $main-font;
+
   text-decoration: none;
   box-sizing: border-box;
 
@@ -138,11 +139,11 @@ ul {
   i {
     font-size: 2rem;
     margin-right: 1rem;
-    color: $primary-color;
+    color: $point-color;
   }
   .user-admin {
     margin-left: 1rem;
-    background: $primary-color;
+    background: $point-color;
     padding: 0.3rem 1rem;
     color: white;
     border-radius: 10px;
@@ -237,7 +238,7 @@ ul {
       height: 3rem;
       border: none;
       border-radius: 15px;
-      border: 0.2px solid $primary-color;
+      border: 0.2px solid $point-color;
       font-size: 2rem;
       display: flex;
       flex-direction: column;
@@ -247,7 +248,7 @@ ul {
       transition: 0.3s ease-in;
 
       &:hover {
-        background: $primary-color;
+        background: $point-color;
         color: white;
       }
     }
@@ -257,9 +258,10 @@ ul {
 // Common Components
 
 #bg {
-  background-color: $primary-color;
+  background-color: $bg-color;
   clip-path: polygon(0 0, 100% 0, 100% 42%, 0 62%);
-  // background: url('./img/mainimage.jpg') no-repeat;
+
+  background-size: cover;
   position: absolute;
   z-index: -1;
   width: 100%;
@@ -282,11 +284,11 @@ textarea {
   //   font-size: 2.3rem;
   // }
   border: none;
-  border-bottom: 1.5px solid lighten($primary-color, 20%);
+  border-bottom: 1.5px solid lighten($point-color, 20%);
   transition: 0.4s ease-in;
 
   &:focus {
-    border-bottom: 1.5px solid $primary-color;
+    border-bottom: 1.5px solid $point-color;
   }
 }
 
@@ -303,7 +305,7 @@ textarea {
       width: 0.5rem;
       height: 4.1rem;
       transform: translate(-25%, 1%);
-      background-color: $primary-color;
+      background-color: $point-color;
     }
   }
 }
@@ -324,7 +326,7 @@ textarea {
     content: '';
     display: block;
     height: 0.3rem;
-    background: lighten($primary-color, 10%);
+    background: lighten($point-color, 10%);
     width: 100%;
   }
 
@@ -356,12 +358,12 @@ textarea {
     height: 2.2rem;
     transform: translate(-30%, 7%);
 
-    background-color: lighten($primary-color, 20%);
+    background-color: lighten($point-color, 20%);
   }
 
   &:hover {
     &::before {
-      background-color: $primary-color;
+      background-color: $point-color;
       transition: 0.3s ease-in-out;
     }
   }
@@ -378,12 +380,12 @@ textarea {
     width: 100%;
     height: 0.3rem;
 
-    background-color: lighten($primary-color, 30%);
+    background-color: lighten($point-color, 30%);
   }
 
   &:hover {
     &::after {
-      background-color: $primary-color;
+      background-color: $point-color;
       transition: 0.3s ease-in-out;
     }
   }
@@ -391,10 +393,10 @@ textarea {
 
 .active-btn {
   &::before {
-    background-color: $primary-color;
+    background-color: $point-color;
   }
   &::after {
-    background-color: $primary-color;
+    background-color: $point-color;
   }
 }
 
@@ -417,15 +419,18 @@ textarea {
   // border: 1px solid black;
   @include btn-common(white);
   transition: 0.5s ease-in;
+  box-shadow: $box-shadow;
 }
 
 .indicator-btn-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 
   .indicator-btn {
     @include btn-common(white);
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -436,13 +441,21 @@ textarea {
       .indicator-mark {
         font-size: 2rem;
         font-weight: bold;
-        color: $primary-color;
+        color: $point-color;
         margin: 0 0.7rem;
       }
       .active-element {
         font-size: 2rem;
       }
     }
+  }
+  .except {
+    position: fixed;
+    top: 90%;
+    left: 10%;
+    z-index: 2;
+    padding: 2rem 2rem;
+    border-radius: 50%;
   }
 
   .selector-container {
@@ -453,6 +466,7 @@ textarea {
     align-items: center;
     transition: 0.3s ease-in;
     background: white;
+
     &:hover {
       background: darken(white, 15%);
     }
@@ -462,8 +476,16 @@ textarea {
     border-radius: 30px;
     padding: 1rem 1.5rem;
 
+    @include small {
+      padding: 1rem 1.3rem;
+    }
+
     .normal-element {
-      font-size: 1.3em;
+      font-size: 1.8rem;
+
+      @include small {
+        font-size: 1.8rem;
+      }
     }
   }
   .circle {
@@ -616,6 +638,7 @@ textarea {
     // position: relative;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 
     @include small {
       padding-top: 5rem;
@@ -630,7 +653,7 @@ textarea {
   }
 
   .active {
-    color: $primary-color;
+    color: $point-color;
   }
   .nav-title {
     font-family: $big-font;
@@ -643,11 +666,23 @@ textarea {
     // position: absolute;
     // right: 1px;
     color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 7rem;
 
     span {
       font-size: 1.6rem;
       margin: 0 1rem;
       font-weight: bold;
+    }
+
+    .menu-toggler {
+      color: white;
+      cursor: pointer;
+      margin-left: 2rem;
+      margin-right: 0;
     }
   }
 }
@@ -697,80 +732,85 @@ textarea {
   @include large {
     flex-direction: column;
   }
-  .indicator-card {
-    box-shadow: $box-shadow;
-    background: white;
-    border-radius: 15px;
-    width: 120%;
-    &:hover {
-      .small-title::after {
-        background: $primary-color;
-
-        transition: 0.3s ease-in-out;
-      }
-    }
-    display: inline-block;
-    padding: 2.5rem;
-    margin: 1rem;
-
-    text-align: center;
-
-    @include large {
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .indicator-card {
+      box-shadow: $box-shadow;
+      background: white;
+      border-radius: 15px;
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 3rem 3rem;
-      margin: 2rem;
-      align-items: center;
-    }
+      cursor: pointer;
+      transition: 0.3s ease-in;
+      &:hover {
+        background: darken(white, 10%);
+      }
+      display: inline-block;
+      padding: 2.5rem;
+      margin: 1rem;
 
-    .indicator-title-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
 
-      .emotion {
-        font-size: 4.5rem;
-        margin-right: 2rem;
+      @include large {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 3rem 3rem;
+        margin: 2rem;
+        align-items: center;
+      }
 
-        @include large {
-          margin-right: 3rem;
+      .indicator-title-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .emotion {
+          font-size: 4.5rem;
+          margin-right: 2rem;
+
+          @include large {
+            margin-right: 3rem;
+          }
+        }
+
+        div {
+          text-align: left;
+          .indicator-title {
+            font-size: 3rem;
+            text-align: left;
+            font-weight: bold;
+          }
+
+          .active-community {
+            color: darken(lightgray, 20%);
+            font-size: 1.7rem;
+          }
         }
       }
 
-      div {
-        text-align: left;
-        .indicator-title {
-          font-size: 3rem;
-          text-align: left;
+      .fa-font {
+        color: $point-color;
+      }
+      .indicator-content {
+        font-family: $big-font;
+
+        .value {
+          font-size: 5rem;
+          font-weight: bold;
         }
 
-        .active-community {
-          color: darken(lightgray, 20%);
+        .metric {
           font-size: 1.7rem;
         }
-      }
-    }
 
-    .fa-font {
-      color: $primary-color;
-    }
-    .indicator-content {
-      font-family: $big-font;
-
-      .value {
-        font-size: 5rem;
-        font-weight: bold;
-      }
-
-      .metric {
-        font-size: 1.7rem;
-      }
-
-      .status {
-        font-size: 2rem;
-        text-align: right;
+        .status {
+          font-size: 2rem;
+          text-align: right;
+        }
       }
     }
   }
@@ -791,9 +831,9 @@ textarea {
 
   &:hover {
     .small-title::after {
-      background: darken($color: $primary-color, $amount: 30%);
+      background: darken($color: $point-color, $amount: 30%);
 
-      transition: 0.5s ease-in-out;
+      transition: 0.3s ease-in;
     }
   }
 
@@ -825,6 +865,12 @@ textarea {
     }
     .first {
       font-weight: bold;
+      color: $red;
+    }
+
+    .last {
+      font-weight: bold;
+      color: $blue;
     }
     .left {
       text-align: left;
@@ -837,12 +883,12 @@ textarea {
     }
 
     .rank-up {
-      color: $blue;
+      color: $red;
       font-size: 120%;
     }
 
     .rank-down {
-      color: $red;
+      color: $blue;
       font-size: 120%;
     }
 
@@ -911,12 +957,13 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    flex-direction: row;
+    flex-direction: column;
     margin-bottom: 3rem;
+    min-height: 20rem;
 
     @include small {
       flex-direction: column;
-      height: 25rem;
+      min-height: 20rem;
     }
 
     ul {
@@ -937,7 +984,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 
     @include large {
       flex-direction: column;
@@ -1126,7 +1173,7 @@ textarea {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 2;
+  z-index: 3;
   background: rgba(0, 0, 0, 0.5);
   .single-post-relative {
     position: relative;
@@ -1187,6 +1234,7 @@ textarea {
             margin-bottom: 1rem;
             font-weight: bold;
             color: darken(lightgrey, 60%);
+            border-bottom: 0.3px solid lightgray;
           }
           .no-comment {
             color: darken(lightgrey, 30%);
@@ -1203,7 +1251,7 @@ textarea {
                 @include user-area();
                 i {
                   font-size: 1.8rem;
-                  color: $primary-color;
+                  color: $point-color;
                   margin-right: 1.3rem;
                 }
 
@@ -1217,7 +1265,7 @@ textarea {
 
             .lower-container {
               @include lower-container();
-
+              border-bottom: 0.3px solid lightgray;
               .text-area {
                 font-size: 1.8rem;
               }
@@ -1263,50 +1311,23 @@ footer {
   }
 }
 
-.bar-chart {
+.chart-container {
   canvas {
-    width: 200px !important;
-    height: 600px !important;
+    width: 100% !important;
+    height: 500px !important;
 
     background-color: white;
     border-radius: 15px;
     box-shadow: $box-shadow;
 
-    margin-top: 1rem;
     @include large {
-      width: 750px !important;
-      height: 500px !important;
-    }
-    @include medium {
       width: 100% !important;
-      height: 300px !important;
-    }
-  }
-}
-
-.line-chart {
-  canvas {
-    width: 700px !important;
-    height: 600px !important;
-
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: $box-shadow;
-
-    margin-top: 1rem;
-    margin-right: 2rem;
-
-    @include large {
-      width: 750px !important;
-      height: 500px !important;
-      margin-right: 0;
-      margin-bottom: 3rem;
+      height: 600px !important;
     }
 
     @include medium {
       width: 100% !important;
-      height: 500px !important;
-      margin-right: 0;
+      height: 300px !important;
     }
   }
 }
