@@ -72,6 +72,12 @@ class SinglePost extends Component {
     });
   };
 
+  handleClick = () => {
+    this.setState({
+      ...this.state,
+      commentFormIsOn: !this.state.commentFormIsOn
+    });
+  };
   render() {
     return (
       <div className='single-post-container'>
@@ -93,15 +99,7 @@ class SinglePost extends Component {
           className='indicator-btn-wrapper'
           style={{ justifyContent: 'left' }}
         >
-          <span
-            className='indicator-btn'
-            onClick={() => {
-              this.setState({
-                ...this.state,
-                commentFormIsOn: !this.state.commentFormIsOn
-              });
-            }}
-          >
+          <span className='indicator-btn' onClick={this.handleClick}>
             {this.state.commentFormIsOn
               ? this.props.freeboard.hideElement['korean']
               : this.props.freeboard.writeComment['korean']}
