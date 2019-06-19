@@ -11,6 +11,8 @@ import thunk from 'redux-thunk';
 import reducers from '../shared/reducers/reducers';
 import { initGA } from '../shared/googleAnalytics';
 
+import './clientStyle.scss';
+
 const initialState = window.__INITIAL_STATE__ || {};
 delete window.__INITIAL_STATE__;
 const initialStateScript = document.getElementById('initial-state');
@@ -18,6 +20,7 @@ initialStateScript.remove();
 const store = createStore(reducers, initialState, applyMiddleware(thunk));
 
 initGA();
+
 ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>{renderRoutes(Routes)}</BrowserRouter>
