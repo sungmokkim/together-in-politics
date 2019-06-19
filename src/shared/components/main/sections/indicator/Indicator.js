@@ -13,13 +13,16 @@ class Indicator extends Component {
 
     const {
       isNumber,
-      statusValue,
-      statusName,
+      statusValues,
+      statusNames,
+      statusMarks,
       value,
       metric,
       word_value,
       title,
-      index
+      index,
+      facialExpressions,
+      isFaceEmoji
     } = this.props;
 
     switch (index) {
@@ -37,26 +40,26 @@ class Indicator extends Component {
 
     if (isNumber) {
       numberValue = (value * 100).toFixed(2);
-      if (numberValue >= statusValue[0]) {
-        status = statusName[0];
-        statusMark = 'status-very-good';
-        facialExpression = 'far fa-laugh';
-      } else if (numberValue >= statusValue[1]) {
-        status = statusName[1];
-        statusMark = 'status-good';
-        facialExpression = 'far fa-smile';
-      } else if (numberValue >= statusValue[2]) {
-        status = statusName[2];
-        statusMark = 'status-okay';
-        facialExpression = 'far fa-meh';
-      } else if (numberValue >= statusValue[3]) {
-        status = statusName[3];
-        statusMark = 'status-bad';
-        facialExpression = 'far fa-frown';
+      if (numberValue >= statusValues[0]) {
+        status = statusNames[0];
+        statusMark = statusMarks[0];
+        facialExpression = isFaceEmoji ? facialExpressions[0] : null;
+      } else if (numberValue >= statusValues[1]) {
+        status = statusNames[1];
+        statusMark = statusMarks[1];
+        facialExpression = isFaceEmoji ? facialExpressions[1] : null;
+      } else if (numberValue >= statusValues[2]) {
+        status = statusNames[2];
+        statusMark = statusMarks[2];
+        facialExpression = isFaceEmoji ? facialExpressions[2] : null;
+      } else if (numberValue >= statusValues[3]) {
+        status = statusNames[3];
+        statusMark = statusMarks[3];
+        facialExpression = isFaceEmoji ? facialExpressions[3] : null;
       } else {
-        status = statusName[4];
-        statusMark = 'status-very-bad';
-        facialExpression = 'far fa-angry';
+        status = statusNames[4];
+        statusMark = statusMarks[4];
+        facialExpression = isFaceEmoji ? facialExpressions[4] : null;
       }
     }
 
@@ -81,13 +84,18 @@ class Indicator extends Component {
     };
 
     return (
-      <div className='indicator-card'>
+      <div
+        className='indicator-card'
+        onClick={() => {
+          this.props.handleClick ? this.props.handleClick(index) : null;
+        }}
+      >
         <div className='indicator-title-container'>
           {/* <TodayIndicatorTitle title={title} /> */}
           <i
-            className={`${
-              index === 'like_ratio' ? facialExpression : emoji
-            } emotion ${statusMark ? statusMark : 'status-number'}`}
+            className={`${isFaceEmoji ? facialExpression : emoji} emotion ${
+              statusMark ? statusMark : 'status-number'
+            }`}
           />
           <div>
             <div className='indicator-title'>{title}</div>
