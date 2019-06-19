@@ -4,14 +4,89 @@ import { connect } from 'react-redux';
 import IndicatorBtn from '../../../common/IndicatorBtn';
 
 class MainBoardMenu extends Component {
-  render() {
+  getBarChartMenus = () => {
     return (
       <React.Fragment>
-        <IndicatorBtn handleClick={this.props.handleClick} type='community' />
-        <IndicatorBtn handleClick={this.props.handleClick} type='indicator' />
-        <IndicatorBtn handleClick={this.props.handleClick} type='range' />
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='chart'
+          valueIsObject={true}
+        />
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='community'
+          valueIsObject={false}
+        />
+
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='period'
+          valueIsObject={true}
+        />
       </React.Fragment>
     );
+  };
+
+  getLineChartMenus = () => {
+    return (
+      <React.Fragment>
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='chart'
+          valueIsObject={true}
+        />
+
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='community'
+          valueIsObject={false}
+        />
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='indicator'
+          valueIsObject={false}
+        />
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='range'
+          valueIsObject={true}
+        />
+      </React.Fragment>
+    );
+  };
+
+  getBubbleChartMenus = () => {
+    return (
+      <React.Fragment>
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='chart'
+          valueIsObject={true}
+        />
+        <IndicatorBtn
+          handleClick={this.props.handleClick}
+          type='bubblePeriod'
+          valueIsObject={true}
+        />
+      </React.Fragment>
+    );
+  };
+
+  getMenus = () => {
+    switch (this.props.dashboardManager.active.chart.index) {
+      case 'bar':
+        return this.getBarChartMenus();
+      case 'line':
+        return this.getLineChartMenus();
+
+      case 'bubble':
+        return this.getBubbleChartMenus();
+      default:
+        return;
+    }
+  };
+  render() {
+    return <React.Fragment>{this.getMenus()}</React.Fragment>;
   }
 }
 function mapStateToProps(state) {
