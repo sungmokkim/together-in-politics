@@ -7,6 +7,8 @@ import fetchLatestDate from '../fetch/latestDate';
 import fetchPeriodData from '../fetch/periodData';
 import fetchFreeboardPosts from '../fetch/freeboardPosts';
 import fetchComments from '../fetch/comments';
+import fetchBubbleData from '../fetch/bubbleData';
+
 import fetchHotPosts from '../fetch/hotPosts';
 
 import insertFreeboardPost from '../insert/freeboardPost';
@@ -18,24 +20,30 @@ router.get('/', (req, res) => {
   res.send('welcome');
 });
 
+// fetch -----------------------------------------
+
+//      ** indicator
 router.post('/today_indicator', (req, res) => {
   fetchTodayIndicator(req.body, results => {
     res.json(results);
   });
 });
 
+//      ** ranking
 router.post('/ranking', (req, res) => {
   fetchTodayRankings(req.body, results => {
     res.json(results);
   });
 });
 
+//      ** latest_data
 router.get('/latest_date', (req, res) => {
   fetchLatestDate(results => {
     res.json(results);
   });
 });
 
+//      ** dashboard
 router.post('/dashboard_data', (req, res) => {
   fetchLatestDate(latest => {
     fetchDashboardData(latest, req.body, results => {
@@ -50,21 +58,16 @@ router.post('/period_data', (req, res) => {
   });
 });
 
-router.post('/comments', (req, res) => {
-  fetchComments(req.body, results => {
+router.post('/bubble_data', (req, res) => {
+  fetchBubbleData(req.body, results => {
     res.json(results);
   });
 });
 
-router.post('/insert_freeboard', (req, res) => {
-  insertFreeboardPost(req, rs => {
-    res.json(rs);
-  });
-});
-
-router.post('/new_comment', (req, res) => {
-  updateNewComment(req, rs => {
-    res.json(rs);
+//      ** freeboard
+router.post('/comments', (req, res) => {
+  fetchComments(req.body, results => {
+    res.json(results);
   });
 });
 
@@ -80,7 +83,24 @@ router.get('/hot_posts', (req, res) => {
   });
 });
 
+// insert ------------------------------------------------
+router.post('/insert_freeboard', (req, res) => {
+  insertFreeboardPost(req, rs => {
+    res.json(rs);
+  });
+});
+
+// update ---------------------------------------------
+router.post('/new_comment', (req, res) => {
+  updateNewComment(req, rs => {
+    res.json(rs);
+  });
+});
+
+// default ------------------------------------------------
+
 router.get('*', (req, res) => {
   res.send('welcome!');
 });
+
 export default router;
