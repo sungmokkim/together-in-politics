@@ -17,7 +17,20 @@ const initialState = {
       duration: 'months',
       number: 6,
       split: 7
-    }
+    },
+    period: {
+      korean: '월간',
+      koreanShort: '월간',
+      index: 'months'
+    },
+    bubblePeriod: {
+      korean: '최근 1개월 지형도',
+      koreanShort: '1개월',
+      index: '1m',
+      type: 'month',
+      value: 1
+    },
+    chart: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' }
   },
   period: [
     { display: '1년차' },
@@ -26,45 +39,62 @@ const initialState = {
     { display: '4년차' },
     { display: '5년차' }
   ],
-  // rangeOptions: [
-  //   {
-  //     label: '2년',
-  //     value: '2년',
-  //     duration: 'years',
-  //     number: 2,
-  //     split: 7
-  //   },
-  //   {
-  //     label: '1년',
-  //     value: '1년',
-  //     duration: 'years',
-  //     number: 1,
-  //     split: 7
-  //   },
-  //   {
-  //     label: '6개월',
-  //     value: '6개월',
-  //     duration: 'months',
-  //     number: 6,
-  //     split: 7
-  //   },
-  //   {
-  //     label: '3개월',
-  //     value: '3개월',
-  //     duration: 'months',
-  //     number: 3,
-  //     split: 10
-  //   },
-  //   {
-  //     label: '1개월',
-  //     value: '1개월',
-  //     duration: 'months',
-  //     number: 1,
-  //     split: 10
-  //   },
-  //   { label: '7일', value: '7일', duration: 'days', number: 7, split: 10 }
-  // ],
 
+  periodOptions: {
+    years: {
+      korean: '연간',
+      koreanShort: '연간',
+      index: 'years'
+    },
+    months: {
+      korean: '월간',
+      koreanShort: '월간',
+      index: 'months'
+    },
+    weeks: {
+      korean: '주간',
+      koreanShort: '주간',
+      index: 'weeks'
+    }
+  },
+  bubblePeriodOptions: {
+    total: {
+      korean: '전체 기간 지형도',
+      koreanShort: '전체',
+      index: 'total',
+      type: 'total',
+      value: 0
+    },
+
+    '1y': {
+      korean: '최근 1년 지형도',
+      koreanShort: '1년',
+      index: '1y',
+      type: 'year',
+      value: 1
+    },
+    '6m': {
+      korean: '최근 6개월 지형도',
+      koreanShort: '6개월',
+      index: '6m',
+      type: 'month',
+      value: 6
+    },
+    '3m': {
+      korean: '최근 3개월 지형도',
+      koreanShort: '3개월',
+      index: '3m',
+      type: 'month',
+      value: 3
+    },
+    '1m': {
+      korean: '최근 1개월 지형도',
+      koreanShort: '1개월',
+      index: '1m',
+      type: 'month',
+      value: 1
+    }
+  },
   rangeOptions: {
     '2y': {
       index: '2y',
@@ -105,15 +135,16 @@ const initialState = {
       duration: 'months',
       number: 1,
       split: 10
-    },
-    '7d': {
-      index: '7d',
-      korean: '7일(일간)',
-      koreanShort: '7일',
-      duration: 'days',
-      number: 7,
-      split: 10
     }
+    // ,
+    // '7d': {
+    //   index: '7d',
+    //   korean: '7일(일간)',
+    //   koreanShort: '7일',
+    //   duration: 'days',
+    //   number: 7,
+    //   split: 10
+    // }
   },
 
   currentDate: {
@@ -127,21 +158,14 @@ const initialState = {
     month: null,
     date: null
   },
-  // communities: {
-  //   mlbpark: 'MLB파크ee',
-  //   ruli: '루리웹',
-  //   ilbe: '일간베스트',
-  //   clien: '클리앙',
-  //   cook: '82쿡',
-  //   ygosu: '와이고수'
-  // },
+
   communities: {
-    mlbpark: { korean: 'MLB파크', koreanShort: '엠' },
-    ruli: { korean: '루리웹', koreanShort: '루' },
-    ilbe: { korean: '일간베스트', koreanShort: '일' },
-    clien: { korean: '클리앙', koreanShort: '클' },
-    cook: { korean: '82쿡', koreanShort: '쿡' },
-    ygosu: { korean: '와이고수', koreanShort: '와' }
+    mlbpark: { korean: 'MLB파크', koreanShort: '엠', color: '#E7813C' },
+    ruli: { korean: '루리웹', koreanShort: '루', color: '#01417F' },
+    ilbe: { korean: '일간베스트', koreanShort: '일', color: '#ED1F23' },
+    clien: { korean: '클리앙', koreanShort: '클', color: '#516C83' },
+    cook: { korean: '82쿡', koreanShort: '쿡', color: '#4AA43A' },
+    ygosu: { korean: '와이고수', koreanShort: '와', color: '#86331D' }
   },
 
   dashboardIndicators: {
@@ -149,21 +173,74 @@ const initialState = {
     '관심 지수': 'popularity',
     '민심 랭킹': 'real_rank'
   },
-  // dashboardIndicatorsName: {
-  //   anti_ratio: '민심 지수',
-  //   popularity: '관심 지수',
-  //   real_rank: '민심 랭킹'
-  // },
+
   dashboardIndicatorsName: {
-    anti_ratio: { korean: '민심 지수', koreanShort: '민심' },
-    popularity: { korean: '관심 지수', koreanShort: '관심' },
-    real_rank: { korean: '민심 랭킹', koreanShort: '랭킹' }
+    anti_ratio: { korean: '적극 거부율', koreanShort: '거부율' },
+    popularity: { korean: '게시판 지분율', koreanShort: '지분율' },
+    real_rank: { korean: '랭킹 변화', koreanShort: '랭킹' }
+  },
+
+  chartName: {
+    bar: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
+    line: { korean: '기간별 지표 변화', koreanShort: '지표', index: 'line' },
+    bubble: {
+      korean: '커뮤니티 지형도',
+      koreanShort: '지형도',
+      index: 'bubble'
+    }
   },
 
   todayIndicators: {
-    popularity: '오늘의 관심도',
-    anti_ratio: '오늘의 민심',
-    word1: '오늘의 단어'
+    popularity: {
+      korean: '게시판 지분율',
+      index: 'popularity',
+      statusValues: [1, 0.5, 0.3, 0.1],
+      statusNames: {
+        korean: [
+          '지분율 매우 높음',
+          '지분율 높음',
+          '지분율 보통',
+          '지분율 낮음',
+          '지분율 매우 낮음'
+        ]
+      },
+      statusMarks: [
+        'status-very-good',
+        'status-good',
+        'status-okay',
+        'status-bad',
+        'status-very-bad'
+      ]
+    },
+    anti_ratio: {
+      korean: '적극 거부율 ',
+      index: 'anti_ratio',
+      statusValues: [60, 40, 20, 10],
+      statusNames: {
+        korean: [
+          '거부율 매우 높음',
+          '거부율 높음',
+          '거부율 보통',
+          '거부율 낮음',
+          '거부율 매우 낮음'
+        ]
+      },
+      statusMarks: [
+        'status-very-bad',
+        'status-bad',
+        'status-okay',
+        'status-good',
+        'status-very-good'
+      ],
+      facialExpressions: [
+        'far fa-angry',
+        'far fa-frown',
+        'far fa-meh',
+        'far fa-smile',
+        'far fa-laugh'
+      ]
+    },
+    word1: '게시판 최빈 단어'
   }
 };
 
