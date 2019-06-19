@@ -77,6 +77,8 @@ class CalendarModule extends Component {
       clientX: e.clientX,
       clientY: e.clientY
     });
+
+    document.body.style.overflow = 'hidden';
   };
 
   render() {
@@ -142,6 +144,7 @@ class CalendarModule extends Component {
                 ...this.state,
                 toggled: false
               });
+              document.body.style.overflow = 'scroll';
             }
           }}
         >
