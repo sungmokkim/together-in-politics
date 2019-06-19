@@ -33,7 +33,15 @@ class Ranking extends Component {
       };
       return (
         <tr key={rank.rank}>
-          <td className={rank.rank === 1 ? 'first rank left' : 'rank left'}>
+          <td
+            className={
+              rank.rank === 1
+                ? 'first rank left'
+                : rank.rank === this.props.data.length
+                ? 'last rank left'
+                : 'rank left'
+            }
+          >
             {`${rank.rank} 위 `}
           </td>
           <td className='community center'>{rank.community}</td>
@@ -49,7 +57,7 @@ class Ranking extends Component {
             <tr>
               <th className='left'>순위</th>
               <th>커뮤니티</th>
-              <th>오늘의 민심</th>
+              <th>적극 거부율</th>
               <th className='right'>전날 대비</th>
             </tr>
           </thead>
