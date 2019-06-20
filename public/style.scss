@@ -527,6 +527,22 @@ textarea {
   }
 }
 
+.menu-fade-in {
+  animation: menu-fade-in 0.3s ease-in forwards;
+}
+
+@keyframes menu-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(40%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
 .opacity-fade-in {
   animation: opacity-fade-in 0.3s ease-in forwards;
 }
@@ -635,13 +651,12 @@ textarea {
 .main-nav-wrapper {
   .main-nav-container {
     display: flex;
-    // position: relative;
     justify-content: space-between;
     align-items: center;
     height: 100%;
 
-    @include small {
-      padding-top: 5rem;
+    @include medium-small {
+      padding-top: 3rem;
       padding-bottom: 5rem;
     }
   }
@@ -1313,7 +1328,7 @@ footer {
 
 .chart-container {
   canvas {
-    width: 100% !important;
+    width: 900px !important;
     height: 500px !important;
 
     background-color: white;
@@ -1321,13 +1336,35 @@ footer {
     box-shadow: $box-shadow;
 
     @include large {
-      width: 100% !important;
+      width: 660px !important;
       height: 600px !important;
     }
 
     @include medium {
-      width: 100% !important;
-      height: 300px !important;
+      width: 85vw !important;
+      height: 380px !important;
     }
   }
+}
+
+// functioning classes
+.for-desktop {
+  display: block;
+
+  @include medium-small {
+    display: none;
+  }
+}
+.for-mobile {
+  display: none;
+
+  @include medium-small {
+    display: block;
+  }
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
 }
