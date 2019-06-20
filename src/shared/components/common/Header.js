@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -9,15 +9,26 @@ class Header extends Component {
     menuStatus: null
   };
 
-  // componentDidMount() {
-  //   const containerWidth = document.getElementById('root').offsetWidth;
-
-  //   this.setState({
-  //     ...this.state,
-  //     portView: containerWidth > 600 ? 'desktop' : 'mobile',
-  //     menuIsOn: containerWidth > 600 ? true : false
-  //   });
-  // }
+  renderMenus = () => {
+    return Object.keys(this.props.site.navDisplay).map((menu, index) => {
+      return (
+        <NavLink exact to={this.props.site.navDisplay[menu].linkTo} key={menu}>
+          <span
+            className={`menu-btn for-desktop ${this.state.menuStatus}`}
+            style={{
+              opacity: 0,
+              animation: `menu-fade-in 0.2s ease-in ${0.1 *
+                (Object.keys(this.props.site.navDisplay).length -
+                  (index + 1))}s forwards`
+            }}
+            onClick={this.handleClosingMenu}
+          >
+            {this.props.site.navDisplay[menu]['korean']}
+          </span>
+        </NavLink>
+      );
+    });
+  };
 
   handleClickingToggle = () => {
     if (this.state.menuIsOn) {
@@ -52,47 +63,19 @@ class Header extends Component {
             <span className='nav-title'>모두의 정치</span>
           </Link>
 
-          <div className='nav-menu-container'>
-            <NavLink exact to='/'>
-              <span
-                className={`menu-btn menu-fade-in for-desktop ${
-                  this.state.menuStatus
-                }`}
-                // style={{ display: this.state.menuIsOn ? 'inline' : 'none' }}
-                onClick={this.handleClosingMenu}
-              >
-                Home
+          <div className='menu-wrapper'>
+            <div className='menu-toggler-container'>
+              <span className='menu-toggler for-mobile'>
+                <i
+                  className={
+                    this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'
+                  }
+                  style={{ fontSize: '4rem', color: 'white' }}
+                  onClick={this.handleClickingToggle}
+                />
               </span>
-            </NavLink>
-            <NavLink to='/dashboard'>
-              <span
-                className={`menu-btn menu-fade-in for-desktop ${
-                  this.state.menuStatus
-                }`}
-                onClick={this.handleClosingMenu}
-              >
-                Graphs
-              </span>
-            </NavLink>
-
-            {/* <NavLink to='/freeboard'>
-              <span
-                className={`menu-btn menu-fade-in for-desktop ${
-                  this.state.menuStatus
-                }`}
-                onClick={this.handleClosingMenu}
-              >
-                Board
-              </span>
-            </NavLink> */}
-
-            <span className='menu-toggler for-mobile'>
-              <i
-                className={this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'}
-                style={{ fontSize: '4rem', color: 'white' }}
-                onClick={this.handleClickingToggle}
-              />
-            </span>
+            </div>
+            <div className='nav-menu-container'>{this.renderMenus()}</div>
           </div>
         </div>
       </nav>
@@ -100,4 +83,10 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    site: state.siteManager
+  };
+};
+
+export default connect(mapStateToProps)(Header);
