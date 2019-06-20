@@ -4,32 +4,43 @@ import { Link, NavLink } from 'react-router-dom';
 
 class Header extends Component {
   state = {
-    menuIsOn: true,
-    portView: null
+    menuIsOn: false,
+    portView: null,
+    menuStatus: null
   };
 
-  componentDidMount() {
-    const containerWidth = document.getElementById('root').offsetWidth;
+  // componentDidMount() {
+  //   const containerWidth = document.getElementById('root').offsetWidth;
 
-    this.setState({
-      ...this.state,
-      portView: containerWidth > 600 ? 'desktop' : 'mobile',
-      menuIsOn: containerWidth > 600 ? true : false
-    });
-  }
+  //   this.setState({
+  //     ...this.state,
+  //     portView: containerWidth > 600 ? 'desktop' : 'mobile',
+  //     menuIsOn: containerWidth > 600 ? true : false
+  //   });
+  // }
 
-  handleClick = () => {
-    this.setState({
-      ...this.state,
-      menuIsOn: !this.state.menuIsOn
-    });
+  handleClickingToggle = () => {
+    if (this.state.menuIsOn) {
+      this.setState({
+        ...this.state,
+        menuIsOn: false,
+        menuStatus: null
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        menuIsOn: true,
+        menuStatus: 'show'
+      });
+    }
   };
 
   handleClosingMenu = () => {
-    if (this.state.portView === 'mobile') {
+    if (this.state.menuIsOn) {
       this.setState({
         ...this.state,
-        menuIsOn: false
+        menuIsOn: false,
+        menuStatus: null
       });
     }
   };
@@ -44,10 +55,10 @@ class Header extends Component {
           <div className='nav-menu-container'>
             <NavLink exact to='/'>
               <span
-                className={`menu-btn ${
-                  this.state.menuIsOn ? 'selection-fade-in' : null
+                className={`menu-btn menu-fade-in for-desktop ${
+                  this.state.menuStatus
                 }`}
-                style={{ display: this.state.menuIsOn ? 'inline' : 'none' }}
+                // style={{ display: this.state.menuIsOn ? 'inline' : 'none' }}
                 onClick={this.handleClosingMenu}
               >
                 Home
@@ -55,10 +66,9 @@ class Header extends Component {
             </NavLink>
             <NavLink to='/dashboard'>
               <span
-                className={`menu-btn ${
-                  this.state.menuIsOn ? 'selection-fade-in' : null
+                className={`menu-btn menu-fade-in for-desktop ${
+                  this.state.menuStatus
                 }`}
-                style={{ display: this.state.menuIsOn ? 'inline' : 'none' }}
                 onClick={this.handleClosingMenu}
               >
                 Graphs
@@ -67,26 +77,20 @@ class Header extends Component {
 
             {/* <NavLink to='/freeboard'>
               <span
-                className={`menu-btn ${
-                  this.state.menuIsOn ? 'selection-fade-in' : null
+                className={`menu-btn menu-fade-in for-desktop ${
+                  this.state.menuStatus
                 }`}
-                style={{ display: this.state.menuIsOn ? 'inline' : 'none' }}
                 onClick={this.handleClosingMenu}
               >
                 Board
               </span>
             </NavLink> */}
 
-            <span
-              className='menu-toggler'
-              style={{
-                display: this.state.portView === 'desktop' ? 'none' : 'block'
-              }}
-            >
+            <span className='menu-toggler for-mobile'>
               <i
                 className={this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'}
-                style={{ fontSize: '3rem', color: 'white' }}
-                onClick={this.handleClick}
+                style={{ fontSize: '4rem', color: 'white' }}
+                onClick={this.handleClickingToggle}
               />
             </span>
           </div>
