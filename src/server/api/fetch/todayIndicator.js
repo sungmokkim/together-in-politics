@@ -2,7 +2,7 @@ const mysql = require('mysql');
 import env from '../../helpers/serverEnv';
 
 const fetchTodayIndicator = (
-  { year, month, date, get_latest, community },
+  { year, month, date, get_latest, community, weight },
   callback
 ) => {
   const { host, user, password, database, todayDataTable } = env.mysql;
@@ -25,7 +25,7 @@ const fetchTodayIndicator = (
     if (get_latest) {
       todayDate = `(select ${dateFieldName} from ${tableName} order by ${dateFieldName} desc limit 1)`;
 
-      query = `select  popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ${todayDate}`;
+      query = `select  (popularity / ${weight}) as popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ${todayDate}`;
 
       const queryVariables = [community];
 
@@ -39,7 +39,7 @@ const fetchTodayIndicator = (
 
       connection.end();
     } else {
-      query = `select  popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ?`;
+      query = `select  (popularity / ${weight}) as popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ?`;
 
       const queryVariables = [community, todayDate];
 

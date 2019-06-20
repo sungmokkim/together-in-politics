@@ -15,7 +15,7 @@ import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 class HomePage extends Component {
   componentDidMount() {
     const { rankings } = this.props.today;
-    const { latestDate, active } = this.props.dashboardManager;
+    const { latestDate, active, communities } = this.props.dashboardManager;
 
     if (!rankings.length) {
       if (!latestDate.year) {
@@ -26,7 +26,8 @@ class HomePage extends Component {
             month,
             date,
             false,
-            active.community
+            active.community,
+            communities[active.community].weight
           );
           this.props.fetchTodayRankings(year, month, date);
         });
@@ -62,7 +63,9 @@ const mapStateToProps = state => {
 };
 
 const fetchDataFromServerSide = store => {
-  const { currentDate, active } = store.getState()['dashboardManager'];
+  const { currentDate, active, communities } = store.getState()[
+    'dashboardManager'
+  ];
 
   return [
     store.dispatch(
@@ -71,7 +74,8 @@ const fetchDataFromServerSide = store => {
         currentDate.month,
         currentDate.date,
         true,
-        active.community
+        active.community,
+        communities[active.community].weight
       )
     ),
     store.dispatch(fetchLatestDate())

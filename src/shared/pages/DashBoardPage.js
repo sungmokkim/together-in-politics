@@ -10,10 +10,10 @@ class DashBoardPage extends Component {
   }
 }
 
-const fetchDataFromServerSide = store => {
-  const { active } = store.getState()['dashboardManager'];
-  return [store.dispatch(fetchDashboardData(active))];
-};
+// const fetchDataFromServerSide = store => {
+//   const { active } = store.getState()['dashboardManager'];
+//   return [store.dispatch(fetchDashboardData(active, ***include weight ***))];
+// };
 
 export default {
   component: connect(

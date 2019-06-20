@@ -1,12 +1,12 @@
 import axios from 'axios';
 import dateAndTime from 'date-and-time';
-import { clientFetchingReference } from '../clientEnv';
+import { clientFetchingReference, protocol } from '../clientEnv';
 
 // FETCH ----------------------------------------------------------------------------
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
 export const fetchLatestDate = () => async dispatch => {
   const res = await axios.get(
-    `https://${clientFetchingReference}/api/latest_date`
+    `${protocol}://${clientFetchingReference}/api/latest_date`
   );
 
   const latestDateParsed = dateAndTime.parse(
@@ -35,7 +35,7 @@ export const fetchTodayRankings = (
   get_latest = false
 ) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/ranking`,
+    `${protocol}://${clientFetchingReference}/api/ranking`,
     {
       year,
       month,
@@ -56,16 +56,18 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  community = null
+  community = null,
+  weight = 1
 ) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/today_indicator`,
+    `${protocol}://${clientFetchingReference}/api/today_indicator`,
     {
       year,
       month,
       date,
       get_latest: getLatest,
-      community
+      community,
+      weight
     }
   );
 
@@ -77,17 +79,17 @@ export const fetchTodayIndicators = (
 
 //      ***********DASHBOARD
 export const FETCH_DASHBOARD_DATA = 'FETCH_DASHBOARD_DATA';
-export const fetchDashboardData = ({
-  community,
-  indicator,
-  range
-}) => async dispatch => {
+export const fetchDashboardData = (
+  { community, indicator, range },
+  weight = 1
+) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/dashboard_data`,
+    `${protocol}://${clientFetchingReference}/api/dashboard_data`,
     {
       community,
       indicator,
-      range
+      range,
+      weight
     }
   );
 
@@ -109,7 +111,7 @@ export const fetchDashboardData = ({
 export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
 export const fetchPeriodData = ({ community, period }) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/period_data`,
+    `${protocol}://${clientFetchingReference}/api/period_data`,
     { community, period }
   );
 
@@ -127,7 +129,7 @@ export const fetchBubbleData = (
   latestDate
 ) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/bubble_data`,
+    `${protocol}://${clientFetchingReference}/api/bubble_data`,
     { latestDate: latestDate, period: bubblePeriod }
   );
 
@@ -142,7 +144,7 @@ export const fetchBubbleData = (
 export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
 export const fetchFreeboard = () => async dispatch => {
   const res = await axios.get(
-    `https://${clientFetchingReference}/api/freeboard`
+    `${protocol}://${clientFetchingReference}/api/freeboard`
   );
 
   const editedData = res.data.map(dt => {
@@ -167,7 +169,7 @@ export const fetchFreeboard = () => async dispatch => {
 export const FETCH_HOT_POSTS = 'FETCH_HOT_POSTS';
 export const fetchHotPosts = () => async dispatch => {
   const res = await axios.get(
-    `https://${clientFetchingReference}/api/hot_posts`
+    `${protocol}://${clientFetchingReference}/api/hot_posts`
   );
 
   const editedData = res.data.map(dt => {
@@ -193,7 +195,7 @@ export const fetchHotPosts = () => async dispatch => {
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const fetchComments = postId => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/comments`,
+    `${protocol}://${clientFetchingReference}/api/comments`,
     {
       postId
     }
@@ -287,7 +289,7 @@ export const insertInFreeboard = ({
   password
 }) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/insert_freeboard`,
+    `${protocol}://${clientFetchingReference}/api/insert_freeboard`,
     {
       text,
       userName,
@@ -312,7 +314,7 @@ export const updateNewComment = ({
   password
 }) => async dispatch => {
   const res = await axios.post(
-    `https://${clientFetchingReference}/api/new_comment`,
+    `${protocol}://${clientFetchingReference}/api/new_comment`,
     {
       inputId,
       comment,

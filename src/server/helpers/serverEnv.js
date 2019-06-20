@@ -5,7 +5,7 @@ export default {
     password: '**MYSQL PASSWORD **',
     database: '**MYSQL DB **',
     todayDataTable: '**MYSQL TABLENAME **',
-    monthlyDataTable: '**MYSQL TABLENAME **'
+    periodDataTable: '**MYSQL TABLENAME **'
   },
   ga: '** GOOGLE ANALYTICS ID **',
   mongodb: {

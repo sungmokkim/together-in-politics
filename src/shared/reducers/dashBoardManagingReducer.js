@@ -160,12 +160,42 @@ const initialState = {
   },
 
   communities: {
-    mlbpark: { korean: 'MLB파크', koreanShort: '엠', color: '#E7813C' },
-    ruli: { korean: '루리웹', koreanShort: '루', color: '#01417F' },
-    ilbe: { korean: '일간베스트', koreanShort: '일', color: '#ED1F23' },
-    clien: { korean: '클리앙', koreanShort: '클', color: '#516C83' },
-    cook: { korean: '82쿡', koreanShort: '쿡', color: '#4AA43A' },
-    ygosu: { korean: '와이고수', koreanShort: '와', color: '#86331D' }
+    mlbpark: {
+      korean: 'MLB파크',
+      koreanShort: '엠',
+      color: '#E7813C',
+      weight: 0.029
+    },
+    ruli: {
+      korean: '루리웹',
+      koreanShort: '루',
+      color: '#01417F',
+      weight: 0.051
+    },
+    ilbe: {
+      korean: '일간베스트',
+      koreanShort: '일',
+      color: '#ED1F23',
+      weight: 0.014
+    },
+    clien: {
+      korean: '클리앙',
+      koreanShort: '클',
+      color: '#516C83',
+      weight: 0.037
+    },
+    cook: {
+      korean: '82쿡',
+      koreanShort: '쿡',
+      color: '#4AA43A',
+      weight: 0.036
+    },
+    ygosu: {
+      korean: '와이고수',
+      koreanShort: '와',
+      color: '#86331D',
+      weight: 0.045
+    }
   },
 
   dashboardIndicators: {
@@ -194,7 +224,7 @@ const initialState = {
     popularity: {
       korean: '게시판 지분율',
       index: 'popularity',
-      statusValues: [1, 0.5, 0.3, 0.1],
+      statusValues: [60, 40, 20, 10],
       statusNames: {
         korean: [
           '지분율 매우 높음',
