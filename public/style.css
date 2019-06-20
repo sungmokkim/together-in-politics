@@ -613,17 +613,37 @@ textarea:focus {
   text-decoration: none;
 }
 
-.main-nav-wrapper .active {
-  color: #f78886;
-}
-
 .main-nav-wrapper .nav-title {
   font-family: "Jua", sans-serif;
   color: white;
   font-size: 3.5rem;
 }
 
-.main-nav-wrapper .nav-menu-container {
+.main-nav-wrapper .menu-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 600px) {
+  .main-nav-wrapper .menu-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-line-pack: center;
+        align-content: center;
+  }
+}
+
+.main-nav-wrapper .menu-wrapper .nav-menu-container {
   font-size: 1.6rem;
   color: white;
   display: -webkit-box;
@@ -642,13 +662,23 @@ textarea:focus {
   min-height: 7rem;
 }
 
-.main-nav-wrapper .nav-menu-container span {
+@media (max-width: 600px) {
+  .main-nav-wrapper .menu-wrapper .nav-menu-container {
+    position: absolute;
+    top: 7rem;
+    right: 1.1rem;
+  }
+}
+
+.main-nav-wrapper .menu-wrapper .nav-menu-container .menu-btn {
   font-size: 1.6rem;
   margin: 0 1rem;
   font-weight: bold;
+  min-width: 10rem;
+  text-align: center;
 }
 
-.main-nav-wrapper .nav-menu-container .menu-toggler {
+.main-nav-wrapper .menu-wrapper .menu-toggler-container .menu-toggler {
   color: white;
   cursor: pointer;
   margin-left: 2rem;

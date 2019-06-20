@@ -175,7 +175,7 @@ const initialState = {
     ilbe: {
       korean: '일간베스트',
       koreanShort: '일',
-      color: '#ED1F23',
+      color: '#f75467',
       weight: 0.014
     },
     clien: {

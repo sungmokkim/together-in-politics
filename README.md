@@ -12,17 +12,24 @@ Sentiment data were collected from several Korean web sites (web communities) an
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.1.1
+## Release Note - 0.1.2
 
-- **0.1.1**
+- **0.1.2**
+  -Improvements & Changes
+    - Improved animation for navigation bar menus
+    - Layout for navigation bar was changed
+      - Nav-menus will display below the hamburger button
+
+* 0.1.1
   - Improvements
     - Responsiveness of navigation bar was improved
       - Now it changes its layout based on the current viewport (no need to refresh)
+      
   - Fixes
     - A bug that chart width does not take enough portion of the screen on some browsers was fixed
     - Hot fixes for certain Korean word
 
-* 0.1
+- 0.1
   - New + Improvement
     - Bubble Chart was added. This bubble chart shows how different Korean communities are placed in coordinates based on:
       - Anti-President Ratio
@@ -32,25 +39,21 @@ You can click [Here](https://togetherinpolitics.com) to take a look.
 ## Tech Stacks
 
 - Programming Languages
-
   - Javascript (Application and Server)
   - Python (Data Collecting and pre-processing)
   - HTML5 / CSS3 / SASS (Web Publishing)
 
 - Front-End
-
   - React.js
   - Redux
 
 - Back-End
-
   - Node.js
   - Express
   - Nginx
   - React.js(For server-side rendering)
 
 - Database
-
   - MongoDB
   - MariaDB
 
