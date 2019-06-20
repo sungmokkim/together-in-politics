@@ -20,6 +20,7 @@ You can click [Here](https://togetherinpolitics.com) to take a look.
       - Now it changes its layout based on the current viewport (no need to refresh)
   - Fixes
     - A bug that chart width does not take enough portion of the screen on some browsers was fixed
+    - Hot fixes for certain Korean word
 
 * 0.1
   - New + Improvement
