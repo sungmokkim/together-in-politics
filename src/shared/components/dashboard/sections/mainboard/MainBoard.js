@@ -140,7 +140,7 @@ class MainBoard extends Component {
     });
   };
   fetchAndUpdateCharts = () => {
-    const { active, latestDate } = this.props.dashboardManager;
+    const { active, latestDate, communities } = this.props.dashboardManager;
 
     this.setState(
       {
@@ -156,7 +156,7 @@ class MainBoard extends Component {
             return;
           case 'line':
             this.props
-              .fetchDashboardData(active)
+              .fetchDashboardData(active, communities[active.community].weight)
               .then(fetchedData => this.updateLineChart(fetchedData));
             return;
 
@@ -178,15 +178,17 @@ class MainBoard extends Component {
 
   handleButtonClick = (type, value) => {
     this.props.changeActive(type, value, () => {
+      const { communities, active, currentDate } = this.props.dashboardManager;
       switch (type) {
         case 'community':
           this.fetchAndUpdateCharts();
           this.props.fetchTodayIndicators(
-            this.props.dashboardManager.currentDate.year,
-            this.props.dashboardManager.currentDate.month,
-            this.props.dashboardManager.currentDate.date,
+            currentDate.year,
+            currentDate.month,
+            currentDate.date,
             false,
-            this.props.dashboardManager.active.community
+            active.community,
+            communities[active.community].weight
           );
           return;
         case 'range':

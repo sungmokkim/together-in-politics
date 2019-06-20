@@ -29,13 +29,15 @@ class DateAdjust extends Component {
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
+        const { active, communities } = this.props.dashboardManager;
         this.props.fetchTodayRankings(year, month, date);
         this.props.fetchTodayIndicators(
           year,
           month,
           date,
           false,
-          this.props.dashboardManager.active.community
+          active.community,
+          communities[active.community].weight
         );
       });
   };
@@ -43,10 +45,17 @@ class DateAdjust extends Component {
   handleCommunityChange = (type, value) => {
     this.props.changeActive(type, value, () => {
       const { year, month, date } = this.props.dashboardManager.currentDate;
+      const { communities, active } = this.props.dashboardManager;
+      this.props.fetchTodayIndicators(
+        year,
+        month,
+        date,
+        false,
+        value,
+        communities[value].weight
+      );
 
-      this.props.fetchTodayIndicators(year, month, date, false, value);
-
-      this.props.fetchDashboardData(this.props.dashboardManager.active);
+      this.props.fetchDashboardData(active, communities[value].weight);
     });
   };
 
