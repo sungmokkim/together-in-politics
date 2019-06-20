@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeActive } from '../../../../actions/actions';
-import { fetchDashboardData } from '../../../../actions/actions';
 import { Line, Bubble, Bar } from 'react-chartjs-2';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import ChartLoading from '../../../common/ChartLoading';
@@ -52,14 +50,10 @@ class MainBoardContent extends Component {
           max: Object.keys(communities).length
         };
       case 'anti_ratio':
-        return {
-          min: 0,
-          max: 100
-        };
       case 'popularity':
         return {
           min: 0,
-          max: 1.2
+          max: 100
         };
 
       default:
@@ -241,7 +235,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { changeActive, fetchDashboardData }
-)(MainBoardContent);
+export default connect(mapStateToProps)(MainBoardContent);
