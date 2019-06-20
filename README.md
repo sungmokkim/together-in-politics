@@ -14,11 +14,11 @@ You can click [Here](https://togetherinpolitics.com) to take a look.
 
 ## Release Note - 0.1.2
 
-- **0.1.2**
-  -Improvements & Changes
-    - Improved animation for navigation bar menus
-    - Layout for navigation bar was changed
-      - Nav-menus will display below the hamburger button
+* **0.1.2**
+  * Improvements & Changes
+      * Improved animation for navigation bar menus
+      * Layout for navigation bar was changed
+        * Nav-menus will display below the hamburger button
 
 * 0.1.1
   - Improvements
