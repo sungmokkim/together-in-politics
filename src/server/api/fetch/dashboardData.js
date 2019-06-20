@@ -4,7 +4,7 @@ import dateAndTime from 'date-and-time';
 
 const fetchDashboardData = (
   latestDate,
-  { community, indicator, range },
+  { community, indicator, range, weight },
   callback
 ) => {
   const { host, user, password, database, todayDataTable } = env.mysql;
@@ -36,7 +36,7 @@ const fetchDashboardData = (
     0 - range['number']
   );
 
-  const query = `select ${dateFieldName} as today, name , (popularity * 100) as popularity,(((anti_count) / m_count) * 100) as anti_ratio,word1, word2, word3,${rankFieldName}, (select count(name) from ${tableName} where ${dateFieldName} like today) as total_community from ${tableName} where name like ? and (${dateFieldName} between ? and ? ) order by today asc`;
+  const query = `select ${dateFieldName} as today, name , ((popularity / ${weight}) * 100) as popularity,(((anti_count) / m_count) * 100) as anti_ratio,word1, word2, word3,${rankFieldName}, (select count(name) from ${tableName} where ${dateFieldName} like today) as total_community from ${tableName} where name like ? and (${dateFieldName} between ? and ? ) order by today asc`;
 
   const queryVariables = [community, fetchFrom, todayKoreanString];
 
