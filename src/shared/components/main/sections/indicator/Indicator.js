@@ -66,7 +66,10 @@ class Indicator extends Component {
     const renderContent = () => {
       return value || value === 0 ? (
         <React.Fragment>
-          <span className='value'>{isNumber ? numberValue : value}</span>
+          <span className='value'>
+            {/* temp hot fix for '자한당' */}
+            {isNumber ? numberValue : value === '한당' ? '자' + value : value}
+          </span>
           <span className='metric'>{metric || ''}</span>
           <div
             className={`status ${statusMark ? statusMark : 'status-number'}`}
