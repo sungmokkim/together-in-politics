@@ -667,37 +667,53 @@ textarea {
     text-decoration: none;
   }
 
-  .active {
-    color: $point-color;
-  }
   .nav-title {
     font-family: $big-font;
     color: white;
     font-size: 3.5rem;
   }
 
-  .nav-menu-container {
-    font-size: 1.6rem;
-    // position: absolute;
-    // right: 1px;
-    color: white;
+  .menu-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    min-height: 7rem;
 
-    span {
+    @include medium-small {
+      flex-direction: column;
+      align-content: center;
+    }
+    .nav-menu-container {
       font-size: 1.6rem;
-      margin: 0 1rem;
-      font-weight: bold;
+      // position: absolute;
+      // right: 1px;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 7rem;
+
+      @include medium-small {
+        position: absolute;
+        top: 7rem;
+        right: 1.1rem;
+      }
+      .menu-btn {
+        font-size: 1.6rem;
+        margin: 0 1rem;
+        font-weight: bold;
+        min-width: 10rem;
+        text-align: center;
+      }
     }
 
-    .menu-toggler {
-      color: white;
-      cursor: pointer;
-      margin-left: 2rem;
-      margin-right: 0;
+    .menu-toggler-container {
+      .menu-toggler {
+        color: white;
+        cursor: pointer;
+        margin-left: 2rem;
+        margin-right: 0;
+      }
     }
   }
 }
