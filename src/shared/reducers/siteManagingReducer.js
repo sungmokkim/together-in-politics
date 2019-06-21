@@ -10,17 +10,18 @@ const initialState = {
       korean: '대시보드',
       index: 'dashboard',
       linkTo: '/dashboard'
-    },
-    freeboard: {
-      korean: '게시판',
-      index: 'freeboard',
-      linkTo: '/freeboard'
-    },
-    keywords: {
-      korean: '키워드',
-      index: 'keywords',
-      linkTo: '/keywords'
     }
+    // ,
+    // freeboard: {
+    //   korean: '게시판',
+    //   index: 'freeboard',
+    //   linkTo: '/freeboard'
+    // },
+    // keywords: {
+    //   korean: '키워드',
+    //   index: 'keywords',
+    //   linkTo: '/keywords'
+    // }
   }
 };
 
