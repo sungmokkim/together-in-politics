@@ -7,49 +7,51 @@ import {
   resetCurrentDate,
   fetchLatestDate
 } from '../actions/actions';
-import HeroSection from '../components/main/sections/hero/HeroSection';
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
 import RankingSection from '../components/main/sections/ranking/RankingSection';
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
-
+import { logPageView } from '../googleAnalytics';
 class HomePage extends Component {
   componentDidMount() {
-    const { rankings } = this.props.today;
-    const { latestDate, active, communities } = this.props.dashboardManager;
+    logPageView();
+    const { rankings, indicators } = this.props.today;
+    const {
+      latestDate,
+      active,
+      communities,
+      currentDate
+    } = this.props.dashboardManager;
 
-    if (!rankings.length) {
-      if (!latestDate.year) {
-        //there was no data fetching from server side
-        this.props.fetchLatestDate().then(({ year, month, date }) => {
-          this.props.fetchTodayIndicators(
-            year,
-            month,
-            date,
-            false,
-            active.community,
-            communities[active.community].weight
-          );
-          this.props.fetchTodayRankings(year, month, date);
-        });
-      } else {
-        // there was some data fetching from server side
-        this.props.fetchTodayRankings(
-          latestDate.year,
-          latestDate.month,
-          latestDate.date
-        );
-      }
+    // stringify currentDate(in object form)
+    const currentDateString = `${currentDate.year}-${currentDate.month}-${
+      currentDate.date
+    }`;
+
+    // when component is mounted, there are some possible situations
+    // case 1 : there is no indicator dataset at all
+    // case 2 : web app's current date and datatset's current date do not match (most likely due to date change in other pages)
+    // case 3 :web app's current community and dataset's current community do not match(most likely due to change in other pages)
+    // in these cases, there should be data fetching
+    if (
+      !indicators.length ||
+      indicators[0].name !== active.community.index ||
+      indicators[0].dates !== currentDateString
+    ) {
+      this.props.fetchTodayIndicators(
+        currentDate.year,
+        currentDate.month,
+        currentDate.date,
+        false,
+        active.community
+      );
     }
   }
 
   render() {
     return (
       <React.Fragment>
-        {/* <HeroSection /> */}
         <AdjustSection />
         <IndicatorSection />
-        {/* <hr className='section-seperator global-width global-center' /> */}
-        <RankingSection />
       </React.Fragment>
     );
   }
@@ -63,9 +65,7 @@ const mapStateToProps = state => {
 };
 
 const fetchDataFromServerSide = store => {
-  const { currentDate, active, communities } = store.getState()[
-    'dashboardManager'
-  ];
+  const { currentDate, active } = store.getState()['dashboardManager'];
 
   return [
     store.dispatch(
@@ -73,12 +73,10 @@ const fetchDataFromServerSide = store => {
         currentDate.year,
         currentDate.month,
         currentDate.date,
-        true,
-        active.community,
-        communities[active.community].weight
+        true, // fetch latest. this has to be true since it is the first time loading this page
+        active.community
       )
-    ),
-    store.dispatch(fetchLatestDate())
+    )
   ];
 };
 
@@ -93,5 +91,5 @@ export default {
       fetchLatestDate
     }
   )(HomePage),
-  fetchDataFromServerSide: fetchDataFromServerSide
+  fetchDataFromServerSide
 };
