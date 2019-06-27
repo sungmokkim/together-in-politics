@@ -1,19 +1,29 @@
 export default {
   mysql: {
-    host: '**MYSQL ADDRESS**',
-    user: '**MYSQL USERNAME **',
-    password: '**MYSQL PASSWORD **',
-    database: '**MYSQL DB **',
-    todayDataTable: '**MYSQL TABLENAME **',
-    periodDataTable: '**MYSQL TABLENAME **'
+    host: '',
+    user: '',
+    password: '',
+    database: '',
+    todayDataTable: '',
+    periodDataTable: '',
+    keywordsDataTable: ''
   },
-  ga: '** GOOGLE ANALYTICS ID **',
+  ga: '',
   mongodb: {
-    host: '**MONGODB HOST **',
-    port: '**MONGODB PORT **',
-    user: '**MONGODB USER **',
-    mongopw: '**MONGODB PW **',
-    database: '**MONGODB DB**',
-    freeBoardCollection: '**MONGODB COLL**'
+    host: '',
+    port: '',
+    user: '',
+    mongopw: '',
+    database: '',
+    freeBoardCollection: '',
+    infoCollection: ''
+  },
+  mongodb_info: {
+    host: '',
+    port: '',
+    user: '',
+    mongopw: '',
+    database: '',
+    infoCollection: ''
   }
 };
