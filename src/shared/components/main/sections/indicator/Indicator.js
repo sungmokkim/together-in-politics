@@ -27,13 +27,16 @@ class Indicator extends Component {
 
     switch (index) {
       case 'popularity':
-        emoji = 'fas fa-user';
+        emoji = 'fas fa-users';
         break;
 
       case 'word1':
         emoji = 'fas fa-font';
         break;
 
+      case 'femi_ratio':
+        emoji = 'fas fa-venus-mars';
+        break;
       default:
         emoji = 'far fa-angry';
     }
@@ -56,8 +59,12 @@ class Indicator extends Component {
         status = statusNames[3];
         statusMark = statusMarks[3];
         facialExpression = isFaceEmoji ? facialExpressions[3] : null;
-      } else {
+      } else if (numberValue < statusValues[3]) {
         status = statusNames[4];
+        statusMark = statusMarks[4];
+        facialExpression = isFaceEmoji ? facialExpressions[4] : null;
+      } else {
+        status = 'Status Unknown';
         statusMark = statusMarks[4];
         facialExpression = isFaceEmoji ? facialExpressions[4] : null;
       }
@@ -66,19 +73,16 @@ class Indicator extends Component {
     const renderContent = () => {
       return value || value === 0 ? (
         <React.Fragment>
-          <span className='value'>
-            {/* temp hot fix for '자한당' */}
-            {isNumber ? numberValue : value === '한당' ? '자' + value : value}
-          </span>
+          <span className='value'>{numberValue}</span>
           <span className='metric'>{metric || ''}</span>
           <div
-            className={`status ${statusMark ? statusMark : 'status-number'}`}
+            className={`status ${statusMark}`}
             style={{
               transition: 'color 0.5s linear',
               fontWeight: 'bolder'
             }}
           >
-            {status ? status : `${word_value.toLocaleString()}회`}
+            {status}
           </div>
         </React.Fragment>
       ) : (
@@ -96,9 +100,9 @@ class Indicator extends Component {
         <div className='indicator-title-container'>
           {/* <TodayIndicatorTitle title={title} /> */}
           <i
-            className={`${isFaceEmoji ? facialExpression : emoji} emotion ${
-              statusMark ? statusMark : 'status-number'
-            }`}
+            className={`${isFaceEmoji ? facialExpression : emoji} ${
+              index !== 'anti_ratio' ? 'emotion-large' : 'emotion'
+            } ${statusMark}`}
           />
           <div>
             <div className='indicator-title'>{title}</div>
