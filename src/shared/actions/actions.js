@@ -48,6 +48,8 @@ export const fetchTodayRankings = (
     type: FETCH_TODAY_RANKINGS,
     payload: res.data
   });
+
+  return res.data; // return data for other actions
 };
 
 export const FETCH_TODAY_INDICATORS = 'FETCH_TODAY_INDICATORS';
@@ -56,8 +58,7 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  community = null,
-  weight = 1
+  { index, femiWeight, popularityWeight }
 ) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/today_indicator`,
@@ -66,8 +67,9 @@ export const fetchTodayIndicators = (
       month,
       date,
       get_latest: getLatest,
-      community,
-      weight
+      community: index,
+      popularityWeight,
+      femiWeight
     }
   );
 
@@ -80,16 +82,17 @@ export const fetchTodayIndicators = (
 //      ***********DASHBOARD
 export const FETCH_DASHBOARD_DATA = 'FETCH_DASHBOARD_DATA';
 export const fetchDashboardData = (
-  { community, indicator, range },
-  weight = 1
+  { community, range, mentionPortion, indicator },
+  latestDate
 ) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/dashboard_data`,
     {
       community,
+      mentionPortion,
       indicator,
       range,
-      weight
+      latestDate
     }
   );
 
@@ -109,10 +112,10 @@ export const fetchDashboardData = (
 };
 
 export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
-export const fetchPeriodData = ({ community, period }) => async dispatch => {
+export const fetchPeriodData = ({ community, barPeriod }) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/period_data`,
-    { community, period }
+    { community: community.index, period: barPeriod }
   );
 
   dispatch({
@@ -141,6 +144,30 @@ export const fetchBubbleData = (
   return res.data;
 };
 
+export const FETCH_KEYWORDS = 'FETCH_KEYWORDS';
+export const fetchKeywords = (
+  { community, keywordPeriod, mentionPortion },
+  latestDate
+) => async dispatch => {
+  const res = await axios.post(
+    `${protocol}://${clientFetchingReference}/api/keywords`,
+    {
+      community,
+      latestDate: latestDate,
+      period: keywordPeriod,
+      mentionPortion
+    }
+  );
+
+  dispatch({
+    type: FETCH_KEYWORDS,
+    payload: res.data
+  });
+
+  return res.data;
+};
+
+//          *********** FREEBOARD
 export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
 export const fetchFreeboard = () => async dispatch => {
   const res = await axios.get(
@@ -191,7 +218,6 @@ export const fetchHotPosts = () => async dispatch => {
   return editedData;
 };
 
-//          *********** FREEBOARD
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const fetchComments = postId => async dispatch => {
   const res = await axios.post(
