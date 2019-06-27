@@ -8,7 +8,7 @@ import fetchPeriodData from '../fetch/periodData';
 import fetchFreeboardPosts from '../fetch/freeboardPosts';
 import fetchComments from '../fetch/comments';
 import fetchBubbleData from '../fetch/bubbleData';
-
+import fetchKeywordsData from '../fetch/keywordsData';
 import fetchHotPosts from '../fetch/hotPosts';
 
 import insertFreeboardPost from '../insert/freeboardPost';
@@ -45,10 +45,8 @@ router.get('/latest_date', (req, res) => {
 
 //      ** dashboard
 router.post('/dashboard_data', (req, res) => {
-  fetchLatestDate(latest => {
-    fetchDashboardData(latest, req.body, results => {
-      res.json(results);
-    });
+  fetchDashboardData(req.body, results => {
+    res.json(results);
   });
 });
 
@@ -80,6 +78,13 @@ router.get('/freeboard', (req, res) => {
 router.get('/hot_posts', (req, res) => {
   fetchHotPosts(rs => {
     res.json(rs);
+  });
+});
+
+//      ** keywords
+router.post('/keywords', (req, res) => {
+  fetchKeywordsData(req.body, results => {
+    res.json(results);
   });
 });
 
