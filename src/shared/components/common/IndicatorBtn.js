@@ -43,10 +43,10 @@ class IndicatorBtn extends Component {
           shape: 'normal',
           toggle: this.toggleSelection
         },
-        period: {
+        barPeriod: {
           toMap: this.mapSelections,
           icon: 'far fa-clock',
-          names: this.props.dashboardManager.periodOptions,
+          names: this.props.dashboardManager.barPeriodOptions,
           shape: 'normal',
           toggle: this.toggleSelection
         },
@@ -54,6 +54,27 @@ class IndicatorBtn extends Component {
           toMap: this.mapSelections,
           icon: 'far fa-clock',
           names: this.props.dashboardManager.bubblePeriodOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+        keywordPeriod: {
+          toMap: this.mapSelections,
+          icon: 'far fa-clock',
+          names: this.props.dashboardManager.keywordPeriodOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+        mentionPortion: {
+          toMap: this.mapSelections,
+          icon: 'fas fa-filter',
+          names: this.props.dashboardManager.mentionPortionOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
+        },
+        rankingSorting: {
+          toMap: this.mapSelections,
+          icon: 'fas fa-sort-numeric-down',
+          names: this.props.dashboardManager.rankingSortingOptions,
           shape: 'normal',
           toggle: this.toggleSelection
         }
