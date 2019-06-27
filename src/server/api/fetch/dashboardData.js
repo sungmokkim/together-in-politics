@@ -1,54 +1,108 @@
-const mysql = require('mysql');
 import env from '../../helpers/serverEnv';
 import dateAndTime from 'date-and-time';
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+const {
+  host,
+  port,
+  user,
+  mongopw,
+  database,
+  infoCollection
+} = env.mongodb_info;
 
 const fetchDashboardData = (
-  latestDate,
-  { community, indicator, range, weight },
+  { community, mentionPortion, range, indicator, latestDate },
   callback
 ) => {
-  const { host, user, password, database, todayDataTable } = env.mysql;
-  const connection = mysql.createConnection({
-    host,
-    user,
-    password,
-    database
-  });
+  const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
 
-  connection.connect();
+  // Database Name
+  const dbName = `${database}`;
 
-  const todayKoreanString = latestDate[0]['date'];
+  // decontruct year, month, date from the most recent date
+  const { year, month, date } = latestDate;
 
-  const todayKorean = dateAndTime.parse(todayKoreanString, 'YYYY-MM-DD', true);
+  // decontrcut needed values from active community obj
+  const { femiWeight, popularityWeight } = community;
 
-  const dateFieldName = `date`;
-  const rankFieldName = `rank`;
-  const tableName = todayDataTable;
+  const latestDateString = `${year}-${month}-${date}`;
 
-  const durations = {
-    months: dateAndTime.addMonths,
-    years: dateAndTime.addYears,
-    days: dateAndTime.addDays
-  };
+  const dateParsed = dateAndTime.parse(latestDateString, 'YYYY-MM-DD', true);
 
-  const fetchFrom = durations[range['duration']](
-    todayKorean,
-    0 - range['number']
+  // define date to fetch from based on given duration
+  let subtractedDate;
+  switch (range['duration']) {
+    case 'years':
+      subtractedDate = dateAndTime.addYears(dateParsed, 0 - range['number']);
+      break;
+    case 'months':
+      subtractedDate = dateAndTime.addMonths(dateParsed, 0 - range['number']);
+      break;
+    case 'days':
+      subtractedDate = dateAndTime.addDays(dateParsed, 0 - range['number']);
+    default:
+      break;
+  }
+
+  // format it to string for mongodb query
+  const dateToFetchFrom = dateAndTime.format(
+    subtractedDate,
+    'YYYY-MM-DD',
+    true
   );
 
-  const query = `select ${dateFieldName} as today, name , ((popularity / ${weight}) * 100) as popularity,(((anti_count) / m_count) * 100) as anti_ratio,word1, word2, word3,${rankFieldName}, (select count(name) from ${tableName} where ${dateFieldName} like today) as total_community from ${tableName} where name like ? and (${dateFieldName} between ? and ? ) order by today asc`;
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  client.connect(err => {
+    assert.equal(null, err);
+    const db = client.db(dbName);
+    const collection = db.collection(`${infoCollection}`);
+    collection
+      .aggregate([
+        {
+          $match: {
+            name: community.index,
+            dates: { $gte: dateToFetchFrom },
+            m_count: {
+              $gte:
+                indicator === 'popularity' ? 0 : community[mentionPortion.index]
+            } // only fetch records with minimum m_count(freq of mentioning president) when the indicator is not popularity
+          }
+        },
 
-  const queryVariables = [community, fetchFrom, todayKoreanString];
+        {
+          $project: {
+            name: 1,
+            today: '$dates',
+            w_count: 1,
+            m_count: 1,
+            popularity: {
+              $multiply: [{ $divide: ['$popularity', popularityWeight] }, 100]
+              // divide popularity by respective weight and multiply by 100(percentage)
+            },
+            femi_ratio: {
+              $multiply: [{ $divide: ['$femi_ratio', femiWeight] }, 100]
+              // divide femi_ratio by respective weight and multiply by 100(percentage)
+            },
+            femi_count: 1,
+            anti_ratio: {
+              $multiply: ['$anti_ratio', 100] // multiply anti_ratio by 100 (percentage)
+            },
+            anti_count: 1
+          }
+        },
+        {
+          $sort: { dates: 1 } //sort by date(from least recent)
+        }
+      ])
+      .toArray((err, result) => {
+        assert.equal(null, err);
+        callback(result); // get result and give it to callback func
 
-  connection.query(query, queryVariables, function(error, results, fields) {
-    if (error) {
-      callback(error);
-    } else {
-      callback(results);
-    }
+        client.close();
+      });
   });
-
-  connection.end();
 };
 
 export default fetchDashboardData;
