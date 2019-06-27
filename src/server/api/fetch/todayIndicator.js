@@ -1,95 +1,130 @@
 const mysql = require('mysql');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 import env from '../../helpers/serverEnv';
+import wordsToFilter from '../../helpers/wordsToFilter';
+
+const {
+  host,
+  port,
+  user,
+  mongopw,
+  database,
+  infoCollection
+} = env.mongodb_info;
 
 const fetchTodayIndicator = (
-  { year, month, date, get_latest, community, weight },
+  { year, month, date, get_latest, community, popularityWeight, femiWeight },
   callback
 ) => {
-  const { host, user, password, database, todayDataTable } = env.mysql;
-  const connection = mysql.createConnection({
-    host,
-    user,
-    password,
-    database
-  });
+  const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
 
-  connection.connect();
+  // Database Name
+  const dbName = `${database}`;
 
   let todayDate = `${year}-${month}-${date}`;
 
-  const dateFieldName = `date`;
-  const tableName = todayDataTable;
-  let query;
-
   if (community) {
     if (get_latest) {
-      todayDate = `(select ${dateFieldName} from ${tableName} order by ${dateFieldName} desc limit 1)`;
+      // if no specific date is defined, get the most recent data
+      const client = new MongoClient(url, { useNewUrlParser: true });
+      client.connect(err => {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        const collection = db.collection(`${infoCollection}`);
+        collection
+          .aggregate([
+            { $match: { name: community } },
 
-      query = `select  (popularity / ${weight}) as popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ${todayDate}`;
+            {
+              $project: {
+                name: 1,
+                dates: 1,
+                w_count: 1,
+                m_count: 1,
+                popularity: {
+                  $divide: ['$popularity', popularityWeight] // divide popularity by respective weight
+                },
+                femi_ratio: {
+                  $divide: ['$femi_ratio', femiWeight] // divide popularity by respective weight
+                },
+                femi_count: 1,
+                anti_ratio: 1,
+                anti_count: 1,
 
-      const queryVariables = [community];
-
-      connection.query(query, queryVariables, function(error, results, fields) {
-        if (error) {
-          callback(error);
-        } else {
-          callback(results);
-        }
+                words: {
+                  $filter: {
+                    input: '$words',
+                    as: 'word',
+                    cond: {
+                      $not: {
+                        $in: ['$$word.word', wordsToFilter]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              $sort: { dates: -1 } //sort by date(from latest)
+            }
+          ])
+          .limit(1) // get only one since it's daily data
+          .toArray((err, result) => {
+            assert.equal(null, err);
+            callback(result); // get result and give it to callback func
+            client.close();
+          });
       });
-
-      connection.end();
     } else {
-      query = `select  (popularity / ${weight}) as popularity , ( ((anti_count) / m_count))  as like_ratio , word1, word1_1 from ${tableName} where name like ? and ${dateFieldName} like ?`;
+      const client = new MongoClient(url, { useNewUrlParser: true });
+      client.connect(err => {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        const collection = db.collection(`${infoCollection}`);
+        collection
+          .aggregate([
+            { $match: { name: community, dates: todayDate } },
 
-      const queryVariables = [community, todayDate];
-
-      connection.query(query, queryVariables, function(error, results, fields) {
-        if (error) {
-          callback(error);
-        } else {
-          callback(results);
-        }
+            {
+              $project: {
+                name: 1,
+                dates: 1,
+                w_count: 1,
+                m_count: 1,
+                popularity: {
+                  $divide: ['$popularity', popularityWeight] // divide popularity by respective weight
+                },
+                femi_ratio: {
+                  $divide: ['$femi_ratio', femiWeight] // divide popularity by respective weight
+                },
+                femi_count: 1,
+                anti_ratio: 1,
+                anti_count: 1,
+                words: {
+                  $filter: {
+                    input: '$words',
+                    as: 'word',
+                    cond: {
+                      $not: {
+                        $in: ['$$word.word', wordsToFilter]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              $sort: { dates: -1 } //sort by date(from latest)
+            }
+          ])
+          .limit(1) // get only one since it's daily data
+          .toArray((err, result) => {
+            assert.equal(null, err);
+            callback(result); // get result and give it to callback func
+            client.close();
+          });
       });
-
-      connection.end();
-    }
-  } else {
-    if (get_latest) {
-      todayDate = `(select ${dateFieldName} from ${tableName} order by ${dateFieldName} desc limit 1)`;
-
-      query = `select (SUM(m_count)/SUM(w_count)) as popularity , ( (SUM(anti_count) / SUM(m_count))  ) as like_ratio, (select word from (select word1 as word, word1_1 as value from ${tableName} where ${dateFieldName} like ${todayDate} union select word2 as word, word2_1 as value from ${tableName} where ${dateFieldName} like ${todayDate} union select word3 as word, word3_1 as value from ${tableName} where ${dateFieldName} like ${todayDate}) x group by word order by sum(value) desc limit 1) as word1, (select sum(value) from (select word1 as word, word1_1 as value from ${tableName} where ${dateFieldName} like ${todayDate} union select word2 as word, word2_1 as value from ${tableName} where ${dateFieldName} like ${todayDate} union select word3 as word, word3_1 as value from ${tableName} where ${dateFieldName} like ${todayDate}) x group by word order by sum(value) desc limit 1) as word1_1 from ${tableName} where ${dateFieldName} like ${todayDate}`;
-
-      connection.query(query, function(error, results, fields) {
-        if (error) {
-          callback(error);
-        } else {
-          callback(results);
-        }
-      });
-
-      connection.end();
-    } else {
-      query = `select (SUM(m_count)/SUM(w_count)) as popularity , ( (SUM(anti_count) / SUM(m_count))  ) as like_ratio, (select word from (select word1 as word, word1_1 as value from ${tableName} where ${dateFieldName} like ? union select word2 as word, word2_1 as value from ${tableName} where ${dateFieldName} like ? union select word3 as word, word3_1 as value from ${tableName} where ${dateFieldName} like ?) x group by word order by sum(value) desc limit 1) as word1, (select sum(value) from (select word1 as word, word1_1 as value from ${tableName} where ${dateFieldName} like ? union select word2 as word, word2_1 as value from ${tableName} where ${dateFieldName} like ? union select word3 as word, word3_1 as value from ${tableName} where ${dateFieldName} like ?) x group by word order by sum(value) desc limit 1) as word1_1 from ${tableName} where ${dateFieldName} like ?`;
-
-      const queryVariables = [
-        todayDate,
-        todayDate,
-        todayDate,
-        todayDate,
-        todayDate,
-        todayDate,
-        todayDate
-      ];
-
-      connection.query(query, queryVariables, function(error, results, fields) {
-        if (error) {
-          callback(error);
-        } else {
-          callback(results);
-        }
-      });
-
-      connection.end();
     }
   }
 };
