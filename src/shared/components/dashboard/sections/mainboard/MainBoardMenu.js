@@ -15,12 +15,12 @@ class MainBoardMenu extends Component {
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='community'
-          valueIsObject={false}
+          valueIsObject={true}
         />
 
         <IndicatorBtn
           handleClick={this.props.handleClick}
-          type='period'
+          type='barPeriod'
           valueIsObject={true}
         />
       </React.Fragment>
@@ -39,7 +39,7 @@ class MainBoardMenu extends Component {
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='community'
-          valueIsObject={false}
+          valueIsObject={true}
         />
         <IndicatorBtn
           handleClick={this.props.handleClick}
@@ -51,6 +51,13 @@ class MainBoardMenu extends Component {
           type='range'
           valueIsObject={true}
         />
+        {this.props.dashboardManager.active.indicator !== 'popularity' ? (
+          <IndicatorBtn
+            handleClick={this.props.handleClick}
+            type='mentionPortion'
+            valueIsObject={true}
+          />
+        ) : null}
       </React.Fragment>
     );
   };
