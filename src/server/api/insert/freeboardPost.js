@@ -50,9 +50,9 @@ const insertFreeboardPost = (req, callback) => {
               (err, result) => {
                 assert.equal(null, err);
                 callback(result);
+                client.close();
               }
             );
-            client.close();
           });
         }
       );

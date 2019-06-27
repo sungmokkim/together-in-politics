@@ -60,9 +60,9 @@ const updateNewComment = (req, callback) => {
                 assert.equal(null, err);
 
                 callback(result);
+                client.close();
               }
             );
-            client.close();
           });
         }
       );
