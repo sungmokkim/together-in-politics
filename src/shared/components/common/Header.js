@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
+import HeaderMenu from './HeaderMenu';
 class Header extends Component {
   state = {
     menuIsOn: false,
@@ -75,7 +76,12 @@ class Header extends Component {
                 />
               </span>
             </div>
-            <div className='nav-menu-container'>{this.renderMenus()}</div>
+            <div className='nav-menu-container'>
+              <HeaderMenu
+                menuStatus={this.state.menuStatus}
+                handleClosingMenu={this.handleClosingMenu}
+              />
+            </div>
           </div>
         </div>
       </nav>
