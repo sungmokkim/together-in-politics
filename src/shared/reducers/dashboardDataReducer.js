@@ -1,13 +1,15 @@
 import {
   FETCH_DASHBOARD_DATA,
   FETCH_PERIOD_DATA,
-  FETCH_BUBBLE_DATA
+  FETCH_BUBBLE_DATA,
+  FETCH_KEYWORDS
 } from '../actions/actions';
 
 const initialState = {
   dashboardData: [],
   periodData: [],
-  bubbleData: []
+  bubbleData: [],
+  keywords: []
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +26,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bubbleData: action.payload
+      };
+    case FETCH_KEYWORDS:
+      return {
+        ...state,
+        keywords: action.payload
       };
     default:
       return state;
