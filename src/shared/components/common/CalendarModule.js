@@ -55,7 +55,7 @@ class CalendarModule extends Component {
   }
   handleDayClick = (inputDate, modifiers = {}) => {
     if (modifiers.disabled) {
-      return;
+      return; // if user clicks disabled date(no data for us)
     }
     this.setState({
       ...this.state,
@@ -78,7 +78,7 @@ class CalendarModule extends Component {
       clientY: e.clientY
     });
 
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // hide scroll when calendar displays
   };
 
   render() {
