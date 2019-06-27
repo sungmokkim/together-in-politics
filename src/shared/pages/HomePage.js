@@ -8,19 +8,13 @@ import {
   fetchLatestDate
 } from '../actions/actions';
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
-import RankingSection from '../components/main/sections/ranking/RankingSection';
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 import { logPageView } from '../googleAnalytics';
 class HomePage extends Component {
   componentDidMount() {
     logPageView();
-    const { rankings, indicators } = this.props.today;
-    const {
-      latestDate,
-      active,
-      communities,
-      currentDate
-    } = this.props.dashboardManager;
+    const { indicators } = this.props.today;
+    const { active, currentDate } = this.props.dashboardManager;
 
     // stringify currentDate(in object form)
     const currentDateString = `${currentDate.year}-${currentDate.month}-${
