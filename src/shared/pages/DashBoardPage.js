@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import MainBoardSection from '../components/dashboard/sections/mainboard/MainboardSection';
 import { connect } from 'react-redux';
 import { fetchDashboardData, resetCurrentRange } from '../actions/actions';
+import { logPageView } from '../googleAnalytics';
 
 class DashBoardPage extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    logPageView(); // google analytics logging
+  }
   render() {
     return <MainBoardSection />;
   }

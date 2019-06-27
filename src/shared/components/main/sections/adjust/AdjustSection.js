@@ -8,7 +8,7 @@ import {
   changeActive
 } from '../../../../actions/actions';
 import IndicatorBtn from '../../../common/IndicatorBtn';
-import CalendarModule from './CalendarModule';
+import CalendarModule from '../../../common/CalendarModule';
 
 class DateAdjust extends Component {
   state = {
@@ -29,15 +29,13 @@ class DateAdjust extends Component {
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
-        const { active, communities } = this.props.dashboardManager;
-        this.props.fetchTodayRankings(year, month, date);
+        const { active } = this.props.dashboardManager;
         this.props.fetchTodayIndicators(
           year,
           month,
           date,
           false,
-          active.community,
-          communities[active.community].weight
+          active.community
         );
       });
   };
@@ -45,22 +43,20 @@ class DateAdjust extends Component {
   handleCommunityChange = (type, value) => {
     this.props.changeActive(type, value, () => {
       const { year, month, date } = this.props.dashboardManager.currentDate;
-      const { communities, active } = this.props.dashboardManager;
+      const { active } = this.props.dashboardManager;
       this.props.fetchTodayIndicators(
         year,
         month,
         date,
         false,
         value,
-        communities[value].weight
+        active.community
       );
-
-      this.props.fetchDashboardData(active, communities[value].weight);
     });
   };
 
   render() {
-    const { latestDate, currentDate, active } = this.props.dashboardManager;
+    const { latestDate, currentDate } = this.props.dashboardManager;
 
     return (
       <section className='section-global'>
@@ -74,6 +70,7 @@ class DateAdjust extends Component {
           <IndicatorBtn
             handleClick={this.handleCommunityChange}
             type='community'
+            valueIsObject={true}
           />
         </div>
       </section>

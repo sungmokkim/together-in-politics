@@ -42,7 +42,6 @@ class MainBoardContent extends Component {
 
   lineChartMinMax = () => {
     const { active, communities } = this.props.dashboardManager;
-
     switch (active.indicator) {
       case 'real_rank':
         return {
@@ -51,13 +50,26 @@ class MainBoardContent extends Component {
         };
       case 'anti_ratio':
       case 'popularity':
+      case 'femi_ratio':
         return {
           min: 0,
           max: 100
         };
-
+      case 'femi_count':
+        return {
+          min: 0,
+          max: Math.max.apply(null, this.props.lineChartData.dataArray)
+        };
+      case 'anti_count':
+        return {
+          min: 0,
+          max: Math.max.apply(null, this.props.lineChartData.dataArray)
+        };
       default:
-        return;
+        return {
+          min: 0,
+          max: 1
+        };
     }
   };
   lineChart = () => {
@@ -103,7 +115,7 @@ class MainBoardContent extends Component {
                 return `${
                   dashboardIndicatorsName[active.indicator]['koreanShort']
                 }: ${tooltipItem.yLabel}${
-                  active.indicator === 'real_rank' ? '위' : '%'
+                  active.indicator === 'femi_count' ? '' : '%'
                 }`;
               }
             }
@@ -118,10 +130,10 @@ class MainBoardContent extends Component {
     return (
       <Bubble
         data={{
-          labels: '커뮤니티 지형도',
+          labels: '페미 지형도',
           datasets: this.props.bubbleChartData
         }}
-        plugins={[ChartAnnotation]}
+        // plugins={[ChartAnnotation]}
         options={{
           maintainAspectRatio: false,
           legend: {
@@ -134,11 +146,11 @@ class MainBoardContent extends Component {
               {
                 scaleLabel: {
                   display: true,
-                  labelString: dashboardIndicatorsName.popularity['korean']
+                  labelString: dashboardIndicatorsName.femi_ratio['korean']
                 },
                 ticks: {
                   min: 0,
-                  max: 1
+                  max: 100
                 }
               }
             ],
@@ -155,35 +167,36 @@ class MainBoardContent extends Component {
               }
             ]
           },
-          annotation: {
-            annotations: [
-              {
-                drawTime: 'afterDraw',
-                type: 'line',
-                mode: 'horizontal',
-                scaleID: 'y-axis-0',
-                value: '0.5',
-                borderColor: 'rgb(0,0,0,0.5)',
-                borderWidth: 1
-              },
-              {
-                drawTime: 'afterDraw',
-                type: 'line',
-                mode: 'vertical',
-                scaleID: 'x-axis-0',
-                value: '50',
-                borderColor: 'rgb(0,0,0,0.5)',
-                borderWidth: 1
-              }
-            ]
-          },
+          // ,
+          // annotation: {
+          //   annotations: [
+          //     {
+          //       drawTime: 'afterDraw',
+          //       type: 'line',
+          //       mode: 'horizontal',
+          //       scaleID: 'y-axis-0',
+          //       value: '0.5',
+          //       borderColor: 'rgb(0,0,0,0.5)',
+          //       borderWidth: 1
+          //     },
+          //     {
+          //       drawTime: 'afterDraw',
+          //       type: 'line',
+          //       mode: 'vertical',
+          //       scaleID: 'x-axis-0',
+          //       value: '50',
+          //       borderColor: 'rgb(0,0,0,0.5)',
+          //       borderWidth: 1
+          //     }
+          //   ]
+          // }
           tooltips: {
             callbacks: {
               label: function(tooltipItem, data) {
                 return `${data.datasets[tooltipItem.datasetIndex].label} (${
                   dashboardIndicatorsName.anti_ratio['koreanShort']
                 }: ${tooltipItem.xLabel}% ${
-                  dashboardIndicatorsName.popularity['koreanShort']
+                  dashboardIndicatorsName.femi_ratio['koreanShort']
                 }: ${tooltipItem.yLabel}% 게시판 규모 : ${
                   data.datasets[tooltipItem.datasetIndex].data[
                     tooltipItem.index

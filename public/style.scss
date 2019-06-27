@@ -18,6 +18,8 @@ $blue: #4386f9;
 $green: #03c03c;
 $lightblue: rgb(75, 164, 194);
 $orange: #f6ac5b;
+
+$frequency-color: #0aa137;
 // -------------------------------------------------------
 
 //Viewports
@@ -89,13 +91,14 @@ ul {
 // global setting
 
 .section-global {
-  padding: 3rem;
+  padding: 2rem 3rem;
   width: 1000px;
   margin: 0 auto;
   box-sizing: border-box;
 
   @include large {
-    width: 750px;
+    max-width: 1000px;
+    width: 100%;
   }
 
   @include medium {
@@ -637,6 +640,23 @@ textarea {
   color: gray;
 }
 
+// frequency status
+.status-very-high {
+  color: darken($frequency-color, 20%);
+}
+.status-high {
+  color: darken($frequency-color, 10%);
+}
+.status-mid {
+  color: $frequency-color;
+}
+.status-low {
+  color: lighten($frequency-color, 10%);
+}
+.status-very-low {
+  color: lighten($frequency-color, 20%);
+}
+
 // -------------------------------------------------------
 
 // sections
@@ -660,7 +680,7 @@ textarea {
       padding-bottom: 5rem;
     }
   }
-  // background: black;
+
   width: 100%;
   a {
     // color: white;
@@ -693,8 +713,10 @@ textarea {
       align-items: center;
       min-height: 7rem;
 
-      @include medium-small {
+      @include large {
         position: absolute;
+        flex-direction: column;
+        z-index: 3;
         top: 7rem;
         right: 1.1rem;
       }
@@ -704,6 +726,11 @@ textarea {
         font-weight: bold;
         min-width: 10rem;
         text-align: center;
+
+        @include large {
+          margin-bottom: 1rem;
+          margin-top: 1rem;
+        }
       }
     }
 
@@ -758,16 +785,14 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-direction: row;
+  flex-direction: column;
 
-  @include large {
-    flex-direction: column;
-  }
   a {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+
     .indicator-card {
       box-shadow: $box-shadow;
       background: white;
@@ -775,17 +800,20 @@ textarea {
       width: 100%;
       cursor: pointer;
       transition: 0.3s ease-in;
+
       &:hover {
         background: darken(white, 10%);
       }
-      display: inline-block;
-      padding: 2.5rem;
-      margin: 1rem;
+
+      display: flex;
+      justify-content: space-between;
+      padding: 3rem 3rem;
+      margin: 2rem;
+      align-items: center;
 
       text-align: center;
 
       @include large {
-        width: 100%;
         display: flex;
         justify-content: space-between;
         padding: 3rem 3rem;
@@ -801,10 +829,19 @@ textarea {
 
         .emotion {
           font-size: 4.5rem;
-          margin-right: 2rem;
+          margin-right: 1.5rem;
 
           @include large {
-            margin-right: 3rem;
+            margin-right: 2rem;
+          }
+        }
+
+        .emotion-large {
+          font-size: 4.5rem;
+          margin-right: 1rem;
+
+          @include large {
+            margin-right: 1.2rem;
           }
         }
 
@@ -814,6 +851,10 @@ textarea {
             font-size: 3rem;
             text-align: left;
             font-weight: bold;
+
+            @include medium-small {
+              font-size: 2.4rem;
+            }
           }
 
           .active-community {
@@ -832,6 +873,10 @@ textarea {
         .value {
           font-size: 5rem;
           font-weight: bold;
+
+          @include medium-small {
+            font-size: 4.4rem;
+          }
         }
 
         .metric {
@@ -844,20 +889,133 @@ textarea {
         }
       }
     }
+
+    .word-card {
+      box-shadow: $box-shadow;
+      background: white;
+      border-radius: 15px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.3s ease-in;
+
+      &:hover {
+        background: darken(white, 10%);
+      }
+
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      padding: 3rem 3rem;
+      margin: 2rem;
+      align-items: center;
+
+      text-align: center;
+
+      @include large {
+        display: flex;
+        justify-content: space-between;
+        padding: 3rem 3rem;
+        margin: 2rem;
+        align-items: center;
+      }
+
+      .indicator-title-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .emotion {
+          font-size: 4.5rem;
+          margin-right: 1.5rem;
+
+          @include large {
+            margin-right: 2rem;
+          }
+        }
+
+        .emotion-large {
+          font-size: 4.5rem;
+          margin-right: 1rem;
+
+          @include large {
+            margin-right: 1.2rem;
+          }
+        }
+
+        div {
+          text-align: left;
+          .indicator-title {
+            font-size: 3rem;
+            text-align: left;
+            font-weight: bold;
+
+            @include medium-small {
+              font-size: 2.4rem;
+            }
+          }
+
+          .active-community {
+            color: darken(lightgray, 20%);
+            font-size: 1.7rem;
+          }
+        }
+      }
+
+      .fa-font {
+        color: $point-color;
+      }
+      .indicator-content {
+        font-family: $big-font;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 80%;
+
+        @include large {
+          width: 70%;
+        }
+        @include medium-small {
+          width: 60%;
+        }
+
+        .keyword-container {
+          .value {
+            font-size: 3.8rem;
+            font-weight: bold;
+
+            @include medium-small {
+              font-size: 3rem;
+            }
+          }
+
+          .metric {
+            font-size: 1.7rem;
+          }
+
+          .status {
+            font-size: 2rem;
+            text-align: right;
+          }
+        }
+      }
+    }
   }
 }
 
-.ranking-container {
+.ranking-table-container {
   display: flex;
   min-height: 300px;
   height: 100%;
+  overflow-x: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
-  box-shadow: $box-shadow;
-  background: white;
+  // box-shadow: $box-shadow;
+  // background: white;
   border-radius: 15px;
 
   &:hover {
@@ -867,67 +1025,205 @@ textarea {
       transition: 0.3s ease-in;
     }
   }
+}
 
-  .ranking-table {
-    width: 90%;
-    border-collapse: collapse;
+.keywords-table {
+  width: 90rem;
+  @include medium-small {
+    width: 70rem;
+  }
+  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0px 0.7rem;
+  margin: 0 auto;
+  position: sticky;
+  thead {
+    tr {
+      box-shadow: $box-shadow;
+      background: $point-color;
 
-    thead {
       th {
-        border-bottom: 0.3px grey solid;
+        // border-bottom: 0.3px grey solid;
+        color: white;
+        height: 7rem;
         padding: 1rem;
         font-size: 1.9rem;
         margin-bottom: 100px;
       }
     }
+  }
 
-    tbody {
-      tr {
-        &:hover {
-          background: rgba(182, 182, 182, 0.329);
+  tbody {
+    tr {
+      box-shadow: $box-shadow;
+
+      background: white;
+      transition: background-color 0.2s ease-in;
+      &:hover {
+        background: rgb(235, 235, 235);
+      }
+
+      td {
+        font-size: 1.8rem;
+        height: 8rem;
+        padding: 1rem;
+
+        @include medium {
+          font-size: 1.5rem;
         }
-
-        td {
+        .word-link {
           font-size: 1.8rem;
-          height: 8rem;
-          padding: 1rem;
+          text-decoration: underline;
+          color: #1168ff;
         }
       }
     }
-    .first {
-      font-weight: bold;
-      color: $red;
-    }
+  }
 
-    .last {
-      font-weight: bold;
-      color: $blue;
-    }
-    .left {
-      text-align: left;
-    }
-    .right {
-      text-align: right;
-    }
-    .center {
-      text-align: center;
-    }
+  .first {
+    font-weight: bold;
+    color: $red;
+  }
 
-    .rank-up {
-      color: $red;
-      font-size: 120%;
-    }
+  .last {
+    font-weight: bold;
+    color: $blue;
+  }
+  .left {
+    text-align: left;
+  }
+  .right {
+    text-align: right;
+  }
+  .center {
+    text-align: center;
+  }
 
-    .rank-down {
-      color: $blue;
-      font-size: 120%;
-    }
+  .rank-up {
+    color: $red;
+    font-size: 120%;
+  }
 
-    .rank-same {
-      color: grey;
-      font-size: 90%;
+  .rank-down {
+    color: $blue;
+    font-size: 120%;
+  }
+
+  .rank-same {
+    color: grey;
+    font-size: 90%;
+  }
+
+  .no-word {
+    color: lightgray;
+  }
+}
+
+.ranking-table {
+  width: 90rem;
+  @include medium-small {
+    width: 70rem;
+  }
+  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0px 0.7rem;
+  margin: 0 auto;
+  position: sticky;
+  thead {
+    tr {
+      box-shadow: $box-shadow;
+      background: $point-color;
+
+      th {
+        // border-bottom: 0.3px grey solid;
+        color: white;
+        height: 7rem;
+        padding: 1rem;
+        font-size: 1.9rem;
+        margin-bottom: 100px;
+      }
     }
   }
+
+  tbody {
+    tr {
+      box-shadow: $box-shadow;
+
+      background: white;
+      transition: background-color 0.2s ease-in;
+      &:hover {
+        background: rgb(235, 235, 235);
+      }
+
+      td {
+        font-size: 1.8rem;
+        height: 8rem;
+        padding: 1rem;
+
+        @include medium {
+          font-size: 1.5rem;
+        }
+        .word-link {
+          font-size: 1.8rem;
+          text-decoration: underline;
+          color: #1168ff;
+        }
+      }
+    }
+  }
+
+  .first {
+    font-weight: bold;
+    color: $red;
+  }
+
+  .last {
+    font-weight: bold;
+    color: $blue;
+  }
+  .left {
+    text-align: left;
+  }
+  .right {
+    text-align: right;
+  }
+  .center {
+    text-align: center;
+  }
+
+  .rank-up {
+    color: $red;
+    font-size: 120%;
+  }
+
+  .rank-down {
+    color: $blue;
+    font-size: 120%;
+  }
+
+  .rank-same {
+    color: grey;
+    font-size: 90%;
+  }
+
+  .no-word {
+    color: lightgray;
+  }
+}
+
+.keywords-table-container {
+  display: block;
+  overflow-x: auto;
+  min-height: 300px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 1rem;
+  // box-shadow: $box-shadow;
+  // background: white;
+  border-radius: 15px;
 }
 
 .date-adj-container {
@@ -1322,6 +1618,31 @@ textarea {
   align-items: center;
   justify-content: flex-end;
 }
+
+.about-wrapper {
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  line-height: 50px;
+  box-shadow: $box-shadow;
+  .about-title {
+    font-size: 3rem;
+    text-align: center;
+    margin: 1rem;
+    margin-bottom: 3rem;
+    i {
+      color: $point-color;
+      font-size: 2.5rem;
+      margin-right: 1.5rem;
+    }
+  }
+  .about,
+  .about i,
+  .about p {
+    font-size: 2rem;
+  }
+}
+
 footer {
   // background: black;
   width: 100%;
@@ -1367,14 +1688,14 @@ footer {
 .for-desktop {
   display: block;
 
-  @include medium-small {
+  @include large {
     display: none;
   }
 }
 .for-mobile {
   display: none;
 
-  @include medium-small {
+  @include large {
     display: block;
   }
 }

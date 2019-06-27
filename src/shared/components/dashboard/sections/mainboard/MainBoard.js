@@ -23,7 +23,8 @@ class MainBoard extends Component {
       labels: [],
       dataArray: []
     },
-    bubbleChartData: []
+    bubbleChartData: [],
+    firstTimeLoaded: true
   };
 
   updateLineChart = (inputData = null) => {
@@ -40,33 +41,37 @@ class MainBoard extends Component {
     const split = active.range.split;
     const dateObj = dataToMap
       .reduce((acc, val) => {
-        acc.indexOf(val.today.substr(0, split)) > -1
-          ? null
-          : acc.push(val.today.substr(0, split));
+        // reduce and group date string based on current duration
+        acc.indexOf(val.today.substr(0, split)) > -1 // if sliced date is in accumulated array
+          ? null // don't include
+          : acc.push(val.today.substr(0, split)); // if not, include it
         return acc;
       }, [])
       .reduce((acc, val) => {
-        acc[val] = [];
+        // reduce it one more time
+        acc[val] = []; // make each array for one date and store it in the object
         return acc;
       }, {});
 
     const dataArray = dataToMap.forEach(dt => {
-      dateObj[dt.today.substr(0, split)].push(dt[active.indicator]);
+      dateObj[dt.today.substr(0, split)].push(dt[active.indicator]); // push data to object with same date
     });
 
-    const datesInArray = Object.keys(dateObj);
+    const datesInArray = Object.keys(dateObj); // this is actual x axis in line graph
     const dataInArray = datesInArray.map(date => {
+      // this is actual y axis in line graph
       return (
         dateObj[date].reduce((acc, val) => acc + val) / dateObj[date].length
-      ).toFixed(2);
+      ) // divide reduced(summed) data into array length ( to make it avg )
+        .toFixed(2); // only 2 decimal places
     });
 
     this.setState({
       ...this.state,
-      chartIsLoading: false,
+      chartIsLoading: false, // turn off chart loading component (it was turned on in higher order function)
       lineChartData: {
         labels: datesInArray,
-        dataArray: dataInArray
+        dataArray: dataInArray // set data in state
       }
     });
   };
@@ -126,7 +131,10 @@ class MainBoard extends Component {
         data: [
           {
             x: (data.anti_ratio * 100).toFixed(2),
-            y: (data.popularity * 100).toFixed(1),
+            y: (
+              (data.femi_ratio / communities[data.name]['femiWeight']) *
+              100
+            ).toFixed(2),
             r: (data.w_count / 10000).toFixed(2)
           }
         ]
@@ -139,30 +147,35 @@ class MainBoard extends Component {
       bubbleChartData: dataInArray
     });
   };
+
   fetchAndUpdateCharts = () => {
     const { active, latestDate, communities } = this.props.dashboardManager;
 
     this.setState(
       {
         ...this.state,
-        chartIsLoading: true
+        chartIsLoading: true // turn on chart loading component to display loading effect(it will be turned off soon as data are fetched and the chart is updated)
       },
       () => {
+        // call back after setState to make sure state change was implemented
         switch (active.chart.index) {
+          // update chart data differently according to currently active chart
           case 'bar':
             this.props
-              .fetchPeriodData(active)
+              .fetchPeriodData(active) // fetch period data before updating bar chart
               .then(fetchedData => this.updateBarChart(fetchedData));
             return;
           case 'line':
             this.props
-              .fetchDashboardData(active, communities[active.community].weight)
-              .then(fetchedData => this.updateLineChart(fetchedData));
+              .fetchDashboardData(active, latestDate) // fetch data before updating line chart
+              .then(fetchedData => {
+                this.updateLineChart(fetchedData);
+              });
             return;
 
           case 'bubble':
             this.props
-              .fetchBubbleData(active, latestDate)
+              .fetchBubbleData(active, latestDate) // fetch data before updating bubble chart
               .then(fetchedData => this.updateBubbleChart(fetchedData));
             return;
           default:
@@ -173,28 +186,20 @@ class MainBoard extends Component {
   };
 
   componentDidMount() {
+    // fetch needed data and update corresponding chart when component is mounted
     this.fetchAndUpdateCharts();
   }
 
   handleButtonClick = (type, value) => {
     this.props.changeActive(type, value, () => {
-      const { communities, active, currentDate } = this.props.dashboardManager;
       switch (type) {
         case 'community':
-          this.fetchAndUpdateCharts();
-          this.props.fetchTodayIndicators(
-            currentDate.year,
-            currentDate.month,
-            currentDate.date,
-            false,
-            active.community,
-            communities[active.community].weight
-          );
-          return;
         case 'range':
-        case 'period':
+        case 'barPeriod':
         case 'chart':
         case 'bubblePeriod':
+        case 'mentionPortion':
+        case 'indicator':
           this.fetchAndUpdateCharts();
           return;
         default:
@@ -208,7 +213,6 @@ class MainBoard extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <SectionTitle title='DASHBOARD' /> */}
         <div className='mainboard-wrapper'>
           <div className='mainboard-menu-container'>
             <MainBoardMenu handleClick={this.handleButtonClick} />

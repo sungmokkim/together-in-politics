@@ -62,6 +62,7 @@ const fetchComments = ({ postId }, callback) => {
       .toArray((err, result) => {
         assert.equal(null, err);
         callback(result);
+        client.close();
       });
   });
 };

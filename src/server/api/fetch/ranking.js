@@ -1,41 +1,37 @@
-const mysql = require('mysql');
-let dateAndTime = require('date-and-time');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 import env from '../../helpers/serverEnv';
 
+const {
+  host,
+  port,
+  user,
+  mongopw,
+  database,
+  infoCollection
+} = env.mongodb_info;
+
 const fetchTodayRankings = ({ year, month, date, get_latest }, callback) => {
-  const { host, user, password, database, todayDataTable } = env.mysql;
-  const connection = mysql.createConnection({
-    host,
-    user,
-    password,
-    database
+  const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
+
+  // Database Name
+  const dbName = `${database}`;
+
+  // date to filter
+  let todayDate = `${year}-${month}-${date}`;
+
+  const client = new MongoClient(url, { useNewUrlParser: true });
+  client.connect(err => {
+    assert.equal(null, err);
+    const db = client.db(dbName); // declare db
+    const collection = db.collection(`${infoCollection}`); // declare collection
+
+    collection.find({ dates: todayDate }).toArray((err, result) => {
+      assert.equal(null, err);
+      callback(result); // get result and give it to callback func
+      client.close();
+    });
   });
-
-  connection.connect();
-
-  const originalDate = `${year}-${month}-${date}`;
-
-  const todayParsed = dateAndTime.parse(originalDate, 'YYYY-MM-DD', true);
-  const dateMinusOne = dateAndTime.addDays(todayParsed, -1);
-  const newDate = dateAndTime.format(dateMinusOne, 'YYYY-MM-DD', true);
-
-  const dateFieldName = `date`;
-  const rankFieldName = `rank`;
-  const tableName = todayDataTable;
-
-  const query = `select a.name, ((a.anti_count) / a.m_count) as anti_ratio, a.${rankFieldName} as rank_today, (select ${rankFieldName} from ${tableName} where ${dateFieldName} like ? and name like a.name and exists(select ${rankFieldName} from ${tableName} where ${dateFieldName} like ?)) as rank_yesterday from ${tableName} a where (a.${dateFieldName} like ?) order by rank_today asc `;
-
-  const queryVariables = [newDate, newDate, originalDate];
-
-  connection.query(query, queryVariables, function(error, results, fields) {
-    if (error) {
-      callback(error);
-    } else {
-      callback(results);
-    }
-  });
-
-  connection.end();
 };
 
 export default fetchTodayRankings;

@@ -19,7 +19,7 @@ const initialStateScript = document.getElementById('initial-state');
 initialStateScript.remove();
 const store = createStore(reducers, initialState, applyMiddleware(thunk));
 
-initGA();
+initGA(); //initialize GA for the first time only
 
 ReactDOM.hydrate(
   <Provider store={store}>

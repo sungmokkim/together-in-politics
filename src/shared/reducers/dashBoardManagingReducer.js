@@ -6,9 +6,23 @@ import {
   FETCH_LATEST_DATE
 } from '../actions/actions';
 
+import { communityOptions, communityDefault } from '../options/communities';
+import {
+  mentionPortionOptions,
+  mentionPortionDefault
+} from '../options/mentionPortion';
+import {
+  bubblePeriodDefault,
+  bubblePeriodOptions
+} from '../options/bubblePeriod';
+import {
+  rankingSortingDefault,
+  rankingSortingOptions
+} from '../options/rankingSorting';
+
 const initialState = {
   active: {
-    community: 'ruli',
+    community: communityDefault,
     indicator: 'anti_ratio',
     range: {
       index: '6m',
@@ -18,29 +32,28 @@ const initialState = {
       number: 6,
       split: 7
     },
-    period: {
+    barPeriod: {
       korean: '월간',
       koreanShort: '월간',
       index: 'months'
     },
-    bubblePeriod: {
-      korean: '최근 1개월 지형도',
-      koreanShort: '1개월',
-      index: '1m',
+    bubblePeriod: bubblePeriodDefault,
+    chart: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
+    keywordPeriod: {
+      korean: '최근 6개월 키워드',
+      koreanShort: '6개월',
+      index: '6m',
       type: 'month',
-      value: 1
+      value: 6,
+      limit: 30,
+      splitRange: [10, 30],
+      defaultSplitRange: 30
     },
-    chart: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' }
+    mentionPortion: mentionPortionDefault,
+    rankingSorting: rankingSortingDefault
   },
-  period: [
-    { display: '1년차' },
-    { display: '2년차' },
-    { display: '3년차' },
-    { display: '4년차' },
-    { display: '5년차' }
-  ],
 
-  periodOptions: {
+  barPeriodOptions: {
     years: {
       korean: '연간',
       koreanShort: '연간',
@@ -57,44 +70,65 @@ const initialState = {
       index: 'weeks'
     }
   },
-  bubblePeriodOptions: {
+  rankingSortingOptions: rankingSortingOptions,
+  mentionPortionOptions: mentionPortionOptions,
+
+  bubblePeriodOptions: bubblePeriodOptions,
+
+  keywordPeriodOptions: {
     total: {
-      korean: '전체 기간 지형도',
+      korean: '전체 기간 키워드',
       koreanShort: '전체',
       index: 'total',
       type: 'total',
-      value: 0
+      value: 0,
+      limit: 100,
+      splitRange: [10, 30, 50, 100],
+      defaultSplitRange: 50
     },
 
     '1y': {
-      korean: '최근 1년 지형도',
+      korean: '최근 1년 키워드',
       koreanShort: '1년',
       index: '1y',
       type: 'year',
-      value: 1
+      value: 1,
+      limit: 50,
+      splitRange: [10, 30, 50],
+      defaultSplitRange: 50
     },
     '6m': {
-      korean: '최근 6개월 지형도',
+      korean: '최근 6개월 키워드',
       koreanShort: '6개월',
       index: '6m',
       type: 'month',
-      value: 6
-    },
-    '3m': {
-      korean: '최근 3개월 지형도',
-      koreanShort: '3개월',
-      index: '3m',
-      type: 'month',
-      value: 3
+      value: 6,
+      limit: 30,
+      splitRange: [10, 30],
+      defaultSplitRange: 30
     },
     '1m': {
-      korean: '최근 1개월 지형도',
+      korean: '최근 1개월 키워드',
       koreanShort: '1개월',
       index: '1m',
       type: 'month',
-      value: 1
+      value: 1,
+      limit: 10,
+      splitRange: [],
+      defaultSplitRange: 10
+    },
+    '1w': {
+      korean: '최근 1주 키워드',
+      koreanShort: '1주',
+      index: '1w',
+      type: 'day',
+      value: 6,
+      limit: 7,
+      splitRange: [],
+      defaultSplitRange: 7
     }
   },
+
   rangeOptions: {
     '2y': {
       index: '2y',
@@ -119,32 +153,7 @@ const initialState = {
       duration: 'months',
       number: 6,
       split: 7
-    },
-    '3m': {
-      index: '3m',
-      korean: '3개월(일간)',
-      koreanShort: '3개월',
-      duration: 'months',
-      number: 3,
-      split: 10
-    },
-    '1m': {
-      index: '1m',
-      korean: '1개월(일간)',
-      koreanShort: '1개월',
-      duration: 'months',
-      number: 1,
-      split: 10
     }
-    // ,
-    // '7d': {
-    //   index: '7d',
-    //   korean: '7일(일간)',
-    //   koreanShort: '7일',
-    //   duration: 'days',
-    //   number: 7,
-    //   split: 10
-    // }
   },
 
   currentDate: {
@@ -159,55 +168,15 @@ const initialState = {
     date: null
   },
 
-  communities: {
-    mlbpark: {
-      korean: 'MLB파크',
-      koreanShort: '엠',
-      color: '#E7813C',
-      weight: 0.029
-    },
-    ruli: {
-      korean: '루리웹',
-      koreanShort: '루',
-      color: '#01417F',
-      weight: 0.051
-    },
-    ilbe: {
-      korean: '일간베스트',
-      koreanShort: '일',
-      color: '#f75467',
-      weight: 0.014
-    },
-    clien: {
-      korean: '클리앙',
-      koreanShort: '클',
-      color: '#516C83',
-      weight: 0.037
-    },
-    cook: {
-      korean: '82쿡',
-      koreanShort: '쿡',
-      color: '#4AA43A',
-      weight: 0.036
-    },
-    ygosu: {
-      korean: '와이고수',
-      koreanShort: '와',
-      color: '#86331D',
-      weight: 0.045
-    }
-  },
-
-  dashboardIndicators: {
-    '민심 지수': 'anti_ratio',
-    '관심 지수': 'popularity',
-    '민심 랭킹': 'real_rank'
-  },
+  communities: communityOptions,
 
   dashboardIndicatorsName: {
     anti_ratio: { korean: '적극 거부율', koreanShort: '거부율' },
     popularity: { korean: '게시판 지분율', koreanShort: '지분율' },
-    real_rank: { korean: '랭킹 변화', koreanShort: '랭킹' }
+    femi_ratio: { korean: '여성 갈등 지수', koreanShort: '여성 지수' },
+    femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
+    // ,
+    // anti_count: { korean: '대통령 혐오 발언 빈도', koreanShort: '혐오(빈도)' }
   },
 
   chartName: {
@@ -222,7 +191,7 @@ const initialState = {
 
   todayIndicators: {
     popularity: {
-      korean: '게시판 지분율',
+      korean: '대통령 게시판 지분율',
       index: 'popularity',
       statusValues: [60, 40, 20, 10],
       statusNames: {
@@ -243,7 +212,7 @@ const initialState = {
       ]
     },
     anti_ratio: {
-      korean: '적극 거부율 ',
+      korean: '대통령 적극 거부율 ',
       index: 'anti_ratio',
       statusValues: [60, 40, 20, 10],
       statusNames: {
@@ -268,6 +237,28 @@ const initialState = {
         'far fa-meh',
         'far fa-smile',
         'far fa-laugh'
+      ]
+    },
+
+    femi_ratio: {
+      korean: '여성 갈등 지수',
+      index: 'femi_ratio',
+      statusValues: [20, 15, 10, 5],
+      statusNames: {
+        korean: [
+          '갈등 매우 높음',
+          '갈등 비교적 높음',
+          '갈등 보통',
+          '갈등 비교적 낮음',
+          '갈등 매우 낮음'
+        ]
+      },
+      statusMarks: [
+        'status-very-bad',
+        'status-bad',
+        'status-okay',
+        'status-good',
+        'status-very-good'
       ]
     },
     word1: '게시판 최빈 단어'

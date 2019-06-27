@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import KeywordsMain from '../components/keywords/sections/KeywordsMain';
 import { logPageView } from '../googleAnalytics';
-
-class NotFountPage extends Component {
+class KeywordsPage extends Component {
   componentDidMount() {
     logPageView();
   }
   render() {
-    return <div>NOT FOUND!</div>;
+    return <KeywordsMain />;
   }
 }
 
 export default {
-  component: NotFountPage
+  component: KeywordsPage
 };

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import RankingMain from '../components/rankings/sections/RankingMain';
 import { logPageView } from '../googleAnalytics';
-
-class NotFountPage extends Component {
+class RankingPage extends Component {
   componentDidMount() {
     logPageView();
   }
   render() {
-    return <div>NOT FOUND!</div>;
+    return <RankingMain />;
   }
 }
 
 export default {
-  component: NotFountPage
+  component: RankingPage
 };

@@ -8,33 +8,30 @@ This repository shares the source codes of a Web Site / Web Application named _T
 
 _Together In Politics_ (_TIPS_) aims to show how Korean people on the internet think and feel about current Korean President Moon Jae-In.
 
+_Together In Politics_ (_TIPS_) analyzes popular Korean internet communities to find out trends in public sentiments from teenagers to forties, which has been quite difficult to know until now.
+
+_TIPS_ offers unique and diverse indicators to give insights regarding several aspects of Korean society such as approval ratings, the ratio of favorable responses on the president, and people's thoughts on feminism.
+
 Sentiment data were collected from several Korean web sites (web communities) and no personal data were collected.
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.1.2
+## Release Note - 0.2
 
-* **0.1.2**
-  * Improvements & Changes
-      * Improved animation for navigation bar menus
-      * Layout for navigation bar was changed
-        * Nav-menus will display below the hamburger button
+* **0.2**
+  * New
+      * Keywords Page was added
+        * this page shows important keywords of each community based on anti-approval rate of the president
+        * there are also options to set range of dates and filtering setting
+      * About page was added
+      * New indicator was added
 
-* 0.1.1
-  * Improvements
-    * Responsiveness of navigation bar was improved
-      * Now it changes its layout based on the current viewport (no need to refresh)
-      
-  * Fixes
-    * A bug that chart width does not take enough portion of the screen on some browsers was fixed
-    * Hot fixes for certain Korean word
-
-* 0.1
-  * New + Improvement
-    * Bubble Chart was added. This bubble chart shows how different Korean communities are placed in coordinates based on:
-      * Anti-President Ratio
-      * President Mention Ratio
-      * Size of the community
+    * Changes & Improvements
+      * Ranking section was moved to a separate page
+      * Some of fetched data now come from MongoDB (previously from MariaDB)
+        * this process is still on going(some datasets still come from MariaDB)
+      * Refactored some codes
+        * it is still on going
 
 ## Tech Stacks
 
