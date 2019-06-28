@@ -16,8 +16,13 @@ class RankingTable extends Component {
           >{`${index + 1}위`}</td>
           <td className='center'>{dt.name}</td>
 
-          {this.props.fieldOrder.map(field => {
-            return <td className='center' key={field}>{`${dt[field]}%`}</td>;
+          {this.props.fieldOrder.map((field, index) => {
+            return (
+              <td
+                className={`center ${index === 0 ? 'td-highlight' : null}`}
+                key={field}
+              >{`${dt[field]}%`}</td>
+            );
           })}
         </tr>
       );
@@ -27,7 +32,7 @@ class RankingTable extends Component {
   mapThead = () => {
     return this.props.fieldOrder.map(field => {
       return (
-        <th className='center' key={field}>
+        <th className='center ranking-fixed-header' key={field}>
           {this.props.fieldNames[field]['korean']}
         </th>
       );
