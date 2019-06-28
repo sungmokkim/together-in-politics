@@ -41,6 +41,8 @@ class MainBoardContent extends Component {
   };
 
   lineChartMinMax = () => {
+    // this function is to get min and max value for y axis of the line graph
+    // y axis varies based on a given indicator
     const { active, communities } = this.props.dashboardManager;
     switch (active.indicator) {
       case 'real_rank':
@@ -53,17 +55,17 @@ class MainBoardContent extends Component {
       case 'femi_ratio':
         return {
           min: 0,
-          max: 100
+          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
         };
       case 'femi_count':
         return {
           min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray)
+          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
         };
       case 'anti_count':
         return {
           min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray)
+          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
         };
       default:
         return {
