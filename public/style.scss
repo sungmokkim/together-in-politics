@@ -891,6 +891,7 @@ textarea {
     }
 
     .word-card {
+      word-break: keep-all;
       box-shadow: $box-shadow;
       background: white;
       border-radius: 15px;
@@ -1028,6 +1029,7 @@ textarea {
 }
 
 .keywords-table {
+  word-break: keep-all;
   width: 90rem;
   @include medium-small {
     width: 70rem;
@@ -1120,6 +1122,7 @@ textarea {
 }
 
 .ranking-table {
+  word-break: keep-all;
   width: 90rem;
   @include medium-small {
     width: 70rem;
@@ -1208,6 +1211,18 @@ textarea {
 
   .no-word {
     color: lightgray;
+  }
+
+  .ranking-fixed-header {
+    width: 20%;
+    padding: 1rem 6rem;
+    @include medium-small {
+      width: 20%;
+    }
+  }
+
+  .td-highlight {
+    background: rgb(212, 212, 212);
   }
 }
 
@@ -1620,6 +1635,7 @@ textarea {
 }
 
 .about-wrapper {
+  word-break: keep-all;
   background: white;
   padding: 2rem 3rem;
   border-radius: 15px;

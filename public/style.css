@@ -923,6 +923,7 @@ textarea:focus {
 }
 
 .indicator-container a .word-card {
+  word-break: keep-all;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   background: white;
@@ -1110,6 +1111,7 @@ textarea:focus {
 }
 
 .keywords-table {
+  word-break: keep-all;
   width: 90rem;
   border-collapse: collapse;
   border-collapse: separate;
@@ -1211,6 +1213,7 @@ textarea:focus {
 }
 
 .ranking-table {
+  word-break: keep-all;
   width: 90rem;
   border-collapse: collapse;
   border-collapse: separate;
@@ -1309,6 +1312,21 @@ textarea:focus {
 
 .ranking-table .no-word {
   color: lightgray;
+}
+
+.ranking-table .ranking-fixed-header {
+  width: 20%;
+  padding: 1rem 6rem;
+}
+
+@media (max-width: 600px) {
+  .ranking-table .ranking-fixed-header {
+    width: 20%;
+  }
+}
+
+.ranking-table .td-highlight {
+  background: #d4d4d4;
 }
 
 .keywords-table-container {
@@ -2406,6 +2424,7 @@ textarea:focus {
 }
 
 .about-wrapper {
+  word-break: keep-all;
   background: white;
   padding: 2rem 3rem;
   border-radius: 15px;
