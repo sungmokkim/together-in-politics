@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import mapLinkToWords from '../../../functions/mapLinkToWords';
+import SlideNotification from '../../common/SlideNotification';
+
 class KeywordsTable extends Component {
   mapTbody = () => {
     // // declare object to get average anti_ratio of given data(can't directly divide acculmated anti_ratio by data length)
@@ -46,17 +48,33 @@ class KeywordsTable extends Component {
     return (
       <section className='section-global'>
         <div className='keywords-table-container'>
+          <SlideNotification />
           <table className='keywords-table'>
             <thead>
               <tr>
                 <th className='center'>순위</th>
                 <th className='center'>거부율</th>
                 <th className='center'>날짜</th>
-                <th className='center'>키워드 1</th>
-                <th className='center'>키워드 2</th>
-                <th className='center'>키워드 3</th>
-                <th className='center'>키워드 4</th>
-                <th className='center'>키워드 5</th>
+                <th className='center keywords-fixed-header'>
+                  키워드 <br />
+                  1위
+                </th>
+                <th className='center keywords-fixed-header'>
+                  키워드 <br />
+                  2위
+                </th>
+                <th className='center keywords-fixed-header'>
+                  키워드 <br />
+                  3위
+                </th>
+                <th className='center keywords-fixed-header'>
+                  키워드 <br />
+                  4위
+                </th>
+                <th className='center keywords-fixed-header'>
+                  키워드 <br />
+                  5위
+                </th>
               </tr>
             </thead>
 

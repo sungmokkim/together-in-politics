@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SlideNotification from '../../common/SlideNotification';
 
 class RankingTable extends Component {
   mapTbody = () => {
@@ -42,6 +43,7 @@ class RankingTable extends Component {
     return (
       <section className='section-global'>
         <div className='ranking-table-container'>
+          <SlideNotification />
           <table className='ranking-table'>
             <thead>
               <tr>
