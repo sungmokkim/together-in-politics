@@ -17,6 +17,8 @@ export const fixWords = word => {
       return '지지율';
     case '노자':
       return '외노자';
+    case '자영':
+      return '자영업자';
     default:
       return word;
   }
