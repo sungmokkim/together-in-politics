@@ -64,25 +64,12 @@ class Header extends Component {
             <span className='nav-title'>모두의 정치</span>
           </Link>
 
-          <div className='menu-wrapper'>
-            <div className='menu-toggler-container'>
-              <span className='menu-toggler for-mobile'>
-                <i
-                  className={
-                    this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'
-                  }
-                  style={{ fontSize: '4rem', color: 'white' }}
-                  onClick={this.handleClickingToggle}
-                />
-              </span>
-            </div>
-            <div className='nav-menu-container'>
-              <HeaderMenu
-                menuStatus={this.state.menuStatus}
-                handleClosingMenu={this.handleClosingMenu}
-              />
-            </div>
-          </div>
+          <HeaderMenu
+            menuStatus={this.state.menuStatus}
+            handleClosingMenu={this.handleClosingMenu}
+            menuIsOn={this.state.menuIsOn}
+            handleClickingToggle={this.handleClickingToggle}
+          />
         </div>
       </nav>
     );
