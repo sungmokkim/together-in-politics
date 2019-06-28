@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default () => {
+export default props => {
   return (
     <div
       style={{
@@ -9,13 +9,15 @@ export default () => {
         minWidth: '100%',
         minHeight: '100%',
         display: 'flex',
-        alignItems: 'center',
+        // if there's incoming props for alignItems, use it
+        alignItems: props.alignItems ? props.alignItems : 'center',
         justifyContent: 'center',
         top: '0',
         left: '0',
         background: 'rgba(0, 0, 0, 0.5)',
 
-        borderRadius: '15px'
+        borderRadius: '15px',
+        zIndex: 5
       }}
     >
       <div
@@ -24,7 +26,9 @@ export default () => {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          minWidth: '100%'
+          minWidth: '100%',
+          // if there's incoming props for margintop, use it
+          marginTop: props.marginTop ? props.marginTop : '0'
         }}
       >
         <i
