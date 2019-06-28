@@ -1,27 +1,10 @@
 import React, { Component } from 'react';
 import mapLinkToWords from '../../../functions/mapLinkToWords';
 import SlideNotification from '../../common/SlideNotification';
+import ContentLoading from '../../common/ContentLoading';
 
 class KeywordsTable extends Component {
   mapTbody = () => {
-    // // declare object to get average anti_ratio of given data(can't directly divide acculmated anti_ratio by data length)
-    // const avgObj = {
-    //   anti_count: 0,
-    //   m_count: 0
-    // };
-
-    // // add values to respective field
-    // this.props.data.forEach(dt => {
-    //   avgObj.anti_count += dt.anti_count;
-    //   avgObj.m_count += dt.m_count;
-    // });
-
-    // // get anti ratio average
-    // const avg_anti_ratio =
-    //   avgObj.anti_count /
-    //   this.props.data.length /
-    //   (avgObj.m_count / this.props.data.length);
-
     return this.props.data.map((dt, index) => {
       return (
         <tr key={dt._id}>
@@ -44,11 +27,26 @@ class KeywordsTable extends Component {
       );
     });
   };
+
+  renderLoading = () => {
+    return this.props.contentIsLoading ? (
+      <ContentLoading alignItems='start' marginTop='15rem' />
+    ) : null;
+  };
+
+  renderSlideIcon = () => {
+    // render slide icon only after data loading is completed
+    // also, only display icon when coming dataset has more than one row
+    return this.props.contentIsLoading ? null : this.props.data.length ? (
+      <SlideNotification />
+    ) : null;
+  };
   render() {
     return (
       <section className='section-global'>
         <div className='keywords-table-container'>
-          <SlideNotification />
+          {this.renderSlideIcon()}
+          {this.renderLoading()}
           <table className='keywords-table'>
             <thead>
               <tr>
