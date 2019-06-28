@@ -48,7 +48,6 @@ const fetchKeywordsData = (
     default:
       break;
   }
-  console.log(community);
 
   //convert date object to string (for db query) if something goes wrong, the date string would be '2017-05-01' (oldest date from our data)
   const dateString = dateFrom
