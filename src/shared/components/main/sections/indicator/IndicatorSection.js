@@ -4,7 +4,6 @@ import WordCard from './WordCard';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeActive, fetchDashboardData } from '../../../../actions/actions';
-import Loading from '../../../common/Loading';
 
 class IndicatorSection extends Component {
   handleChange = index => {

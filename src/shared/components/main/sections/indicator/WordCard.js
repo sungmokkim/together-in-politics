@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import TodayIndicatorTitle from '../../../common/TodayIndicatorTitle';
+
 import { fixWords } from '../../../../functions/mapLinkToWords';
-import Loading from '../../../common/Loading';
+import ContentLoading from '../../../common/ContentLoading';
 
 class WordCard extends Component {
   render() {
@@ -36,7 +36,7 @@ class WordCard extends Component {
           );
         })
       ) : (
-        <Loading />
+        <ContentLoading />
       );
     };
 

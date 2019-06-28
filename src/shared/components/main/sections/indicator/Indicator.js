@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import TodayIndicatorTitle from '../../../common/TodayIndicatorTitle';
 
-import Loading from '../../../common/Loading';
+import ContentLoading from '../../../common/ContentLoading';
 
 class Indicator extends Component {
   render() {
@@ -86,7 +85,7 @@ class Indicator extends Component {
           </div>
         </React.Fragment>
       ) : (
-        <Loading />
+        <ContentLoading />
       );
     };
 
