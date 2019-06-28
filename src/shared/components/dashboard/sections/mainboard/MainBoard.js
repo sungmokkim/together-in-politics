@@ -149,12 +149,21 @@ class MainBoard extends Component {
   };
 
   fetchAndUpdateCharts = () => {
+    // this function is to
+    // 1. change state 'contentIsLoading' to true
+    // 2. in browser, loading component will display
+    // 3. start fetching data through action
+    // 4. do necessary mapping or editing(if needed)
+    // 5. change state 'contentIsLoading' back to false
+    // 6. loading component disappears
+    // 7. fetched content will display
     const { active, latestDate, communities } = this.props.dashboardManager;
 
     this.setState(
       {
         ...this.state,
-        chartIsLoading: true // turn on chart loading component to display loading effect(it will be turned off soon as data are fetched and the chart is updated)
+        chartIsLoading: true
+        // turn on chart loading component to display loading effect(it will be turned off soon as data are fetched and the chart is updated)
       },
       () => {
         // call back after setState to make sure state change was implemented

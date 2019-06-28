@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Line, Bubble, Bar } from 'react-chartjs-2';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
-import ChartLoading from '../../../common/ChartLoading';
+import ContentLoading from '../../../common/ContentLoading';
 
 class MainBoardContent extends Component {
   barChart = () => {
@@ -229,7 +229,7 @@ class MainBoardContent extends Component {
   };
 
   renderLoading = () => {
-    return this.props.chartIsLoading ? <ChartLoading /> : null;
+    return this.props.chartIsLoading ? <ContentLoading /> : null;
   };
 
   render() {
