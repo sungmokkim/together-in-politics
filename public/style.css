@@ -362,6 +362,15 @@ textarea:focus {
   font-size: 1.2rem;
 }
 
+.slide-notification {
+  font-size: 6rem;
+  color: #4d6e9b;
+  position: fixed;
+  right: 10%;
+  top: 50vh;
+  z-index: 3;
+}
+
 .selection-fade-in {
   -webkit-animation: selection-fade-in 0.3s ease-in forwards;
           animation: selection-fade-in 0.3s ease-in forwards;
@@ -419,6 +428,38 @@ textarea:focus {
   }
   100% {
     opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-notification-fade-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(120%);
+            transform: translateX(120%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+
+@keyframes slide-notification-fade-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(120%);
+            transform: translateX(120%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
     -webkit-transform: translateX(0%);
             transform: translateX(0%);
   }
@@ -1123,7 +1164,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .keywords-table {
-    width: 70rem;
+    width: 80rem;
   }
 }
 
@@ -1156,7 +1197,7 @@ textarea:focus {
 .keywords-table tbody tr td {
   font-size: 1.8rem;
   height: 8rem;
-  padding: 1rem;
+  padding: 0.3rem;
 }
 
 @media (max-width: 800px) {
@@ -1212,9 +1253,14 @@ textarea:focus {
   color: lightgray;
 }
 
+.keywords-table .keywords-fixed-header {
+  width: 15%;
+  padding: 1rem 1rem;
+}
+
 .ranking-table {
   word-break: keep-all;
-  width: 90rem;
+  width: 80rem;
   border-collapse: collapse;
   border-collapse: separate;
   border-spacing: 0px 0.7rem;
@@ -1225,7 +1271,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .ranking-table {
-    width: 70rem;
+    width: 65rem;
   }
 }
 
@@ -1315,18 +1361,18 @@ textarea:focus {
 }
 
 .ranking-table .ranking-fixed-header {
-  width: 20%;
+  width: 15%;
   padding: 1rem 6rem;
 }
 
 @media (max-width: 600px) {
   .ranking-table .ranking-fixed-header {
-    width: 20%;
+    width: 15%;
   }
 }
 
 .ranking-table .td-highlight {
-  background: #d4d4d4;
+  background: #ebebeb;
 }
 
 .keywords-table-container {
@@ -1347,6 +1393,7 @@ textarea:focus {
   margin: 1rem;
   padding: 1rem;
   border-radius: 15px;
+  position: relative;
 }
 
 .date-adj-container {
