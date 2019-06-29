@@ -130,6 +130,14 @@ const initialState = {
   },
 
   rangeOptions: {
+    total: {
+      index: 'total',
+      korean: '전체',
+      koreanShort: '전체',
+      duration: 'total',
+      number: 0,
+      split: 7
+    },
     '2y': {
       index: '2y',
       korean: '2년(월간)',
@@ -224,6 +232,36 @@ const initialState = {
           '거부율 매우 낮음'
         ]
       },
+
+      statusMarks: [
+        'status-very-bad',
+        'status-bad',
+        'status-okay',
+        'status-good',
+        'status-very-good'
+      ],
+      facialExpressions: [
+        'far fa-angry',
+        'far fa-frown',
+        'far fa-meh',
+        'far fa-smile',
+        'far fa-laugh'
+      ]
+    },
+    anti_popularity: {
+      korean: '대통령 혐오 지분율 ',
+      index: 'anti_popularity',
+      statusValues: [20, 15, 10, 5],
+      statusNames: {
+        korean: [
+          '지분율 매우 높음',
+          '지분율 높음',
+          '지분율 보통',
+          '지분율 낮음',
+          '지분율 매우 낮음'
+        ]
+      },
+
       statusMarks: [
         'status-very-bad',
         'status-bad',
