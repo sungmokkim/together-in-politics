@@ -28,13 +28,15 @@ class Indicator extends Component {
       case 'popularity':
         emoji = 'fas fa-users';
         break;
-
       case 'word1':
         emoji = 'fas fa-font';
         break;
 
       case 'femi_ratio':
         emoji = 'fas fa-venus-mars';
+        break;
+      case 'anti_popularity':
+        emoji = 'fas fa-fist-raised';
         break;
       default:
         emoji = 'far fa-angry';
@@ -99,9 +101,10 @@ class Indicator extends Component {
         <div className='indicator-title-container'>
           {/* <TodayIndicatorTitle title={title} /> */}
           <i
-            className={`${isFaceEmoji ? facialExpression : emoji} ${
-              index !== 'anti_ratio' ? 'emotion-large' : 'emotion'
-            } ${statusMark}`}
+            className={`${
+              isFaceEmoji ? facialExpression : emoji
+            } emotion ${statusMark}`}
+            style={{ marginRight: this.props.emojiMargin }}
           />
           <div>
             <div className='indicator-title'>{title}</div>
