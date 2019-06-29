@@ -30,8 +30,7 @@ class MainBoardContent extends Component {
                 scaleLabel: {
                   display: true,
                   labelString: '대통령 혐오 발언'
-                },
-                ticks: { min: 0, max: 200 }
+                }
               }
             ]
           }
@@ -53,24 +52,15 @@ class MainBoardContent extends Component {
       case 'anti_ratio':
       case 'popularity':
       case 'femi_ratio':
-        return {
-          min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
-        };
       case 'femi_count':
-        return {
-          min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
-        };
       case 'anti_count':
         return {
-          min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray) * 1.5
+          min: 0
         };
+
       default:
         return {
-          min: 0,
-          max: 1
+          min: 0
         };
     }
   };
@@ -95,6 +85,19 @@ class MainBoardContent extends Component {
         options={{
           maintainAspectRatio: false,
           scales: {
+            xAxes: [
+              {
+                type: 'time',
+                distribution: 'linear',
+                time: {
+                  parser: 'YYYY-MM',
+                  displayFormats: {
+                    month: 'YYYY-MM',
+                    day: 'MM'
+                  }
+                }
+              }
+            ],
             yAxes: [
               {
                 ticks: {
