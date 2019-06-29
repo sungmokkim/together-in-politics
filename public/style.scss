@@ -854,20 +854,6 @@ textarea {
 
         .emotion {
           font-size: 4.5rem;
-          margin-right: 1.5rem;
-
-          @include large {
-            margin-right: 2rem;
-          }
-        }
-
-        .emotion-large {
-          font-size: 4.5rem;
-          margin-right: 1rem;
-
-          @include large {
-            margin-right: 1.2rem;
-          }
         }
 
         div {

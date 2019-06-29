@@ -894,24 +894,6 @@ textarea:focus {
 
 .indicator-container a .indicator-card .indicator-title-container .emotion {
   font-size: 4.5rem;
-  margin-right: 1.5rem;
-}
-
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card .indicator-title-container .emotion {
-    margin-right: 2rem;
-  }
-}
-
-.indicator-container a .indicator-card .indicator-title-container .emotion-large {
-  font-size: 4.5rem;
-  margin-right: 1rem;
-}
-
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card .indicator-title-container .emotion-large {
-    margin-right: 1.2rem;
-  }
 }
 
 .indicator-container a .indicator-card .indicator-title-container div {
