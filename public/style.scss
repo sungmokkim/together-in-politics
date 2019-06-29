@@ -513,7 +513,7 @@ textarea {
 
 .slide-notification {
   font-size: 6rem;
-  color: $bg-color;
+  color: darken(lightgray, 15%);
   position: fixed;
   right: 10%;
   top: 50vh;
