@@ -9,6 +9,7 @@ import {
   fetchBubbleData,
   fetchTodayIndicators
 } from '../../../../actions/actions';
+import dateAndTime from 'date-and-time';
 
 class MainBoard extends Component {
   state = {
@@ -38,33 +39,20 @@ class MainBoard extends Component {
       dataToMap = this.props.data.dashboardData;
     }
 
-    const split = active.range.split;
-    const dateObj = dataToMap
-      .reduce((acc, val) => {
-        // reduce and group date string based on current duration
-        acc.indexOf(val.today.substr(0, split)) > -1 // if sliced date is in accumulated array
-          ? null // don't include
-          : acc.push(val.today.substr(0, split)); // if not, include it
-        return acc;
-      }, [])
-      .reduce((acc, val) => {
-        // reduce it one more time
-        acc[val] = []; // make each array for one date and store it in the object
-        return acc;
-      }, {});
-
-    const dataArray = dataToMap.forEach(dt => {
-      dateObj[dt.today.substr(0, split)].push(dt[active.indicator]); // push data to object with same date
+    // map dates into a single array (used as x axis in graph)
+    const datesInArray = dataToMap.map(data => {
+      //   const parsedTime = dateAndTime.parse(
+      //  ,
+      //     'YYYY-MM',
+      //     true
+      //   );
+      return `${data.years}-${data.months}`;
     });
 
-    const datesInArray = Object.keys(dateObj); // this is actual x axis in line graph
-    const dataInArray = datesInArray.map(date => {
-      // this is actual y axis in line graph
-      return (
-        dateObj[date].reduce((acc, val) => acc + val) / dateObj[date].length
-      ) // divide reduced(summed) data into array length ( to make it avg )
-        .toFixed(2); // only 2 decimal places
-    });
+    // map actual data into a single array (used as y axis in graph)
+    const dataInArray = dataToMap.map(data =>
+      data[active.indicator].toFixed(2)
+    );
 
     this.setState({
       ...this.state,
