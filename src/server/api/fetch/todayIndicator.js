@@ -14,7 +14,16 @@ const {
 } = env.mongodb_info;
 
 const fetchTodayIndicator = (
-  { year, month, date, get_latest, community, popularityWeight, femiWeight },
+  {
+    year,
+    month,
+    date,
+    get_latest,
+    community,
+    popularityWeight,
+    femiWeight,
+    antiWeight
+  },
   callback
 ) => {
   const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
@@ -43,10 +52,16 @@ const fetchTodayIndicator = (
                 w_count: 1,
                 m_count: 1,
                 popularity: {
-                  $divide: ['$popularity', popularityWeight] // divide popularity by respective weight
+                  $divide: ['$popularity', popularityWeight] // divide popularity by corresponding weight
                 },
                 femi_ratio: {
-                  $divide: ['$femi_ratio', femiWeight] // divide popularity by respective weight
+                  $divide: ['$femi_ratio', femiWeight] // divide femi_ratio by corresponding weight
+                },
+                anti_popularity: {
+                  $divide: [
+                    { $divide: ['$anti_count', '$w_count'] },
+                    antiWeight
+                  ] // divide anti_popularity by corresponding weight
                 },
                 femi_count: 1,
                 anti_ratio: 1,
@@ -73,6 +88,7 @@ const fetchTodayIndicator = (
           .toArray((err, result) => {
             assert.equal(null, err);
             callback(result); // get result and give it to callback func
+
             client.close();
           });
       });
@@ -93,10 +109,16 @@ const fetchTodayIndicator = (
                 w_count: 1,
                 m_count: 1,
                 popularity: {
-                  $divide: ['$popularity', popularityWeight] // divide popularity by respective weight
+                  $divide: ['$popularity', popularityWeight] // divide popularity by corresponding weight
                 },
                 femi_ratio: {
-                  $divide: ['$femi_ratio', femiWeight] // divide popularity by respective weight
+                  $divide: ['$femi_ratio', femiWeight] // divide popularity by corresponding weight
+                },
+                anti_popularity: {
+                  $divide: [
+                    { $divide: ['$anti_count', '$w_count'] },
+                    antiWeight
+                  ] // divide anti_popularity by corresponding weight
                 },
                 femi_count: 1,
                 anti_ratio: 1,
@@ -122,6 +144,7 @@ const fetchTodayIndicator = (
           .toArray((err, result) => {
             assert.equal(null, err);
             callback(result); // get result and give it to callback func
+
             client.close();
           });
       });
