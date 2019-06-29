@@ -9,7 +9,6 @@ import {
   fetchBubbleData,
   fetchTodayIndicators
 } from '../../../../actions/actions';
-import dateAndTime from 'date-and-time';
 
 class MainBoard extends Component {
   state = {
@@ -41,11 +40,6 @@ class MainBoard extends Component {
 
     // map dates into a single array (used as x axis in graph)
     const datesInArray = dataToMap.map(data => {
-      //   const parsedTime = dateAndTime.parse(
-      //  ,
-      //     'YYYY-MM',
-      //     true
-      //   );
       return `${data.years}-${data.months}`;
     });
 
