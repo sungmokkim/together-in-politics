@@ -1040,9 +1040,9 @@ textarea {
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
-  // box-shadow: $box-shadow;
-  // background: white;
+
   border-radius: 15px;
+  position: relative;
 
   &:hover {
     .small-title::after {
@@ -1245,10 +1245,10 @@ textarea {
   }
 
   .ranking-fixed-header {
-    width: 15%;
+    width: 20%;
     padding: 1rem 6rem;
     @include medium-small {
-      width: 15%;
+      width: 20%;
     }
   }
 
