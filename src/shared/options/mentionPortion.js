@@ -15,7 +15,7 @@ export const mentionPortionOptions = {
     index: 'mentionPortionLow'
   },
   mentionPortionNone: {
-    korean: '대통령 최소 언급 기준 없음',
+    korean: '필터링 없음',
     koreanShort: '없음',
     index: 'mentionPortionNone'
   }
