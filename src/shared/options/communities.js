@@ -6,6 +6,7 @@ export const communityOptions = {
     popularityWeight: 0.0284,
     femiWeight: 0.0228,
     antiWeight: 0.0105,
+
     index: 'mlbpark',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
@@ -79,16 +80,5 @@ export const communityOptions = {
   }
 };
 
-export const communityDefault = {
-  korean: 'MLB파크',
-  koreanShort: '엠',
-  color: '#E7813C',
-  popularityWeight: 0.0284,
-  femiWeight: 0.0228,
-  antiWeight: 0.0105,
-  index: 'mlbpark',
-  mentionPortionHigh: 150,
-  mentionPortionMid: 100,
-  mentionPortionLow: 50,
-  mentionPortionNone: 1
-};
+export const communityDefault =
+  communityOptions[Object.keys(communityOptions)[0]];
