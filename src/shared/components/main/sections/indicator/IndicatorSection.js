@@ -44,6 +44,7 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
+            emojiMargin='1rem'
           />
         </Link>
 
@@ -61,8 +62,27 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
+            emojiMargin='2rem'
           />
         </Link>
+
+        {/* <Link to='/dashboard'>
+          <Indicator
+            title={todayIndicators.anti_popularity['korean']}
+            index='anti_popularity'
+            value={this.getValue('anti_popularity')}
+            isNumber={true}
+            statusValues={todayIndicators.anti_popularity.statusValues}
+            statusNames={todayIndicators.anti_popularity.statusNames['korean']}
+            statusMarks={todayIndicators.anti_popularity.statusMarks}
+            isFaceEmoji={false}
+            metric='%'
+            activeCommunity={active.community['korean']}
+            handleClick={this.handleChange}
+            emojiMargin='2rem'
+          />
+        </Link> */}
+
         <Link to='/dashboard'>
           <Indicator
             title={todayIndicators.femi_ratio['korean']}
@@ -76,6 +96,7 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
+            emojiMargin='1rem'
           />
         </Link>
 
