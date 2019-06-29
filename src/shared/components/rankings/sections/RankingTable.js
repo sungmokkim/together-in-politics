@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SlideNotification from '../../common/SlideNotification';
+import ContentLoading from '../../common/ContentLoading';
 
 class RankingTable extends Component {
   mapTbody = () => {
@@ -39,11 +40,24 @@ class RankingTable extends Component {
       );
     });
   };
+
+  renderLoading = () => {
+    return this.props.contentIsLoading ? <ContentLoading /> : null;
+  };
+
+  renderSlideIcon = () => {
+    // render slide icon only after data loading is completed
+    // also, only display icon when coming dataset has more than one row
+    return this.props.contentIsLoading ? null : this.props.data.length ? (
+      <SlideNotification />
+    ) : null;
+  };
   render() {
     return (
       <section className='section-global'>
         <div className='ranking-table-container'>
-          <SlideNotification />
+          {this.renderSlideIcon()}
+          {this.renderLoading()}
           <table className='ranking-table'>
             <thead>
               <tr>
