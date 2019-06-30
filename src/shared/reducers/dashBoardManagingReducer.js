@@ -3,7 +3,8 @@ import {
   CHANGE_CURRENT_DATE,
   CHANGE_ACTIVE,
   RESET_CURRENT_RANGE,
-  FETCH_LATEST_DATE
+  FETCH_LATEST_DATE,
+  TOGGLE_INDICATOR
 } from '../actions/actions';
 
 import { communityOptions, communityDefault } from '../options/communities';
@@ -19,6 +20,7 @@ import {
   rankingSortingDefault,
   rankingSortingOptions
 } from '../options/rankingSorting';
+import { lineChartIndicatorOptions } from '../options/lineChartIndicator';
 
 const initialState = {
   active: {
@@ -129,6 +131,8 @@ const initialState = {
     }
   },
 
+  lineChartIndicatorOptions: lineChartIndicatorOptions,
+
   rangeOptions: {
     total: {
       index: 'total',
@@ -180,7 +184,7 @@ const initialState = {
 
   dashboardIndicatorsName: {
     anti_ratio: { korean: '적극 거부율', koreanShort: '거부율' },
-    popularity: { korean: '게시판 지분율', koreanShort: '지분율' },
+    popularity: { korean: '대통령 지분율', koreanShort: '지분율' },
     femi_ratio: { korean: '여성 갈등 지수', koreanShort: '여성 지수' },
     femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
     // ,
@@ -360,7 +364,14 @@ export default (state = initialState, action) => {
           date: action.payload.date
         }
       };
-
+    case TOGGLE_INDICATOR:
+      return {
+        ...state,
+        lineChartIndicatorOptions: {
+          ...state.lineChartIndicatorOptions,
+          [action.payload.index]: action.payload
+        }
+      };
     default:
       return state;
   }
