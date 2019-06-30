@@ -7,7 +7,8 @@ import {
   fetchDashboardData,
   fetchPeriodData,
   fetchBubbleData,
-  fetchTodayIndicators
+  fetchTodayIndicators,
+  toggleIndicator
 } from '../../../../actions/actions';
 
 class MainBoard extends Component {
@@ -17,18 +18,21 @@ class MainBoard extends Component {
 
     lineChartData: {
       labels: [],
-      dataArray: []
+
+      dataObj: {}
     },
+
     barChartData: {
       labels: [],
       dataArray: []
     },
+
     bubbleChartData: [],
     firstTimeLoaded: true
   };
 
   updateLineChart = (inputData = null) => {
-    const { active } = this.props.dashboardManager;
+    const { active, lineChartIndicatorOptions } = this.props.dashboardManager;
 
     let dataToMap;
 
@@ -43,17 +47,45 @@ class MainBoard extends Component {
       return `${data.years}-${data.months}`;
     });
 
-    // map actual data into a single array (used as y axis in graph)
-    const dataInArray = dataToMap.map(data =>
-      data[active.indicator].toFixed(2)
-    );
+    // the following two functions will reduce the coming array(raw data) twice
+    // first one is to actually map each indicator's data in a respective array (an object with each key containing each array)
+    // second one is to re-structure it to another object each with the data combined with chart configuration
+    // These steps are needed because the line graph should display only when the corresponding indicator's check-status is true
+    // checking status will take place in MainBoardContent.js
+    const dataObj = dataToMap.reduce((acc, val) => {
+      Object.keys(lineChartIndicatorOptions).forEach(key => {
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(val[key].toFixed(2));
+      });
+
+      return acc;
+    }, {});
+
+    const newDataObj = Object.keys(dataObj).reduce((acc, val) => {
+      if (!acc[val]) {
+        acc[val] = {};
+      }
+
+      acc[val] = {
+        data: dataObj[val],
+        label: lineChartIndicatorOptions[val]['korean'],
+        fill: false,
+        backgroundColor: lineChartIndicatorOptions[val]['lineColor'],
+        borderColor: lineChartIndicatorOptions[val]['lineColor'],
+        pointHoverBorderWidth: 10,
+        lineTension: 0.1
+      };
+      return acc;
+    }, {});
 
     this.setState({
       ...this.state,
       chartIsLoading: false, // turn off chart loading component (it was turned on in higher order function)
       lineChartData: {
         labels: datesInArray,
-        dataArray: dataInArray // set data in state
+        dataObj: newDataObj // set data in state
       }
     });
   };
@@ -201,12 +233,23 @@ class MainBoard extends Component {
     });
   };
 
+  handleCheck = (type, value) => {
+    const newValue = {
+      ...value,
+      checked: !value.checked
+    };
+    this.props.toggleIndicator(newValue);
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className='mainboard-wrapper'>
           <div className='mainboard-menu-container'>
-            <MainBoardMenu handleClick={this.handleButtonClick} />
+            <MainBoardMenu
+              handleClick={this.handleButtonClick}
+              handleCheck={this.handleCheck}
+            />
           </div>
           <div
             className='mainboard-content-container'
@@ -239,6 +282,7 @@ export default connect(
     fetchDashboardData,
     fetchPeriodData,
     fetchBubbleData,
-    fetchTodayIndicators
+    fetchTodayIndicators,
+    toggleIndicator
   }
 )(MainBoard);
