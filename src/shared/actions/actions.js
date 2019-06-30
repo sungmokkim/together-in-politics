@@ -58,7 +58,7 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  { index, femiWeight, popularityWeight }
+  { index, femiWeight, popularityWeight, antiWeight }
 ) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/today_indicator`,
@@ -69,7 +69,8 @@ export const fetchTodayIndicators = (
       get_latest: getLatest,
       community: index,
       popularityWeight,
-      femiWeight
+      femiWeight,
+      antiWeight
     }
   );
 
@@ -355,4 +356,14 @@ export const updateNewComment = ({
   });
 
   return res.data;
+};
+
+// TOGGLE------------------------------
+
+export const TOGGLE_INDICATOR = 'TOGGLE_INDICATOR';
+export const toggleIndicator = value => async dispatch => {
+  dispatch({
+    type: TOGGLE_INDICATOR,
+    payload: value
+  });
 };
