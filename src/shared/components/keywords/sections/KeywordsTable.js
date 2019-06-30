@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import mapLinkToWords from '../../../functions/mapLinkToWords';
 import SlideNotification from '../../common/SlideNotification';
 import ContentLoading from '../../common/ContentLoading';
+import IndicatorBar from '../../common/IndicatorBar';
 
 class KeywordsTable extends Component {
   mapTbody = () => {
@@ -9,7 +10,11 @@ class KeywordsTable extends Component {
       return (
         <tr key={dt._id}>
           <td className='center'>{`${index + 1}위`}</td>
-          <td className='center'>{`${(dt.anti_ratio * 100).toFixed(1)}%`}</td>
+          <td className='center'>
+            {`${(dt.anti_ratio * 100).toFixed(1)}%`}
+            <br />
+            <IndicatorBar value={(dt.anti_ratio * 100).toFixed(1)} />
+          </td>
           <td className='center'>{dt.dates.substr(2, 9)}</td>
           {[...Array(5).keys()].map(index => {
             return (
@@ -76,7 +81,15 @@ class KeywordsTable extends Component {
               </tr>
             </thead>
 
-            <tbody>{this.mapTbody()}</tbody>
+            <tbody
+              style={{
+                animation: this.props.contentIsLoading
+                  ? null
+                  : 'opacity-fade-in 1s forwards'
+              }}
+            >
+              {this.mapTbody()}
+            </tbody>
           </table>
         </div>
       </section>

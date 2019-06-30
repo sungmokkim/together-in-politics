@@ -67,7 +67,15 @@ class RankingTable extends Component {
               </tr>
             </thead>
 
-            <tbody>{this.mapTbody()}</tbody>
+            <tbody
+              style={{
+                animation: this.props.contentIsLoading
+                  ? null
+                  : 'opacity-fade-in 1s forwards'
+              }}
+            >
+              {this.mapTbody()}
+            </tbody>
           </table>
         </div>
       </section>
