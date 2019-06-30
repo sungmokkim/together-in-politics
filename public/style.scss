@@ -234,14 +234,14 @@ ul {
     }
 
     .submit-btn {
-      width: 40%;
+      width: 30%;
       background: white;
       color: black;
       padding: 3rem;
       height: 3rem;
       border: none;
-      border-radius: 15px;
-      border: 0.2px solid $point-color;
+      border-radius: 30px;
+      border: 2px solid $point-color;
       font-size: 2rem;
       display: flex;
       flex-direction: column;
@@ -486,6 +486,13 @@ textarea {
     .normal-element {
       font-size: 1.8rem;
 
+      .check-mark {
+        font-size: 2rem;
+
+        color: $point-color;
+        margin: 0 0.7rem;
+      }
+
       @include small {
         font-size: 1.8rem;
       }
@@ -513,11 +520,21 @@ textarea {
 
 .slide-notification {
   font-size: 6rem;
-  color: darken(lightgray, 15%);
+  color: darken(lightgrey, 15%);
   position: fixed;
   right: 10%;
   top: 50vh;
   z-index: 3;
+}
+
+.meter-bar-container {
+  .original-bar {
+    fill: rgb(235, 235, 235);
+  }
+
+  .value-bar {
+    fill: blue;
+  }
 }
 
 //----------------------------------------------------------------------------------------
@@ -1060,7 +1077,7 @@ textarea {
         color: white;
         height: 7rem;
         padding: 1rem;
-        font-size: 1.9rem;
+        font-size: 1.7rem;
         margin-bottom: 100px;
       }
     }
@@ -1077,7 +1094,7 @@ textarea {
       }
 
       td {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         height: 8rem;
         padding: 0.3rem;
 
@@ -1085,9 +1102,21 @@ textarea {
           font-size: 1.5rem;
         }
         .word-link {
-          font-size: 1.8rem;
-          text-decoration: underline;
-          color: #1168ff;
+          font-size: 1.4rem;
+          border: 2px solid $blue;
+          padding: 1rem 2.5rem;
+          border-radius: 30px;
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+
+          &:hover {
+            background: $blue;
+            color: white;
+          }
+
+          @include medium {
+            font-size: 1.4rem;
+          }
         }
       }
     }
@@ -1182,11 +1211,6 @@ textarea {
 
         @include medium {
           font-size: 1.5rem;
-        }
-        .word-link {
-          font-size: 1.8rem;
-          text-decoration: underline;
-          color: #1168ff;
         }
       }
     }
