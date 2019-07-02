@@ -1325,7 +1325,7 @@ textarea:focus {
 
 .ranking-table {
   word-break: keep-all;
-  width: 80rem;
+  width: 90rem;
   border-collapse: collapse;
   border-collapse: separate;
   border-spacing: 0px 0.7rem;
@@ -1336,7 +1336,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .ranking-table {
-    width: 65rem;
+    width: 80rem;
   }
 }
 
