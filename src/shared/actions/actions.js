@@ -1,5 +1,4 @@
 import axios from 'axios';
-import dateAndTime from 'date-and-time';
 import { clientFetchingReference, protocol } from '../clientEnv';
 
 // FETCH ----------------------------------------------------------------------------
@@ -9,15 +8,11 @@ export const fetchLatestDate = () => async dispatch => {
     `${protocol}://${clientFetchingReference}/api/latest_date`
   );
 
-  const latestDateParsed = dateAndTime.parse(
-    res.data[0].date,
-    'YYYY-MM-DD',
-    true
-  );
+  const latestDateArray = res.data[0].dates.split('-');
 
-  const latestYear = dateAndTime.format(latestDateParsed, 'YYYY', true);
-  const latestMonth = dateAndTime.format(latestDateParsed, 'MM', true);
-  const latestDate = dateAndTime.format(latestDateParsed, 'DD', true);
+  const latestYear = latestDateArray[0];
+  const latestMonth = latestDateArray[1];
+  const latestDate = latestDateArray[2];
 
   dispatch({
     type: FETCH_LATEST_DATE,
@@ -58,7 +53,7 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  { index, femiWeight, popularityWeight, antiWeight }
+  { index, femiWeight, popularityWeight, antiWeight, problemWeight }
 ) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/today_indicator`,
@@ -70,7 +65,8 @@ export const fetchTodayIndicators = (
       community: index,
       popularityWeight,
       femiWeight,
-      antiWeight
+      antiWeight,
+      problemWeight
     }
   );
 
