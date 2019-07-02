@@ -62,7 +62,7 @@ const fetchTodayIndicator = (
 
               problem_ratio: {
                 $divide: [
-                  { $divide: ['$problem_count', '$w_count'] },
+                  { $divide: ['$problem_count', '$w_count'] }, // divide problem_ratio by corresponding weight
                   problemWeight
                 ]
               },
