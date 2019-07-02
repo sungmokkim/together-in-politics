@@ -1,18 +1,23 @@
 export const rankingSortingOptions = {
   anti_ratio: {
     korean: '적극 거부율 순 랭킹',
-    koreanShort: '거부율',
+    koreanShort: '거부',
     index: 'anti_ratio'
   },
   popularity: {
     korean: '대통령 지분율 순 랭킹',
-    koreanShort: '지분율',
+    koreanShort: '지분',
     index: 'popularity'
   },
   femi_ratio: {
-    korean: '여성 갈등 지수 순 랭킹',
-    koreanShort: '여성 지수',
+    korean: '페미 이슈 지수 순 랭킹',
+    koreanShort: '페미',
     index: 'femi_ratio'
+  },
+  problem_ratio: {
+    korean: '반발 지수 순 랭킹',
+    koreanShort: '반발',
+    index: 'problem_ratio'
   }
 };
 
