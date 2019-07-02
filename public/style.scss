@@ -19,7 +19,12 @@ $green: #03c03c;
 $lightblue: rgb(75, 164, 194);
 $orange: #f6ac5b;
 
-$frequency-color: #0aa137;
+// colors for indicators
+$femi-color: #583b8b;
+$popularity-color: #4386f9;
+$anti-color: #f75467;
+$problem-color: #f6ac5b;
+
 // -------------------------------------------------------
 
 //Viewports
@@ -533,7 +538,7 @@ textarea {
   }
 
   .value-bar {
-    fill: blue;
+    transition: 1s all ease-in-out;
   }
 }
 
@@ -662,41 +667,92 @@ textarea {
 // -------------------------------------------------------
 
 // Status-Colors
-.status-very-good {
-  color: $blue;
+.popularity-status-1 {
+  color: darken($popularity-color, 10%);
+  fill: darken($popularity-color, 10%);
 }
-.status-good {
-  color: $lightblue;
+.popularity-status-2 {
+  color: darken($popularity-color, 10%);
+  fill: darken($popularity-color, 10%);
 }
-.status-okay {
-  color: $green;
+.popularity-status-3 {
+  color: $popularity-color;
+  fill: $popularity-color;
 }
-.status-bad {
-  color: $orange;
+.popularity-status-4 {
+  color: lighten($popularity-color, 10%);
+  fill: lighten($popularity-color, 10%);
 }
-.status-very-bad {
-  color: $red;
+.popularity-status-5 {
+  color: lighten($popularity-color, 10%);
+  fill: lighten($popularity-color, 10%);
+}
+
+.anti-status-1 {
+  color: darken($anti-color, 10%);
+  fill: darken($anti-color, 10%);
+}
+.anti-status-2 {
+  color: darken($anti-color, 10%);
+  fill: darken($anti-color, 10%);
+}
+.anti-status-3 {
+  color: $anti-color;
+  fill: $anti-color;
+}
+.anti-status-4 {
+  color: lighten($anti-color, 10%);
+  fill: lighten($anti-color, 10%);
+}
+.anti-status-5 {
+  color: lighten($anti-color, 10%);
+  fill: lighten($anti-color, 10%);
+}
+
+.problem-status-1 {
+  color: darken($problem-color, 10%);
+  fill: darken($problem-color, 10%);
+}
+.problem-status-2 {
+  color: darken($problem-color, 10%);
+  fill: darken($problem-color, 10%);
+}
+.problem-status-3 {
+  color: $problem-color;
+  fill: $problem-color;
+}
+.problem-status-4 {
+  color: lighten($problem-color, 10%);
+  fill: lighten($problem-color, 10%);
+}
+.problem-status-5 {
+  color: lighten($problem-color, 10%);
+  fill: lighten($problem-color, 10%);
+}
+
+.femi-status-1 {
+  color: darken($femi-color, 10%);
+  fill: darken($femi-color, 10%);
+}
+.femi-status-2 {
+  color: darken($femi-color, 10%);
+  fill: darken($femi-color, 10%);
+}
+.femi-status-3 {
+  color: $femi-color;
+  fill: $femi-color;
+}
+.femi-status-4 {
+  color: lighten($femi-color, 10%);
+  fill: lighten($femi-color, 10%);
+}
+.femi-status-5 {
+  color: lighten($femi-color, 10%);
+  fill: lighten($femi-color, 10%);
 }
 
 .status-number {
   color: gray;
-}
-
-// frequency status
-.status-very-high {
-  color: darken($frequency-color, 20%);
-}
-.status-high {
-  color: darken($frequency-color, 10%);
-}
-.status-mid {
-  color: $frequency-color;
-}
-.status-low {
-  color: lighten($frequency-color, 10%);
-}
-.status-very-low {
-  color: lighten($frequency-color, 20%);
 }
 
 // -------------------------------------------------------
@@ -847,73 +903,74 @@ textarea {
         background: darken(white, 10%);
       }
 
-      display: flex;
-      justify-content: space-between;
-      padding: 3rem 3rem;
+      // display: flex;
+      // justify-content: space-between;
+      // padding: 3rem 3rem;
+      // margin: 2rem;
+      // align-items: center;
+
+      // text-align: center;
       margin: 2rem;
-      align-items: center;
-
-      text-align: center;
-
-      @include large {
+      padding: 3rem 3rem;
+      .indicator-content-container {
         display: flex;
         justify-content: space-between;
-        padding: 3rem 3rem;
-        margin: 2rem;
-        align-items: center;
-      }
 
-      .indicator-title-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
         align-items: center;
 
-        .emotion {
-          font-size: 4.5rem;
+        text-align: center;
+        .indicator-title-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+
+          .emotion {
+            font-size: 4.5rem;
+          }
+
+          div {
+            text-align: left;
+            .indicator-title {
+              font-size: 3rem;
+              text-align: left;
+              font-weight: bold;
+
+              @include medium-small {
+                font-size: 2.4rem;
+              }
+            }
+
+            .active-community {
+              color: darken(lightgray, 20%);
+              font-size: 1.7rem;
+            }
+          }
         }
 
-        div {
-          text-align: left;
-          .indicator-title {
-            font-size: 3rem;
-            text-align: left;
+        .fa-font {
+          color: $point-color;
+        }
+        .indicator-content {
+          font-family: $big-font;
+
+          .value {
+            font-size: 5rem;
             font-weight: bold;
 
             @include medium-small {
-              font-size: 2.4rem;
+              font-size: 4.4rem;
             }
           }
 
-          .active-community {
-            color: darken(lightgray, 20%);
+          .metric {
             font-size: 1.7rem;
           }
-        }
-      }
 
-      .fa-font {
-        color: $point-color;
-      }
-      .indicator-content {
-        font-family: $big-font;
-
-        .value {
-          font-size: 5rem;
-          font-weight: bold;
-
-          @include medium-small {
-            font-size: 4.4rem;
+          .status {
+            font-size: 2rem;
+            text-align: right;
           }
-        }
-
-        .metric {
-          font-size: 1.7rem;
-        }
-
-        .status {
-          font-size: 2rem;
-          text-align: right;
         }
       }
     }
@@ -939,7 +996,7 @@ textarea {
       align-items: center;
 
       text-align: center;
-
+      height: 20rem;
       @include large {
         display: flex;
         justify-content: space-between;
@@ -1076,9 +1133,13 @@ textarea {
         // border-bottom: 0.3px grey solid;
         color: white;
         height: 7rem;
-        padding: 1rem;
+        padding: 1rem 1rem;
         font-size: 1.7rem;
         margin-bottom: 100px;
+      }
+
+      .meter-header {
+        width: 10%;
       }
     }
   }
@@ -1104,7 +1165,7 @@ textarea {
         .word-link {
           font-size: 1.4rem;
           border: 2px solid $blue;
-          padding: 1rem 2.5rem;
+          padding: 1rem 1.8rem;
           border-radius: 30px;
           cursor: pointer;
           transition: 0.3s ease-in-out;
@@ -1114,8 +1175,8 @@ textarea {
             color: white;
           }
 
-          @include medium {
-            font-size: 1.4rem;
+          @include medium-small {
+            font-size: 1.6rem;
           }
         }
       }
@@ -1161,7 +1222,7 @@ textarea {
   }
   .keywords-fixed-header {
     width: 15%;
-    padding: 1rem 1rem;
+    padding: 1rem 0.3rem;
     @include medium-small {
     }
   }
@@ -1255,11 +1316,8 @@ textarea {
   }
 
   .ranking-fixed-header {
-    width: 20%;
+    width: 15%;
     padding: 1rem 6rem;
-    @include medium-small {
-      width: 20%;
-    }
   }
 
   .td-highlight {

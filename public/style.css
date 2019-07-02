@@ -382,7 +382,8 @@ textarea:focus {
 }
 
 .meter-bar-container .value-bar {
-  fill: blue;
+  -webkit-transition: 1s all ease-in-out;
+  transition: 1s all ease-in-out;
 }
 
 .selection-fade-in {
@@ -610,48 +611,108 @@ textarea:focus {
   }
 }
 
-.status-very-good {
+.popularity-status-1 {
+  color: #1266f7;
+  fill: #1266f7;
+}
+
+.popularity-status-2 {
+  color: #1266f7;
+  fill: #1266f7;
+}
+
+.popularity-status-3 {
   color: #4386f9;
+  fill: #4386f9;
 }
 
-.status-good {
-  color: #4ba4c2;
+.popularity-status-4 {
+  color: #74a6fb;
+  fill: #74a6fb;
 }
 
-.status-okay {
-  color: #03c03c;
+.popularity-status-5 {
+  color: #74a6fb;
+  fill: #74a6fb;
 }
 
-.status-bad {
-  color: #f6ac5b;
+.anti-status-1 {
+  color: #f5233c;
+  fill: #f5233c;
 }
 
-.status-very-bad {
+.anti-status-2 {
+  color: #f5233c;
+  fill: #f5233c;
+}
+
+.anti-status-3 {
   color: #f75467;
+  fill: #f75467;
+}
+
+.anti-status-4 {
+  color: #f98592;
+  fill: #f98592;
+}
+
+.anti-status-5 {
+  color: #f98592;
+  fill: #f98592;
+}
+
+.problem-status-1 {
+  color: #f3942b;
+  fill: #f3942b;
+}
+
+.problem-status-2 {
+  color: #f3942b;
+  fill: #f3942b;
+}
+
+.problem-status-3 {
+  color: #f6ac5b;
+  fill: #f6ac5b;
+}
+
+.problem-status-4 {
+  color: #f9c48b;
+  fill: #f9c48b;
+}
+
+.problem-status-5 {
+  color: #f9c48b;
+  fill: #f9c48b;
+}
+
+.femi-status-1 {
+  color: #412c67;
+  fill: #412c67;
+}
+
+.femi-status-2 {
+  color: #412c67;
+  fill: #412c67;
+}
+
+.femi-status-3 {
+  color: #583b8b;
+  fill: #583b8b;
+}
+
+.femi-status-4 {
+  color: #6f4aaf;
+  fill: #6f4aaf;
+}
+
+.femi-status-5 {
+  color: #6f4aaf;
+  fill: #6f4aaf;
 }
 
 .status-number {
   color: gray;
-}
-
-.status-very-high {
-  color: #044116;
-}
-
-.status-high {
-  color: #077127;
-}
-
-.status-mid {
-  color: #0aa137;
-}
-
-.status-low {
-  color: #0dd147;
-}
-
-.status-very-low {
-  color: #20f15e;
 }
 
 .site-title {
@@ -856,41 +917,28 @@ textarea:focus {
   cursor: pointer;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 3rem 3rem;
   margin: 2rem;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-align: center;
+  padding: 3rem 3rem;
 }
 
 .indicator-container a .indicator-card:hover {
   background: #e6e6e6;
 }
 
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    padding: 3rem 3rem;
-    margin: 2rem;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
+.indicator-container a .indicator-card .indicator-content-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
 }
 
-.indicator-container a .indicator-card .indicator-title-container {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -906,55 +954,55 @@ textarea:focus {
           align-items: center;
 }
 
-.indicator-container a .indicator-card .indicator-title-container .emotion {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container .emotion {
   font-size: 4.5rem;
 }
 
-.indicator-container a .indicator-card .indicator-title-container div {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div {
   text-align: left;
 }
 
-.indicator-container a .indicator-card .indicator-title-container div .indicator-title {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .indicator-title {
   font-size: 3rem;
   text-align: left;
   font-weight: bold;
 }
 
 @media (max-width: 600px) {
-  .indicator-container a .indicator-card .indicator-title-container div .indicator-title {
+  .indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .indicator-title {
     font-size: 2.4rem;
   }
 }
 
-.indicator-container a .indicator-card .indicator-title-container div .active-community {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .active-community {
   color: #a0a0a0;
   font-size: 1.7rem;
 }
 
-.indicator-container a .indicator-card .fa-font {
+.indicator-container a .indicator-card .indicator-content-container .fa-font {
   color: #f78886;
 }
 
-.indicator-container a .indicator-card .indicator-content {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content {
   font-family: "Jua", sans-serif;
 }
 
-.indicator-container a .indicator-card .indicator-content .value {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .value {
   font-size: 5rem;
   font-weight: bold;
 }
 
 @media (max-width: 600px) {
-  .indicator-container a .indicator-card .indicator-content .value {
+  .indicator-container a .indicator-card .indicator-content-container .indicator-content .value {
     font-size: 4.4rem;
   }
 }
 
-.indicator-container a .indicator-card .indicator-content .metric {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .metric {
   font-size: 1.7rem;
 }
 
-.indicator-container a .indicator-card .indicator-content .status {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .status {
   font-size: 2rem;
   text-align: right;
 }
@@ -985,6 +1033,7 @@ textarea:focus {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  height: 20rem;
 }
 
 .indicator-container a .word-card:hover {
@@ -1174,9 +1223,13 @@ textarea:focus {
 .keywords-table thead tr th {
   color: white;
   height: 7rem;
-  padding: 1rem;
+  padding: 1rem 1rem;
   font-size: 1.7rem;
   margin-bottom: 100px;
+}
+
+.keywords-table thead tr .meter-header {
+  width: 10%;
 }
 
 .keywords-table tbody tr {
@@ -1206,7 +1259,7 @@ textarea:focus {
 .keywords-table tbody tr td .word-link {
   font-size: 1.4rem;
   border: 2px solid #4386f9;
-  padding: 1rem 2.5rem;
+  padding: 1rem 1.8rem;
   border-radius: 30px;
   cursor: pointer;
   -webkit-transition: 0.3s ease-in-out;
@@ -1218,9 +1271,9 @@ textarea:focus {
   color: white;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .keywords-table tbody tr td .word-link {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -1267,7 +1320,7 @@ textarea:focus {
 
 .keywords-table .keywords-fixed-header {
   width: 15%;
-  padding: 1rem 1rem;
+  padding: 1rem 0.3rem;
 }
 
 .ranking-table {
@@ -1367,14 +1420,8 @@ textarea:focus {
 }
 
 .ranking-table .ranking-fixed-header {
-  width: 20%;
+  width: 15%;
   padding: 1rem 6rem;
-}
-
-@media (max-width: 600px) {
-  .ranking-table .ranking-fixed-header {
-    width: 20%;
-  }
 }
 
 .ranking-table .td-highlight {
