@@ -25,7 +25,7 @@ const fetchDashboardData = (
   const { year, month, date } = latestDate;
 
   // decontrcut needed values from active community obj
-  const { femiWeight, popularityWeight, antiWeight } = community;
+  const { femiWeight, popularityWeight, antiWeight, problemWeight } = community;
 
   const latestDateString = `${year}-${month}-${date}`;
 
@@ -67,9 +67,8 @@ const fetchDashboardData = (
             name: community.index,
             dates: { $gte: dateToFetchFrom },
             m_count: {
-              $gte:
-                indicator === 'popularity' ? 0 : community[mentionPortion.index]
-            } // only fetch records with minimum m_count(freq of mentioning president) when the indicator is not popularity
+              $gte: community[mentionPortion.index]
+            } // only fetch records with minimum m_count(freq of mentioning president)
           }
         },
         {
@@ -84,6 +83,9 @@ const fetchDashboardData = (
             },
             avg_m_count: {
               $avg: '$m_count'
+            },
+            avg_problem_count: {
+              $avg: '$problem_count'
             },
             sum_m_count: {
               $sum: '$m_count'
@@ -113,6 +115,17 @@ const fetchDashboardData = (
                   $divide: [
                     { $divide: ['$avg_m_count', '$avg_w_count'] },
                     popularityWeight
+                  ]
+                },
+                100
+              ]
+            },
+            problem_ratio: {
+              $multiply: [
+                {
+                  $divide: [
+                    { $divide: ['$avg_problem_count', '$avg_w_count'] },
+                    problemWeight
                   ]
                 },
                 100
