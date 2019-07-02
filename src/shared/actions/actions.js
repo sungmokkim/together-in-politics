@@ -143,7 +143,7 @@ export const fetchBubbleData = (
 
 export const FETCH_KEYWORDS = 'FETCH_KEYWORDS';
 export const fetchKeywords = (
-  { community, keywordPeriod, mentionPortion },
+  { community, keywordPeriod, mentionPortion, rankingSorting },
   latestDate
 ) => async dispatch => {
   const res = await axios.post(
@@ -152,7 +152,8 @@ export const fetchKeywords = (
       community,
       latestDate: latestDate,
       period: keywordPeriod,
-      mentionPortion
+      mentionPortion,
+      rankingSorting
     }
   );
 
