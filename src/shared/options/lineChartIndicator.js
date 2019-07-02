@@ -1,23 +1,31 @@
 export const lineChartIndicatorOptions = {
   anti_ratio: {
     korean: '적극 거부율',
-    koreanShort: '거부율',
+    koreanShort: '거부',
     checked: true,
     index: 'anti_ratio',
     lineColor: '#f75467'
   },
   popularity: {
     korean: '대통령 지분율',
-    koreanShort: '지분율',
+    koreanShort: '지분',
     checked: false,
     index: 'popularity',
     lineColor: '#4386f9'
   },
   femi_ratio: {
-    korean: '여성 갈등 지수',
-    koreanShort: '여성',
+    korean: '페미 이슈 지수',
+    koreanShort: '페미',
     checked: true,
     index: 'femi_ratio',
-    lineColor: '#03c03c'
+    lineColor: '#C38D9D'
+  },
+  problem_ratio: {
+    korean: '반발 지수',
+    koreanShort: '반발',
+    checked: true,
+    index: 'problem_ratio',
+
+    lineColor: '#f6ac5b'
   }
 };
