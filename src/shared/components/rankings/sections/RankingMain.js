@@ -140,6 +140,7 @@ class RankingMain extends Component {
           fieldOrder={this.state.fieldOrder}
           fieldNames={this.props.dashboardManager.todayIndicators}
           contentIsLoading={this.state.contentIsLoading}
+          indicators={this.props.dashboardManager.todayIndicators}
         />
       </section>
     );

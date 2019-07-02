@@ -6,6 +6,7 @@ import IndicatorBar from '../../common/IndicatorBar';
 
 class KeywordsTable extends Component {
   mapTbody = () => {
+    const { anti_ratio } = this.props.indicators;
     return this.props.data.map((dt, index) => {
       return (
         <tr key={dt._id}>
@@ -13,7 +14,13 @@ class KeywordsTable extends Component {
           <td className='center'>
             {`${(dt.anti_ratio * 100).toFixed(1)}%`}
             <br />
-            <IndicatorBar value={(dt.anti_ratio * 100).toFixed(1)} />
+            <IndicatorBar
+              totalWidth='50%'
+              totalHeight='1rem'
+              value={(dt.anti_ratio * 100).toFixed(1)}
+              statusValues={anti_ratio.statusValues}
+              statusMarks={anti_ratio.statusMarks}
+            />
           </td>
           <td className='center'>{dt.dates.substr(2, 9)}</td>
           {[...Array(5).keys()].map(index => {
@@ -56,7 +63,7 @@ class KeywordsTable extends Component {
             <thead>
               <tr>
                 <th className='center'>순위</th>
-                <th className='center'>거부율</th>
+                <th className='center meter-header'>거부율</th>
                 <th className='center'>날짜</th>
                 <th className='center keywords-fixed-header'>
                   키워드 <br />

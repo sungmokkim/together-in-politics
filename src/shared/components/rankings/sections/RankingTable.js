@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SlideNotification from '../../common/SlideNotification';
 import ContentLoading from '../../common/ContentLoading';
+import IndicatorBar from '../../common/IndicatorBar';
 
 class RankingTable extends Component {
   mapTbody = () => {
@@ -23,7 +24,17 @@ class RankingTable extends Component {
               <td
                 className={`center ${index === 0 ? 'td-highlight' : null}`}
                 key={field}
-              >{`${dt[field]}%`}</td>
+              >
+                {`${dt[field]}%`}
+                <br />
+                <IndicatorBar
+                  totalWidth='50%'
+                  totalHeight='1.5rem'
+                  value={dt[field]}
+                  statusValues={this.props.indicators[field].statusValues}
+                  statusMarks={this.props.indicators[field].statusMarks}
+                />
+              </td>
             );
           })}
         </tr>

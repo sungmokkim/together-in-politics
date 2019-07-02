@@ -55,6 +55,7 @@ class KeywordsMain extends Component {
         <KeywordsTable
           data={this.props.data.keywords}
           contentIsLoading={this.state.contentIsLoading}
+          indicators={this.props.dashboardManager.todayIndicators}
         />
       </section>
     );
