@@ -76,6 +76,12 @@ class RankingMain extends Component {
           ((dt.femi_ratio / communities[dt.name].femiWeight) * 100).toFixed(2)
         ),
         anti_ratio: parseFloat((dt.anti_ratio * 100).toFixed(2)),
+        problem_ratio: parseFloat(
+          (
+            (dt.problem_ratio / communities[dt.name].problemWeight) *
+            100
+          ).toFixed(2)
+        ),
         name: communities[dt.name]['korean'] // map full names
       };
     });
@@ -89,14 +95,16 @@ class RankingMain extends Component {
     const getFieldOrder = () => {
       switch (indicatorToSortBy) {
         case 'popularity':
-          return ['popularity', 'anti_ratio', 'femi_ratio'];
+          return ['popularity', 'anti_ratio', 'femi_ratio', 'problem_ratio'];
         case 'femi_ratio':
-          return ['femi_ratio', 'anti_ratio', 'popularity'];
+          return ['femi_ratio', 'problem_ratio', 'popularity', 'anti_ratio'];
         case 'anti_ratio':
-          return ['anti_ratio', 'femi_ratio', 'popularity'];
+          return ['anti_ratio', 'femi_ratio', 'problem_ratio', 'popularity'];
+        case 'problem_ratio':
+          return ['problem_ratio', 'popularity', 'anti_ratio', 'femi_ratio'];
 
         default:
-          ['anti_ratio', 'femi_ratio', 'popularity'];
+          ['anti_ratio', 'femi_ratio', 'problem_ratio', 'popularity'];
       }
     };
 
