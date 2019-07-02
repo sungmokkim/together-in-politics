@@ -44,7 +44,8 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
-            emojiMargin='1rem'
+            emojiMarginRight='1rem'
+            emojiMarginLeft='0rem'
           />
         </Link>
 
@@ -62,26 +63,10 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
-            emojiMargin='2rem'
+            emojiMarginRight='2rem'
+            emojiMarginLeft='0rem'
           />
         </Link>
-
-        {/* <Link to='/dashboard'>
-          <Indicator
-            title={todayIndicators.anti_popularity['korean']}
-            index='anti_popularity'
-            value={this.getValue('anti_popularity')}
-            isNumber={true}
-            statusValues={todayIndicators.anti_popularity.statusValues}
-            statusNames={todayIndicators.anti_popularity.statusNames['korean']}
-            statusMarks={todayIndicators.anti_popularity.statusMarks}
-            isFaceEmoji={false}
-            metric='%'
-            activeCommunity={active.community['korean']}
-            handleClick={this.handleChange}
-            emojiMargin='2rem'
-          />
-        </Link> */}
 
         <Link to='/dashboard'>
           <Indicator
@@ -96,7 +81,26 @@ class IndicatorSection extends Component {
             metric='%'
             activeCommunity={active.community['korean']}
             handleClick={this.handleChange}
-            emojiMargin='1rem'
+            emojiMarginRight='1rem'
+            emojiMarginLeft='0rem'
+          />
+        </Link>
+
+        <Link to='/dashboard'>
+          <Indicator
+            title={todayIndicators.problem_ratio['korean']}
+            index='problem_ratio'
+            value={this.getValue('problem_ratio')}
+            isNumber={true}
+            statusValues={todayIndicators.problem_ratio.statusValues}
+            statusNames={todayIndicators.problem_ratio.statusNames['korean']}
+            statusMarks={todayIndicators.problem_ratio.statusMarks}
+            isFaceEmoji={false}
+            metric='%'
+            activeCommunity={active.community['korean']}
+            handleClick={this.handleChange}
+            emojiMarginRight='3rem'
+            emojiMarginLeft='1.5rem'
           />
         </Link>
 
