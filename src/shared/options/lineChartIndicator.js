@@ -18,12 +18,12 @@ export const lineChartIndicatorOptions = {
     koreanShort: '페미',
     checked: true,
     index: 'femi_ratio',
-    lineColor: '#C38D9D'
+    lineColor: '#583b8b'
   },
   problem_ratio: {
     korean: '반발 지수',
     koreanShort: '반발',
-    checked: true,
+    checked: false,
     index: 'problem_ratio',
 
     lineColor: '#f6ac5b'
