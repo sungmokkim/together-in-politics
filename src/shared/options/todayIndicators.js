@@ -13,11 +13,11 @@ export const todayIndicators = {
       ]
     },
     statusMarks: [
-      'status-very-good',
-      'status-good',
-      'status-okay',
-      'status-bad',
-      'status-very-bad'
+      'popularity-status-1',
+      'popularity-status-2',
+      'popularity-status-3',
+      'popularity-status-4',
+      'popularity-status-5'
     ]
   },
   anti_ratio: {
@@ -35,18 +35,18 @@ export const todayIndicators = {
     },
 
     statusMarks: [
-      'status-very-bad',
-      'status-bad',
-      'status-okay',
-      'status-good',
-      'status-very-good'
+      'anti-status-1',
+      'anti-status-2',
+      'anti-status-3',
+      'anti-status-4',
+      'anti-status-5'
     ],
     facialExpressions: [
       'far fa-angry',
+      'far fa-frown-open',
       'far fa-frown',
       'far fa-meh',
-      'far fa-smile',
-      'far fa-laugh'
+      'far fa-smile'
     ]
   },
   anti_popularity: {
@@ -72,10 +72,10 @@ export const todayIndicators = {
     ],
     facialExpressions: [
       'far fa-angry',
+      'far fa-frown-open',
       'far fa-frown',
       'far fa-meh',
-      'far fa-smile',
-      'far fa-laugh'
+      'far fa-smile'
     ]
   },
 
@@ -93,33 +93,33 @@ export const todayIndicators = {
       ]
     },
     statusMarks: [
-      'status-very-high',
-      'status-high',
-      'status-mid',
-      'status-low',
-      'status-very-low'
+      'femi-status-1',
+      'femi-status-2',
+      'femi-status-3',
+      'femi-status-4',
+      'femi-status-5'
     ]
   },
 
   problem_ratio: {
-    korean: '반발 지수',
+    korean: '시니컬 지수',
     index: 'problem_ratio',
     statusValues: [20, 15, 10, 5],
     statusNames: {
       korean: [
-        '갈등 매우 높음',
-        '갈등 비교적 높음',
-        '갈등 보통',
-        '갈등 비교적 낮음',
-        '갈등 매우 낮음'
+        '시니컬 매우 높음',
+        '시니컬 비교적 높음',
+        '시니컬 보통',
+        '시니컬 비교적 낮음',
+        '시니컬 매우 낮음'
       ]
     },
     statusMarks: [
-      'status-very-bad',
-      'status-bad',
-      'status-okay',
-      'status-good',
-      'status-very-good'
+      'problem-status-1',
+      'problem-status-2',
+      'problem-status-3',
+      'problem-status-4',
+      'problem-status-5'
     ]
   },
   word1: '게시판 최빈 단어'
