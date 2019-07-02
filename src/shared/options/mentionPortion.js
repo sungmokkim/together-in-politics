@@ -21,8 +21,5 @@ export const mentionPortionOptions = {
   }
 };
 
-export const mentionPortionDefault = {
-  korean: '필터링 보통',
-  koreanShort: '보통',
-  index: 'mentionPortionMid'
-};
+export const mentionPortionDefault =
+  mentionPortionOptions[Object.keys(mentionPortionOptions)[2]];
