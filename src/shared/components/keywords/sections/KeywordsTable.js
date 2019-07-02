@@ -7,19 +7,24 @@ import IndicatorBar from '../../common/IndicatorBar';
 class KeywordsTable extends Component {
   mapTbody = () => {
     const { anti_ratio } = this.props.indicators;
+
     return this.props.data.map((dt, index) => {
       return (
         <tr key={dt._id}>
           <td className='center'>{`${index + 1}위`}</td>
           <td className='center'>
-            {`${(dt.anti_ratio * 100).toFixed(1)}%`}
+            {`${(dt[this.props.sorting.index] * 100).toFixed(1)}%`}
             <br />
             <IndicatorBar
               totalWidth='50%'
               totalHeight='1rem'
-              value={(dt.anti_ratio * 100).toFixed(1)}
-              statusValues={anti_ratio.statusValues}
-              statusMarks={anti_ratio.statusMarks}
+              value={(dt[this.props.sorting.index] * 100).toFixed(1)}
+              statusValues={
+                this.props.indicators[this.props.sorting.index].statusValues
+              }
+              statusMarks={
+                this.props.indicators[this.props.sorting.index].statusMarks
+              }
             />
           </td>
           <td className='center'>{dt.dates.substr(2, 9)}</td>
@@ -63,7 +68,9 @@ class KeywordsTable extends Component {
             <thead>
               <tr>
                 <th className='center'>순위</th>
-                <th className='center meter-header'>거부율</th>
+                <th className='center meter-header'>
+                  {this.props.sorting.koreanShort}
+                </th>
                 <th className='center'>날짜</th>
                 <th className='center keywords-fixed-header'>
                   키워드 <br />

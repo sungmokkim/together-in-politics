@@ -17,6 +17,12 @@ class KeywordsMenu extends Component {
           type='keywordPeriod'
           valueIsObject={true}
         />
+
+        <IndicatorBtn
+          handleClick={this.props.handleChange}
+          type='rankingSorting'
+          valueIsObject={true}
+        />
         <IndicatorBtn
           handleClick={this.props.handleChange}
           type='mentionPortion'

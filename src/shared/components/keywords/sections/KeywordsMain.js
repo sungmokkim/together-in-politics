@@ -56,6 +56,7 @@ class KeywordsMain extends Component {
           data={this.props.data.keywords}
           contentIsLoading={this.state.contentIsLoading}
           indicators={this.props.dashboardManager.todayIndicators}
+          sorting={this.props.dashboardManager.active.rankingSorting}
         />
       </section>
     );
