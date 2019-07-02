@@ -6,19 +6,20 @@ import IndicatorBar from '../../common/IndicatorBar';
 
 class KeywordsTable extends Component {
   mapTbody = () => {
-    const { anti_ratio } = this.props.indicators;
-
     return this.props.data.map((dt, index) => {
       return (
         <tr key={dt._id}>
           <td className='center'>{`${index + 1}위`}</td>
           <td className='center'>
+            {/* the indicator to display is based on the active sorting option */}
+            {/* if it is fetched and sorted by anti_ratio, this table must display anti_ratio values */}
             {`${(dt[this.props.sorting.index] * 100).toFixed(1)}%`}
             <br />
             <IndicatorBar
               totalWidth='50%'
               totalHeight='1rem'
               value={(dt[this.props.sorting.index] * 100).toFixed(1)}
+              // as mentioned above, all status values and marks must be based on the currently actvie sorting option
               statusValues={
                 this.props.indicators[this.props.sorting.index].statusValues
               }
