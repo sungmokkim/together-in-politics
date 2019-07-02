@@ -16,9 +16,23 @@ Sentiment data were collected from several Korean web sites (web communities) an
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.2
+## Release Note - 0.2.1
 
-* **0.2**
+* **0.2.1**
+  * New
+    * Line Chart
+      * Users can choose multiple indicators to display at the same time
+      * Instead of showing only one indicator at the same time, the line graph now can show multiple indicators at the same time
+    * Keywords Page
+      * Users can see keywords based on a specific indicator
+      * In the previous version, keywords were shown only based on anti-approval rate 
+    * Others
+      * New indicator was added
+        * This indicator's value goes up when a problematic incident occurs
+      * A indicator meter (gauge) bar was added
+        * This meter bar illustrates how good or bad the current value is
+
+* 0.2
   * New
       * Keywords Page was added
         * this page shows important keywords of each community based on anti-approval rate of the president

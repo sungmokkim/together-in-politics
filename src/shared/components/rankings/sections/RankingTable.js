@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import SlideNotification from '../../common/SlideNotification';
+import ContentLoading from '../../common/ContentLoading';
+import IndicatorBar from '../../common/IndicatorBar';
 
 class RankingTable extends Component {
   mapTbody = () => {
@@ -16,8 +19,23 @@ class RankingTable extends Component {
           >{`${index + 1}위`}</td>
           <td className='center'>{dt.name}</td>
 
-          {this.props.fieldOrder.map(field => {
-            return <td className='center' key={field}>{`${dt[field]}%`}</td>;
+          {this.props.fieldOrder.map((field, index) => {
+            return (
+              <td
+                className={`center ${index === 0 ? 'td-highlight' : null}`}
+                key={field}
+              >
+                {`${dt[field]}%`}
+                <br />
+                <IndicatorBar
+                  totalWidth='50%'
+                  totalHeight='1.5rem'
+                  value={dt[field]}
+                  statusValues={this.props.indicators[field].statusValues}
+                  statusMarks={this.props.indicators[field].statusMarks}
+                />
+              </td>
+            );
           })}
         </tr>
       );
@@ -27,16 +45,30 @@ class RankingTable extends Component {
   mapThead = () => {
     return this.props.fieldOrder.map(field => {
       return (
-        <th className='center' key={field}>
+        <th className='center ranking-fixed-header' key={field}>
           {this.props.fieldNames[field]['korean']}
         </th>
       );
     });
   };
+
+  renderLoading = () => {
+    return this.props.contentIsLoading ? <ContentLoading /> : null;
+  };
+
+  renderSlideIcon = () => {
+    // render slide icon only after data loading is completed
+    // also, only display icon when coming dataset has more than one row
+    return this.props.contentIsLoading ? null : this.props.data.length ? (
+      <SlideNotification />
+    ) : null;
+  };
   render() {
     return (
       <section className='section-global'>
         <div className='ranking-table-container'>
+          {this.renderSlideIcon()}
+          {this.renderLoading()}
           <table className='ranking-table'>
             <thead>
               <tr>
@@ -46,7 +78,15 @@ class RankingTable extends Component {
               </tr>
             </thead>
 
-            <tbody>{this.mapTbody()}</tbody>
+            <tbody
+              style={{
+                animation: this.props.contentIsLoading
+                  ? null
+                  : 'opacity-fade-in 1s forwards'
+              }}
+            >
+              {this.mapTbody()}
+            </tbody>
           </table>
         </div>
       </section>

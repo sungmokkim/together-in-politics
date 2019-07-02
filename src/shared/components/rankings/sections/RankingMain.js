@@ -11,17 +11,48 @@ import RankingMenu from './RankingMenu';
 class RankingMain extends Component {
   state = {
     rankingTableData: [],
-    fieldOrder: []
+    fieldOrder: [],
+    contentIsLoading: false
   };
+
+  fetchAndUpdate = () => {
+    // this function is to
+    // 1. change state 'contentIsLoading' to true
+    // 2. in browser, loading component will display
+    // 3. start fetching data through action
+    // 4. do necessary mapping or editing(if needed)
+    // 5. change state 'contentIsLoading' back to false
+    // 6. loading component disappears
+    // 7. fetched content will display
+
+    const { currentDate } = this.props.dashboardManager;
+    this.setState(
+      {
+        ...this.state,
+        contentIsLoading: true
+      },
+      () => {
+        this.props
+          .fetchTodayRankings(
+            currentDate.year,
+            currentDate.month,
+            currentDate.date
+          )
+          .then(data => {
+            this.mapAndSortRankings(data);
+            this.setState({
+              ...this.state,
+              contentIsLoading: false
+            });
+          });
+      }
+    );
+  };
+
   componentDidMount() {
     // when component mounts, fetch rankings based on current date, and map and sort it
-    const { currentDate } = this.props.dashboardManager;
 
-    this.props
-      .fetchTodayRankings(currentDate.year, currentDate.month, currentDate.date)
-      .then(data => {
-        this.mapAndSortRankings(data);
-      });
+    this.fetchAndUpdate();
   }
 
   mapAndSortRankings = data => {
@@ -45,6 +76,12 @@ class RankingMain extends Component {
           ((dt.femi_ratio / communities[dt.name].femiWeight) * 100).toFixed(2)
         ),
         anti_ratio: parseFloat((dt.anti_ratio * 100).toFixed(2)),
+        problem_ratio: parseFloat(
+          (
+            (dt.problem_ratio / communities[dt.name].problemWeight) *
+            100
+          ).toFixed(2)
+        ),
         name: communities[dt.name]['korean'] // map full names
       };
     });
@@ -58,14 +95,16 @@ class RankingMain extends Component {
     const getFieldOrder = () => {
       switch (indicatorToSortBy) {
         case 'popularity':
-          return ['popularity', 'anti_ratio', 'femi_ratio'];
+          return ['popularity', 'anti_ratio', 'femi_ratio', 'problem_ratio'];
         case 'femi_ratio':
-          return ['femi_ratio', 'anti_ratio', 'popularity'];
+          return ['femi_ratio', 'problem_ratio', 'popularity', 'anti_ratio'];
         case 'anti_ratio':
-          return ['anti_ratio', 'femi_ratio', 'popularity'];
+          return ['anti_ratio', 'femi_ratio', 'problem_ratio', 'popularity'];
+        case 'problem_ratio':
+          return ['problem_ratio', 'popularity', 'anti_ratio', 'femi_ratio'];
 
         default:
-          ['anti_ratio', 'femi_ratio', 'popularity'];
+          ['anti_ratio', 'femi_ratio', 'problem_ratio', 'popularity'];
       }
     };
 
@@ -93,9 +132,7 @@ class RankingMain extends Component {
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
-        this.props.fetchTodayRankings(year, month, date).then(data => {
-          this.mapAndSortRankings(data);
-        });
+        this.fetchAndUpdate();
       });
   };
 
@@ -110,6 +147,8 @@ class RankingMain extends Component {
           data={this.state.rankingTableData}
           fieldOrder={this.state.fieldOrder}
           fieldNames={this.props.dashboardManager.todayIndicators}
+          contentIsLoading={this.state.contentIsLoading}
+          indicators={this.props.dashboardManager.todayIndicators}
         />
       </section>
     );

@@ -7,7 +7,8 @@ import {
   fetchDashboardData,
   fetchPeriodData,
   fetchBubbleData,
-  fetchTodayIndicators
+  fetchTodayIndicators,
+  toggleIndicator
 } from '../../../../actions/actions';
 
 class MainBoard extends Component {
@@ -17,18 +18,21 @@ class MainBoard extends Component {
 
     lineChartData: {
       labels: [],
-      dataArray: []
+
+      dataObj: {}
     },
+
     barChartData: {
       labels: [],
       dataArray: []
     },
+
     bubbleChartData: [],
     firstTimeLoaded: true
   };
 
   updateLineChart = (inputData = null) => {
-    const { active } = this.props.dashboardManager;
+    const { active, lineChartIndicatorOptions } = this.props.dashboardManager;
 
     let dataToMap;
 
@@ -38,40 +42,50 @@ class MainBoard extends Component {
       dataToMap = this.props.data.dashboardData;
     }
 
-    const split = active.range.split;
-    const dateObj = dataToMap
-      .reduce((acc, val) => {
-        // reduce and group date string based on current duration
-        acc.indexOf(val.today.substr(0, split)) > -1 // if sliced date is in accumulated array
-          ? null // don't include
-          : acc.push(val.today.substr(0, split)); // if not, include it
-        return acc;
-      }, [])
-      .reduce((acc, val) => {
-        // reduce it one more time
-        acc[val] = []; // make each array for one date and store it in the object
-        return acc;
-      }, {});
-
-    const dataArray = dataToMap.forEach(dt => {
-      dateObj[dt.today.substr(0, split)].push(dt[active.indicator]); // push data to object with same date
+    // map dates into a single array (used as x axis in graph)
+    const datesInArray = dataToMap.map(data => {
+      return `${data.years}-${data.months}`;
     });
 
-    const datesInArray = Object.keys(dateObj); // this is actual x axis in line graph
-    const dataInArray = datesInArray.map(date => {
-      // this is actual y axis in line graph
-      return (
-        dateObj[date].reduce((acc, val) => acc + val) / dateObj[date].length
-      ) // divide reduced(summed) data into array length ( to make it avg )
-        .toFixed(2); // only 2 decimal places
-    });
+    // the following two functions will reduce the coming array(raw data) twice
+    // first one is to actually map each indicator's data in a respective array (an object with each key containing each array)
+    // second one is to re-structure it to another object each with the data combined with chart configuration
+    // These steps are needed because the line graph should display only when the corresponding indicator's check-status is true
+    // checking status will take place in MainBoardContent.js
+    const dataObj = dataToMap.reduce((acc, val) => {
+      Object.keys(lineChartIndicatorOptions).forEach(key => {
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(val[key].toFixed(2));
+      });
+
+      return acc;
+    }, {});
+
+    const newDataObj = Object.keys(dataObj).reduce((acc, val) => {
+      if (!acc[val]) {
+        acc[val] = {};
+      }
+
+      acc[val] = {
+        data: dataObj[val],
+        label: lineChartIndicatorOptions[val]['korean'],
+        fill: false,
+        backgroundColor: lineChartIndicatorOptions[val]['lineColor'],
+        borderColor: lineChartIndicatorOptions[val]['lineColor'],
+        pointHoverBorderWidth: 10,
+        lineTension: 0.1
+      };
+      return acc;
+    }, {});
 
     this.setState({
       ...this.state,
       chartIsLoading: false, // turn off chart loading component (it was turned on in higher order function)
       lineChartData: {
         labels: datesInArray,
-        dataArray: dataInArray // set data in state
+        dataObj: newDataObj // set data in state
       }
     });
   };
@@ -149,12 +163,21 @@ class MainBoard extends Component {
   };
 
   fetchAndUpdateCharts = () => {
+    // this function is to
+    // 1. change state 'contentIsLoading' to true
+    // 2. in browser, loading component will display
+    // 3. start fetching data through action
+    // 4. do necessary mapping or editing(if needed)
+    // 5. change state 'contentIsLoading' back to false
+    // 6. loading component disappears
+    // 7. fetched content will display
     const { active, latestDate, communities } = this.props.dashboardManager;
 
     this.setState(
       {
         ...this.state,
-        chartIsLoading: true // turn on chart loading component to display loading effect(it will be turned off soon as data are fetched and the chart is updated)
+        chartIsLoading: true
+        // turn on chart loading component to display loading effect(it will be turned off soon as data are fetched and the chart is updated)
       },
       () => {
         // call back after setState to make sure state change was implemented
@@ -210,12 +233,23 @@ class MainBoard extends Component {
     });
   };
 
+  handleCheck = (type, value) => {
+    const newValue = {
+      ...value,
+      checked: !value.checked
+    };
+    this.props.toggleIndicator(newValue);
+  };
+
   render() {
     return (
       <React.Fragment>
         <div className='mainboard-wrapper'>
           <div className='mainboard-menu-container'>
-            <MainBoardMenu handleClick={this.handleButtonClick} />
+            <MainBoardMenu
+              handleClick={this.handleButtonClick}
+              handleCheck={this.handleCheck}
+            />
           </div>
           <div
             className='mainboard-content-container'
@@ -248,6 +282,7 @@ export default connect(
     fetchDashboardData,
     fetchPeriodData,
     fetchBubbleData,
-    fetchTodayIndicators
+    fetchTodayIndicators,
+    toggleIndicator
   }
 )(MainBoard);

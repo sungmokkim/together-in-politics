@@ -25,7 +25,7 @@ const fetchDashboardData = (
   const { year, month, date } = latestDate;
 
   // decontrcut needed values from active community obj
-  const { femiWeight, popularityWeight } = community;
+  const { femiWeight, popularityWeight, antiWeight, problemWeight } = community;
 
   const latestDateString = `${year}-${month}-${date}`;
 
@@ -42,6 +42,8 @@ const fetchDashboardData = (
       break;
     case 'days':
       subtractedDate = dateAndTime.addDays(dateParsed, 0 - range['number']);
+    case 'total':
+      subtractedDate = dateAndTime.parse('2017-05-01', 'YYYY-MM-DD', true);
     default:
       break;
   }
@@ -65,35 +67,98 @@ const fetchDashboardData = (
             name: community.index,
             dates: { $gte: dateToFetchFrom },
             m_count: {
-              $gte:
-                indicator === 'popularity' ? 0 : community[mentionPortion.index]
-            } // only fetch records with minimum m_count(freq of mentioning president) when the indicator is not popularity
+              $gte: community[mentionPortion.index]
+            } // only fetch records with minimum m_count(freq of mentioning president)
           }
         },
-
+        {
+          $group: {
+            _id: {
+              years: '$years',
+              months: '$months',
+              name: '$name'
+            },
+            avg_anti_count: {
+              $avg: '$anti_count'
+            },
+            avg_m_count: {
+              $avg: '$m_count'
+            },
+            avg_problem_count: {
+              $avg: '$problem_count'
+            },
+            sum_m_count: {
+              $sum: '$m_count'
+            },
+            avg_w_count: {
+              $avg: '$w_count'
+            },
+            sum_w_count: {
+              $sum: '$w_count'
+            },
+            avg_femi_count: {
+              $avg: '$femi_count'
+            }
+          }
+        },
         {
           $project: {
-            name: 1,
-            today: '$dates',
-            w_count: 1,
-            m_count: 1,
+            name: '$_id.name',
+            years: '$_id.years',
+            months: '$_id.months',
+            anti_ratio: {
+              $multiply: [{ $divide: ['$avg_anti_count', '$avg_m_count'] }, 100]
+            },
             popularity: {
-              $multiply: [{ $divide: ['$popularity', popularityWeight] }, 100]
-              // divide popularity by respective weight and multiply by 100(percentage)
+              $multiply: [
+                {
+                  $divide: [
+                    { $divide: ['$avg_m_count', '$avg_w_count'] },
+                    popularityWeight
+                  ]
+                },
+                100
+              ]
+            },
+            problem_ratio: {
+              $multiply: [
+                {
+                  $divide: [
+                    { $divide: ['$avg_problem_count', '$avg_w_count'] },
+                    problemWeight
+                  ]
+                },
+                100
+              ]
+            },
+            anti_popularity: {
+              $multiply: [
+                {
+                  $divide: [
+                    { $divide: ['$avg_anti_count', '$avg_w_count'] },
+                    antiWeight
+                  ]
+                },
+                100
+              ]
             },
             femi_ratio: {
-              $multiply: [{ $divide: ['$femi_ratio', femiWeight] }, 100]
-              // divide femi_ratio by respective weight and multiply by 100(percentage)
+              $multiply: [
+                {
+                  $divide: [
+                    { $divide: ['$avg_femi_count', '$avg_w_count'] },
+                    femiWeight
+                  ]
+                },
+                100
+              ]
             },
-            femi_count: 1,
-            anti_ratio: {
-              $multiply: ['$anti_ratio', 100] // multiply anti_ratio by 100 (percentage)
-            },
-            anti_count: 1
+            femi_count: '$avg_femi_count',
+            anti_count: '$avg_anti_count'
           }
         },
         {
-          $sort: { dates: 1 } //sort by date(from least recent)
+          $sort: { _id: 1 }
         }
       ])
       .toArray((err, result) => {

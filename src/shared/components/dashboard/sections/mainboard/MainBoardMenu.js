@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import IndicatorBtn from '../../../common/IndicatorBtn';
+import CheckBtn from '../../../common/CheckBtn';
 
 class MainBoardMenu extends Component {
   getBarChartMenus = () => {
@@ -41,10 +42,11 @@ class MainBoardMenu extends Component {
           type='community'
           valueIsObject={true}
         />
-        <IndicatorBtn
-          handleClick={this.props.handleClick}
+
+        <CheckBtn
+          handleClick={this.props.handleCheck}
           type='indicator'
-          valueIsObject={false}
+          valueIsObject={true}
         />
         <IndicatorBtn
           handleClick={this.props.handleClick}

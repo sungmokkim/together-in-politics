@@ -3,7 +3,8 @@ import {
   CHANGE_CURRENT_DATE,
   CHANGE_ACTIVE,
   RESET_CURRENT_RANGE,
-  FETCH_LATEST_DATE
+  FETCH_LATEST_DATE,
+  TOGGLE_INDICATOR
 } from '../actions/actions';
 
 import { communityOptions, communityDefault } from '../options/communities';
@@ -19,17 +20,19 @@ import {
   rankingSortingDefault,
   rankingSortingOptions
 } from '../options/rankingSorting';
+import { lineChartIndicatorOptions } from '../options/lineChartIndicator';
+import { todayIndicators } from '../options/todayIndicators';
 
 const initialState = {
   active: {
     community: communityDefault,
     indicator: 'anti_ratio',
     range: {
-      index: '6m',
-      korean: '6개월(월간)',
-      koreanShort: '6개월',
-      duration: 'months',
-      number: 6,
+      index: '1y',
+      korean: '1년(월간)',
+      koreanShort: '1년',
+      duration: 'years',
+      number: 1,
       split: 7
     },
     barPeriod: {
@@ -129,7 +132,17 @@ const initialState = {
     }
   },
 
+  lineChartIndicatorOptions: lineChartIndicatorOptions,
+
   rangeOptions: {
+    total: {
+      index: 'total',
+      korean: '전체',
+      koreanShort: '전체',
+      duration: 'total',
+      number: 0,
+      split: 7
+    },
     '2y': {
       index: '2y',
       korean: '2년(월간)',
@@ -172,9 +185,10 @@ const initialState = {
 
   dashboardIndicatorsName: {
     anti_ratio: { korean: '적극 거부율', koreanShort: '거부율' },
-    popularity: { korean: '게시판 지분율', koreanShort: '지분율' },
-    femi_ratio: { korean: '여성 갈등 지수', koreanShort: '여성 지수' },
-    femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
+    popularity: { korean: '대통령 지분율', koreanShort: '지분율' },
+    femi_ratio: { korean: '여성 갈등 지수', koreanShort: '여성 지수' }
+    // ,
+    // femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
     // ,
     // anti_count: { korean: '대통령 혐오 발언 빈도', koreanShort: '혐오(빈도)' }
   },
@@ -189,80 +203,7 @@ const initialState = {
     }
   },
 
-  todayIndicators: {
-    popularity: {
-      korean: '대통령 게시판 지분율',
-      index: 'popularity',
-      statusValues: [60, 40, 20, 10],
-      statusNames: {
-        korean: [
-          '지분율 매우 높음',
-          '지분율 높음',
-          '지분율 보통',
-          '지분율 낮음',
-          '지분율 매우 낮음'
-        ]
-      },
-      statusMarks: [
-        'status-very-good',
-        'status-good',
-        'status-okay',
-        'status-bad',
-        'status-very-bad'
-      ]
-    },
-    anti_ratio: {
-      korean: '대통령 적극 거부율 ',
-      index: 'anti_ratio',
-      statusValues: [60, 40, 20, 10],
-      statusNames: {
-        korean: [
-          '거부율 매우 높음',
-          '거부율 높음',
-          '거부율 보통',
-          '거부율 낮음',
-          '거부율 매우 낮음'
-        ]
-      },
-      statusMarks: [
-        'status-very-bad',
-        'status-bad',
-        'status-okay',
-        'status-good',
-        'status-very-good'
-      ],
-      facialExpressions: [
-        'far fa-angry',
-        'far fa-frown',
-        'far fa-meh',
-        'far fa-smile',
-        'far fa-laugh'
-      ]
-    },
-
-    femi_ratio: {
-      korean: '여성 갈등 지수',
-      index: 'femi_ratio',
-      statusValues: [20, 15, 10, 5],
-      statusNames: {
-        korean: [
-          '갈등 매우 높음',
-          '갈등 비교적 높음',
-          '갈등 보통',
-          '갈등 비교적 낮음',
-          '갈등 매우 낮음'
-        ]
-      },
-      statusMarks: [
-        'status-very-bad',
-        'status-bad',
-        'status-okay',
-        'status-good',
-        'status-very-good'
-      ]
-    },
-    word1: '게시판 최빈 단어'
-  }
+  todayIndicators: todayIndicators
 };
 
 export default (state = initialState, action) => {
@@ -322,7 +263,14 @@ export default (state = initialState, action) => {
           date: action.payload.date
         }
       };
-
+    case TOGGLE_INDICATOR:
+      return {
+        ...state,
+        lineChartIndicatorOptions: {
+          ...state.lineChartIndicatorOptions,
+          [action.payload.index]: action.payload
+        }
+      };
     default:
       return state;
   }

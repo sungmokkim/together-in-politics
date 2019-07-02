@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Line, Bubble, Bar } from 'react-chartjs-2';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
-import ChartLoading from '../../../common/ChartLoading';
+import ContentLoading from '../../../common/ContentLoading';
 
 class MainBoardContent extends Component {
   barChart = () => {
@@ -30,8 +30,7 @@ class MainBoardContent extends Component {
                 scaleLabel: {
                   display: true,
                   labelString: '대통령 혐오 발언'
-                },
-                ticks: { min: 0, max: 200 }
+                }
               }
             ]
           }
@@ -41,6 +40,8 @@ class MainBoardContent extends Component {
   };
 
   lineChartMinMax = () => {
+    // this function is to get min and max value for y axis of the line graph
+    // y axis varies based on a given indicator
     const { active, communities } = this.props.dashboardManager;
     switch (active.indicator) {
       case 'real_rank':
@@ -48,51 +49,55 @@ class MainBoardContent extends Component {
           min: 1,
           max: Object.keys(communities).length
         };
-      case 'anti_ratio':
-      case 'popularity':
-      case 'femi_ratio':
-        return {
-          min: 0,
-          max: 100
-        };
-      case 'femi_count':
-        return {
-          min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray)
-        };
-      case 'anti_count':
-        return {
-          min: 0,
-          max: Math.max.apply(null, this.props.lineChartData.dataArray)
-        };
+
       default:
         return {
-          min: 0,
-          max: 1
+          min: 0
         };
     }
   };
+
+  mapLineChartDataset = () => {
+    const { active, lineChartIndicatorOptions } = this.props.dashboardManager;
+    return Object.keys(this.props.lineChartData.dataObj)
+      .filter(key => {
+        return lineChartIndicatorOptions[key].checked;
+      })
+      .map(filteredKey => {
+        return this.props.lineChartData.dataObj[filteredKey];
+      });
+  };
   lineChart = () => {
-    const { active, dashboardIndicatorsName } = this.props.dashboardManager;
+    const { active, lineChartIndicatorOptions } = this.props.dashboardManager;
+    const lineDataSet = this.mapLineChartDataset();
     return (
       <Line
         data={{
           labels: this.props.lineChartData.labels,
-          datasets: [
-            {
-              data: this.props.lineChartData.dataArray,
-              label: dashboardIndicatorsName[active.indicator]['korean'],
-              fill: false,
-              backgroundColor: '#4D6E9B',
-              borderColor: '#4D6E9B',
-              pointHoverBorderWidth: 10,
-              lineTension: 0.1
-            }
-          ]
+
+          datasets: lineDataSet
         }}
         options={{
           maintainAspectRatio: false,
+          legend: {
+            labels: {
+              boxWidth: 1
+            }
+          },
           scales: {
+            xAxes: [
+              {
+                type: 'time',
+                distribution: 'linear',
+                time: {
+                  parser: 'YYYY-MM',
+                  displayFormats: {
+                    month: 'YYYY-MM',
+                    day: 'MM'
+                  }
+                }
+              }
+            ],
             yAxes: [
               {
                 ticks: {
@@ -102,8 +107,7 @@ class MainBoardContent extends Component {
                 },
                 scaleLabel: {
                   display: true,
-                  labelString:
-                    dashboardIndicatorsName[active.indicator]['korean']
+                  labelString: '수치(%)'
                 }
               }
             ]
@@ -112,11 +116,9 @@ class MainBoardContent extends Component {
           tooltips: {
             callbacks: {
               label: function(tooltipItem, data) {
-                return `${
-                  dashboardIndicatorsName[active.indicator]['koreanShort']
-                }: ${tooltipItem.yLabel}${
-                  active.indicator === 'femi_count' ? '' : '%'
-                }`;
+                return `${data.datasets[tooltipItem.datasetIndex].label}: ${
+                  tooltipItem.yLabel
+                }${active.indicator === 'femi_count' ? '' : '%'}`;
               }
             }
           }
@@ -149,16 +151,14 @@ class MainBoardContent extends Component {
                   labelString: dashboardIndicatorsName.femi_ratio['korean']
                 },
                 ticks: {
-                  min: 0,
-                  max: 100
+                  min: 0
                 }
               }
             ],
             xAxes: [
               {
                 ticks: {
-                  min: 0,
-                  max: 100
+                  min: 0
                 },
                 scaleLabel: {
                   display: true,
@@ -227,7 +227,7 @@ class MainBoardContent extends Component {
   };
 
   renderLoading = () => {
-    return this.props.chartIsLoading ? <ChartLoading /> : null;
+    return this.props.chartIsLoading ? <ContentLoading /> : null;
   };
 
   render() {

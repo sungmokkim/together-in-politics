@@ -19,7 +19,12 @@ $green: #03c03c;
 $lightblue: rgb(75, 164, 194);
 $orange: #f6ac5b;
 
-$frequency-color: #0aa137;
+// colors for indicators
+$femi-color: #583b8b;
+$popularity-color: #4386f9;
+$anti-color: #f75467;
+$problem-color: #f6ac5b;
+
 // -------------------------------------------------------
 
 //Viewports
@@ -234,14 +239,14 @@ ul {
     }
 
     .submit-btn {
-      width: 40%;
+      width: 30%;
       background: white;
       color: black;
       padding: 3rem;
       height: 3rem;
       border: none;
-      border-radius: 15px;
-      border: 0.2px solid $point-color;
+      border-radius: 30px;
+      border: 2px solid $point-color;
       font-size: 2rem;
       display: flex;
       flex-direction: column;
@@ -486,6 +491,13 @@ textarea {
     .normal-element {
       font-size: 1.8rem;
 
+      .check-mark {
+        font-size: 2rem;
+
+        color: $point-color;
+        margin: 0 0.7rem;
+      }
+
       @include small {
         font-size: 1.8rem;
       }
@@ -509,6 +521,25 @@ textarea {
   border-radius: 30px;
   padding: 1rem 1.7rem;
   font-size: 1.2rem;
+}
+
+.slide-notification {
+  font-size: 6rem;
+  color: darken(lightgrey, 15%);
+  position: fixed;
+  right: 10%;
+  top: 50vh;
+  z-index: 3;
+}
+
+.meter-bar-container {
+  .original-bar {
+    fill: rgb(235, 235, 235);
+  }
+
+  .value-bar {
+    transition: 1s all ease-in-out;
+  }
 }
 
 //----------------------------------------------------------------------------------------
@@ -542,6 +573,22 @@ textarea {
 
   100% {
     opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide-notification-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
     transform: translateX(0%);
   }
 }
@@ -620,41 +667,92 @@ textarea {
 // -------------------------------------------------------
 
 // Status-Colors
-.status-very-good {
-  color: $blue;
+.popularity-status-1 {
+  color: darken($popularity-color, 10%);
+  fill: darken($popularity-color, 10%);
 }
-.status-good {
-  color: $lightblue;
+.popularity-status-2 {
+  color: darken($popularity-color, 10%);
+  fill: darken($popularity-color, 10%);
 }
-.status-okay {
-  color: $green;
+.popularity-status-3 {
+  color: $popularity-color;
+  fill: $popularity-color;
 }
-.status-bad {
-  color: $orange;
+.popularity-status-4 {
+  color: lighten($popularity-color, 10%);
+  fill: lighten($popularity-color, 10%);
 }
-.status-very-bad {
-  color: $red;
+.popularity-status-5 {
+  color: lighten($popularity-color, 10%);
+  fill: lighten($popularity-color, 10%);
+}
+
+.anti-status-1 {
+  color: darken($anti-color, 10%);
+  fill: darken($anti-color, 10%);
+}
+.anti-status-2 {
+  color: darken($anti-color, 10%);
+  fill: darken($anti-color, 10%);
+}
+.anti-status-3 {
+  color: $anti-color;
+  fill: $anti-color;
+}
+.anti-status-4 {
+  color: lighten($anti-color, 10%);
+  fill: lighten($anti-color, 10%);
+}
+.anti-status-5 {
+  color: lighten($anti-color, 10%);
+  fill: lighten($anti-color, 10%);
+}
+
+.problem-status-1 {
+  color: darken($problem-color, 10%);
+  fill: darken($problem-color, 10%);
+}
+.problem-status-2 {
+  color: darken($problem-color, 10%);
+  fill: darken($problem-color, 10%);
+}
+.problem-status-3 {
+  color: $problem-color;
+  fill: $problem-color;
+}
+.problem-status-4 {
+  color: lighten($problem-color, 10%);
+  fill: lighten($problem-color, 10%);
+}
+.problem-status-5 {
+  color: lighten($problem-color, 10%);
+  fill: lighten($problem-color, 10%);
+}
+
+.femi-status-1 {
+  color: darken($femi-color, 10%);
+  fill: darken($femi-color, 10%);
+}
+.femi-status-2 {
+  color: darken($femi-color, 10%);
+  fill: darken($femi-color, 10%);
+}
+.femi-status-3 {
+  color: $femi-color;
+  fill: $femi-color;
+}
+.femi-status-4 {
+  color: lighten($femi-color, 10%);
+  fill: lighten($femi-color, 10%);
+}
+.femi-status-5 {
+  color: lighten($femi-color, 10%);
+  fill: lighten($femi-color, 10%);
 }
 
 .status-number {
   color: gray;
-}
-
-// frequency status
-.status-very-high {
-  color: darken($frequency-color, 20%);
-}
-.status-high {
-  color: darken($frequency-color, 10%);
-}
-.status-mid {
-  color: $frequency-color;
-}
-.status-low {
-  color: lighten($frequency-color, 10%);
-}
-.status-very-low {
-  color: lighten($frequency-color, 20%);
 }
 
 // -------------------------------------------------------
@@ -805,92 +903,80 @@ textarea {
         background: darken(white, 10%);
       }
 
-      display: flex;
-      justify-content: space-between;
-      padding: 3rem 3rem;
+      // display: flex;
+      // justify-content: space-between;
+      // padding: 3rem 3rem;
+      // margin: 2rem;
+      // align-items: center;
+
+      // text-align: center;
       margin: 2rem;
-      align-items: center;
-
-      text-align: center;
-
-      @include large {
+      padding: 3rem 3rem;
+      .indicator-content-container {
         display: flex;
         justify-content: space-between;
-        padding: 3rem 3rem;
-        margin: 2rem;
-        align-items: center;
-      }
 
-      .indicator-title-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
         align-items: center;
 
-        .emotion {
-          font-size: 4.5rem;
-          margin-right: 1.5rem;
+        text-align: center;
+        .indicator-title-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
 
-          @include large {
-            margin-right: 2rem;
+          .emotion {
+            font-size: 4.5rem;
           }
-        }
 
-        .emotion-large {
-          font-size: 4.5rem;
-          margin-right: 1rem;
-
-          @include large {
-            margin-right: 1.2rem;
-          }
-        }
-
-        div {
-          text-align: left;
-          .indicator-title {
-            font-size: 3rem;
+          div {
             text-align: left;
+            .indicator-title {
+              font-size: 3rem;
+              text-align: left;
+              font-weight: bold;
+
+              @include medium-small {
+                font-size: 2.4rem;
+              }
+            }
+
+            .active-community {
+              color: darken(lightgray, 20%);
+              font-size: 1.7rem;
+            }
+          }
+        }
+
+        .fa-font {
+          color: $point-color;
+        }
+        .indicator-content {
+          font-family: $big-font;
+
+          .value {
+            font-size: 5rem;
             font-weight: bold;
 
             @include medium-small {
-              font-size: 2.4rem;
+              font-size: 4.4rem;
             }
           }
 
-          .active-community {
-            color: darken(lightgray, 20%);
+          .metric {
             font-size: 1.7rem;
           }
-        }
-      }
 
-      .fa-font {
-        color: $point-color;
-      }
-      .indicator-content {
-        font-family: $big-font;
-
-        .value {
-          font-size: 5rem;
-          font-weight: bold;
-
-          @include medium-small {
-            font-size: 4.4rem;
+          .status {
+            font-size: 2rem;
+            text-align: right;
           }
-        }
-
-        .metric {
-          font-size: 1.7rem;
-        }
-
-        .status {
-          font-size: 2rem;
-          text-align: right;
         }
       }
     }
 
     .word-card {
+      word-break: keep-all;
       box-shadow: $box-shadow;
       background: white;
       border-radius: 15px;
@@ -910,7 +996,7 @@ textarea {
       align-items: center;
 
       text-align: center;
-
+      height: 20rem;
       @include large {
         display: flex;
         justify-content: space-between;
@@ -1014,9 +1100,9 @@ textarea {
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
-  // box-shadow: $box-shadow;
-  // background: white;
+
   border-radius: 15px;
+  position: relative;
 
   &:hover {
     .small-title::after {
@@ -1028,9 +1114,10 @@ textarea {
 }
 
 .keywords-table {
+  word-break: keep-all;
   width: 90rem;
   @include medium-small {
-    width: 70rem;
+    width: 80rem;
   }
   border-collapse: collapse;
   border-collapse: separate;
@@ -1046,9 +1133,13 @@ textarea {
         // border-bottom: 0.3px grey solid;
         color: white;
         height: 7rem;
-        padding: 1rem;
-        font-size: 1.9rem;
+        padding: 1rem 1rem;
+        font-size: 1.7rem;
         margin-bottom: 100px;
+      }
+
+      .meter-header {
+        width: 10%;
       }
     }
   }
@@ -1064,17 +1155,29 @@ textarea {
       }
 
       td {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         height: 8rem;
-        padding: 1rem;
+        padding: 0.3rem;
 
         @include medium {
           font-size: 1.5rem;
         }
         .word-link {
-          font-size: 1.8rem;
-          text-decoration: underline;
-          color: #1168ff;
+          font-size: 1.4rem;
+          border: 2px solid $blue;
+          padding: 1rem 1.8rem;
+          border-radius: 30px;
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+
+          &:hover {
+            background: $blue;
+            color: white;
+          }
+
+          @include medium-small {
+            font-size: 1.6rem;
+          }
         }
       }
     }
@@ -1116,13 +1219,20 @@ textarea {
 
   .no-word {
     color: lightgray;
+  }
+  .keywords-fixed-header {
+    width: 15%;
+    padding: 1rem 0.3rem;
+    @include medium-small {
+    }
   }
 }
 
 .ranking-table {
+  word-break: keep-all;
   width: 90rem;
   @include medium-small {
-    width: 70rem;
+    width: 80rem;
   }
   border-collapse: collapse;
   border-collapse: separate;
@@ -1162,11 +1272,6 @@ textarea {
 
         @include medium {
           font-size: 1.5rem;
-        }
-        .word-link {
-          font-size: 1.8rem;
-          text-decoration: underline;
-          color: #1168ff;
         }
       }
     }
@@ -1208,6 +1313,15 @@ textarea {
 
   .no-word {
     color: lightgray;
+  }
+
+  .ranking-fixed-header {
+    width: 15%;
+    padding: 1rem 6rem;
+  }
+
+  .td-highlight {
+    background: rgb(235, 235, 235);
   }
 }
 
@@ -1221,9 +1335,9 @@ textarea {
   flex-direction: column;
   margin: 1rem;
   padding: 1rem;
-  // box-shadow: $box-shadow;
-  // background: white;
+
   border-radius: 15px;
+  position: relative;
 }
 
 .date-adj-container {
@@ -1620,6 +1734,7 @@ textarea {
 }
 
 .about-wrapper {
+  word-break: keep-all;
   background: white;
   padding: 2rem 3rem;
   border-radius: 15px;

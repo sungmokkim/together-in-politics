@@ -28,7 +28,22 @@ class HeaderMenu extends Component {
   };
 
   render() {
-    return <React.Fragment>{this.renderMenus()}</React.Fragment>;
+    return (
+      <React.Fragment>
+        <div className='menu-wrapper'>
+          <div className='menu-toggler-container'>
+            <span className='menu-toggler for-mobile'>
+              <i
+                className={this.props.menuIsOn ? 'fas fa-times' : 'fas fa-bars'}
+                style={{ fontSize: '4rem', color: 'white' }}
+                onClick={this.props.handleClickingToggle}
+              />
+            </span>
+          </div>
+          <div className='nav-menu-container'>{this.renderMenus()}</div>
+        </div>
+      </React.Fragment>
+    );
   }
 }
 const mapStateToProps = state => {

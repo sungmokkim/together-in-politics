@@ -14,7 +14,7 @@ const {
 } = env.mongodb_info;
 
 const fetchKeywordsData = (
-  { community, latestDate, period, mentionPortion },
+  { community, latestDate, period, mentionPortion, rankingSorting },
   callback
 ) => {
   // Connection URL
@@ -48,12 +48,14 @@ const fetchKeywordsData = (
     default:
       break;
   }
-  console.log(community);
 
   //convert date object to string (for db query) if something goes wrong, the date string would be '2017-05-01' (oldest date from our data)
   const dateString = dateFrom
     ? dateAndTime.format(dateFrom, 'YYYY-MM-DD', true)
     : '2017-05-01';
+
+  // deconstruct necessary weights from community object
+  const { popularityWeight, femiWeight, problemWeight } = community;
 
   const client = new MongoClient(url, { useNewUrlParser: true });
   client.connect(err => {
@@ -76,7 +78,18 @@ const fetchKeywordsData = (
             dates: 1,
             w_count: 1,
             m_count: 1,
-            popularity: 1,
+            popularity: {
+              $divide: ['$popularity', popularityWeight] // divide popularity by corresponding weight
+            },
+            femi_ratio: {
+              $divide: ['$femi_ratio', femiWeight] // divide femi_ratio by corresponding weight
+            },
+            problem_ratio: {
+              $divide: [
+                { $divide: ['$problem_count', '$w_count'] }, // divide problem_ratio by corresponding weight
+                problemWeight
+              ]
+            },
             anti_ratio: 1,
             anti_count: 1,
             words: {
@@ -93,7 +106,7 @@ const fetchKeywordsData = (
           }
         }
       ])
-      .sort({ anti_ratio: -1 }) // order by anti_ratio
+      .sort({ [rankingSorting.index]: -1 }) // order by active sorting index
       .limit(limit)
       .toArray((err, result) => {
         assert.equal(null, err);

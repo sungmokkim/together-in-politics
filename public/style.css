@@ -336,6 +336,12 @@ textarea:focus {
   font-size: 1.8rem;
 }
 
+.indicator-btn-wrapper .normal .normal-element .check-mark {
+  font-size: 2rem;
+  color: #f78886;
+  margin: 0 0.7rem;
+}
+
 @media (max-width: 420px) {
   .indicator-btn-wrapper .normal .normal-element {
     font-size: 1.8rem;
@@ -360,6 +366,24 @@ textarea:focus {
   border-radius: 30px;
   padding: 1rem 1.7rem;
   font-size: 1.2rem;
+}
+
+.slide-notification {
+  font-size: 6rem;
+  color: #adadad;
+  position: fixed;
+  right: 10%;
+  top: 50vh;
+  z-index: 3;
+}
+
+.meter-bar-container .original-bar {
+  fill: #ebebeb;
+}
+
+.meter-bar-container .value-bar {
+  -webkit-transition: 1s all ease-in-out;
+  transition: 1s all ease-in-out;
 }
 
 .selection-fade-in {
@@ -419,6 +443,38 @@ textarea:focus {
   }
   100% {
     opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+
+@-webkit-keyframes slide-notification-fade-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(120%);
+            transform: translateX(120%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+}
+
+@keyframes slide-notification-fade-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(120%);
+            transform: translateX(120%);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
     -webkit-transform: translateX(0%);
             transform: translateX(0%);
   }
@@ -555,48 +611,108 @@ textarea:focus {
   }
 }
 
-.status-very-good {
+.popularity-status-1 {
+  color: #1266f7;
+  fill: #1266f7;
+}
+
+.popularity-status-2 {
+  color: #1266f7;
+  fill: #1266f7;
+}
+
+.popularity-status-3 {
   color: #4386f9;
+  fill: #4386f9;
 }
 
-.status-good {
-  color: #4ba4c2;
+.popularity-status-4 {
+  color: #74a6fb;
+  fill: #74a6fb;
 }
 
-.status-okay {
-  color: #03c03c;
+.popularity-status-5 {
+  color: #74a6fb;
+  fill: #74a6fb;
 }
 
-.status-bad {
-  color: #f6ac5b;
+.anti-status-1 {
+  color: #f5233c;
+  fill: #f5233c;
 }
 
-.status-very-bad {
+.anti-status-2 {
+  color: #f5233c;
+  fill: #f5233c;
+}
+
+.anti-status-3 {
   color: #f75467;
+  fill: #f75467;
+}
+
+.anti-status-4 {
+  color: #f98592;
+  fill: #f98592;
+}
+
+.anti-status-5 {
+  color: #f98592;
+  fill: #f98592;
+}
+
+.problem-status-1 {
+  color: #f3942b;
+  fill: #f3942b;
+}
+
+.problem-status-2 {
+  color: #f3942b;
+  fill: #f3942b;
+}
+
+.problem-status-3 {
+  color: #f6ac5b;
+  fill: #f6ac5b;
+}
+
+.problem-status-4 {
+  color: #f9c48b;
+  fill: #f9c48b;
+}
+
+.problem-status-5 {
+  color: #f9c48b;
+  fill: #f9c48b;
+}
+
+.femi-status-1 {
+  color: #412c67;
+  fill: #412c67;
+}
+
+.femi-status-2 {
+  color: #412c67;
+  fill: #412c67;
+}
+
+.femi-status-3 {
+  color: #583b8b;
+  fill: #583b8b;
+}
+
+.femi-status-4 {
+  color: #6f4aaf;
+  fill: #6f4aaf;
+}
+
+.femi-status-5 {
+  color: #6f4aaf;
+  fill: #6f4aaf;
 }
 
 .status-number {
   color: gray;
-}
-
-.status-very-high {
-  color: #044116;
-}
-
-.status-high {
-  color: #077127;
-}
-
-.status-mid {
-  color: #0aa137;
-}
-
-.status-low {
-  color: #0dd147;
-}
-
-.status-very-low {
-  color: #20f15e;
 }
 
 .site-title {
@@ -801,41 +917,28 @@ textarea:focus {
   cursor: pointer;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 3rem 3rem;
   margin: 2rem;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-align: center;
+  padding: 3rem 3rem;
 }
 
 .indicator-container a .indicator-card:hover {
   background: #e6e6e6;
 }
 
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    padding: 3rem 3rem;
-    margin: 2rem;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
+.indicator-container a .indicator-card .indicator-content-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
 }
 
-.indicator-container a .indicator-card .indicator-title-container {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -851,78 +954,61 @@ textarea:focus {
           align-items: center;
 }
 
-.indicator-container a .indicator-card .indicator-title-container .emotion {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container .emotion {
   font-size: 4.5rem;
-  margin-right: 1.5rem;
 }
 
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card .indicator-title-container .emotion {
-    margin-right: 2rem;
-  }
-}
-
-.indicator-container a .indicator-card .indicator-title-container .emotion-large {
-  font-size: 4.5rem;
-  margin-right: 1rem;
-}
-
-@media (max-width: 1000px) {
-  .indicator-container a .indicator-card .indicator-title-container .emotion-large {
-    margin-right: 1.2rem;
-  }
-}
-
-.indicator-container a .indicator-card .indicator-title-container div {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div {
   text-align: left;
 }
 
-.indicator-container a .indicator-card .indicator-title-container div .indicator-title {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .indicator-title {
   font-size: 3rem;
   text-align: left;
   font-weight: bold;
 }
 
 @media (max-width: 600px) {
-  .indicator-container a .indicator-card .indicator-title-container div .indicator-title {
+  .indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .indicator-title {
     font-size: 2.4rem;
   }
 }
 
-.indicator-container a .indicator-card .indicator-title-container div .active-community {
+.indicator-container a .indicator-card .indicator-content-container .indicator-title-container div .active-community {
   color: #a0a0a0;
   font-size: 1.7rem;
 }
 
-.indicator-container a .indicator-card .fa-font {
+.indicator-container a .indicator-card .indicator-content-container .fa-font {
   color: #f78886;
 }
 
-.indicator-container a .indicator-card .indicator-content {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content {
   font-family: "Jua", sans-serif;
 }
 
-.indicator-container a .indicator-card .indicator-content .value {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .value {
   font-size: 5rem;
   font-weight: bold;
 }
 
 @media (max-width: 600px) {
-  .indicator-container a .indicator-card .indicator-content .value {
+  .indicator-container a .indicator-card .indicator-content-container .indicator-content .value {
     font-size: 4.4rem;
   }
 }
 
-.indicator-container a .indicator-card .indicator-content .metric {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .metric {
   font-size: 1.7rem;
 }
 
-.indicator-container a .indicator-card .indicator-content .status {
+.indicator-container a .indicator-card .indicator-content-container .indicator-content .status {
   font-size: 2rem;
   text-align: right;
 }
 
 .indicator-container a .word-card {
+  word-break: keep-all;
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   background: white;
@@ -947,6 +1033,7 @@ textarea:focus {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  height: 20rem;
 }
 
 .indicator-container a .word-card:hover {
@@ -1101,6 +1188,7 @@ textarea:focus {
   margin: 1rem;
   padding: 1rem;
   border-radius: 15px;
+  position: relative;
 }
 
 .ranking-table-container:hover .small-title::after {
@@ -1110,6 +1198,7 @@ textarea:focus {
 }
 
 .keywords-table {
+  word-break: keep-all;
   width: 90rem;
   border-collapse: collapse;
   border-collapse: separate;
@@ -1121,7 +1210,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .keywords-table {
-    width: 70rem;
+    width: 80rem;
   }
 }
 
@@ -1134,9 +1223,13 @@ textarea:focus {
 .keywords-table thead tr th {
   color: white;
   height: 7rem;
-  padding: 1rem;
-  font-size: 1.9rem;
+  padding: 1rem 1rem;
+  font-size: 1.7rem;
   margin-bottom: 100px;
+}
+
+.keywords-table thead tr .meter-header {
+  width: 10%;
 }
 
 .keywords-table tbody tr {
@@ -1152,9 +1245,9 @@ textarea:focus {
 }
 
 .keywords-table tbody tr td {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   height: 8rem;
-  padding: 1rem;
+  padding: 0.3rem;
 }
 
 @media (max-width: 800px) {
@@ -1164,9 +1257,24 @@ textarea:focus {
 }
 
 .keywords-table tbody tr td .word-link {
-  font-size: 1.8rem;
-  text-decoration: underline;
-  color: #1168ff;
+  font-size: 1.4rem;
+  border: 2px solid #4386f9;
+  padding: 1rem 1.8rem;
+  border-radius: 30px;
+  cursor: pointer;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.keywords-table tbody tr td .word-link:hover {
+  background: #4386f9;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .keywords-table tbody tr td .word-link {
+    font-size: 1.6rem;
+  }
 }
 
 .keywords-table .first {
@@ -1210,7 +1318,13 @@ textarea:focus {
   color: lightgray;
 }
 
+.keywords-table .keywords-fixed-header {
+  width: 15%;
+  padding: 1rem 0.3rem;
+}
+
 .ranking-table {
+  word-break: keep-all;
   width: 90rem;
   border-collapse: collapse;
   border-collapse: separate;
@@ -1222,7 +1336,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .ranking-table {
-    width: 70rem;
+    width: 80rem;
   }
 }
 
@@ -1262,12 +1376,6 @@ textarea:focus {
   .ranking-table tbody tr td {
     font-size: 1.5rem;
   }
-}
-
-.ranking-table tbody tr td .word-link {
-  font-size: 1.8rem;
-  text-decoration: underline;
-  color: #1168ff;
 }
 
 .ranking-table .first {
@@ -1311,6 +1419,15 @@ textarea:focus {
   color: lightgray;
 }
 
+.ranking-table .ranking-fixed-header {
+  width: 15%;
+  padding: 1rem 6rem;
+}
+
+.ranking-table .td-highlight {
+  background: #ebebeb;
+}
+
 .keywords-table-container {
   display: block;
   overflow-x: auto;
@@ -1329,6 +1446,7 @@ textarea:focus {
   margin: 1rem;
   padding: 1rem;
   border-radius: 15px;
+  position: relative;
 }
 
 .date-adj-container {
@@ -2233,14 +2351,14 @@ textarea:focus {
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .submit-btn-area .submit-btn {
-  width: 40%;
+  width: 30%;
   background: white;
   color: black;
   padding: 3rem;
   height: 3rem;
   border: none;
-  border-radius: 15px;
-  border: 0.2px solid #f78886;
+  border-radius: 30px;
+  border: 2px solid #f78886;
   font-size: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2357,14 +2475,14 @@ textarea:focus {
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .submit-btn {
-  width: 40%;
+  width: 30%;
   background: white;
   color: black;
   padding: 3rem;
   height: 3rem;
   border: none;
-  border-radius: 15px;
-  border: 0.2px solid #f78886;
+  border-radius: 30px;
+  border: 2px solid #f78886;
   font-size: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2406,6 +2524,7 @@ textarea:focus {
 }
 
 .about-wrapper {
+  word-break: keep-all;
   background: white;
   padding: 2rem 3rem;
   border-radius: 15px;

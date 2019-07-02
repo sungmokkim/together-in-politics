@@ -1,5 +1,4 @@
 import axios from 'axios';
-import dateAndTime from 'date-and-time';
 import { clientFetchingReference, protocol } from '../clientEnv';
 
 // FETCH ----------------------------------------------------------------------------
@@ -9,15 +8,11 @@ export const fetchLatestDate = () => async dispatch => {
     `${protocol}://${clientFetchingReference}/api/latest_date`
   );
 
-  const latestDateParsed = dateAndTime.parse(
-    res.data[0].date,
-    'YYYY-MM-DD',
-    true
-  );
+  const latestDateArray = res.data[0].dates.split('-');
 
-  const latestYear = dateAndTime.format(latestDateParsed, 'YYYY', true);
-  const latestMonth = dateAndTime.format(latestDateParsed, 'MM', true);
-  const latestDate = dateAndTime.format(latestDateParsed, 'DD', true);
+  const latestYear = latestDateArray[0];
+  const latestMonth = latestDateArray[1];
+  const latestDate = latestDateArray[2];
 
   dispatch({
     type: FETCH_LATEST_DATE,
@@ -58,7 +53,7 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  { index, femiWeight, popularityWeight }
+  { index, femiWeight, popularityWeight, antiWeight, problemWeight }
 ) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/today_indicator`,
@@ -69,7 +64,9 @@ export const fetchTodayIndicators = (
       get_latest: getLatest,
       community: index,
       popularityWeight,
-      femiWeight
+      femiWeight,
+      antiWeight,
+      problemWeight
     }
   );
 
@@ -146,7 +143,7 @@ export const fetchBubbleData = (
 
 export const FETCH_KEYWORDS = 'FETCH_KEYWORDS';
 export const fetchKeywords = (
-  { community, keywordPeriod, mentionPortion },
+  { community, keywordPeriod, mentionPortion, rankingSorting },
   latestDate
 ) => async dispatch => {
   const res = await axios.post(
@@ -155,7 +152,8 @@ export const fetchKeywords = (
       community,
       latestDate: latestDate,
       period: keywordPeriod,
-      mentionPortion
+      mentionPortion,
+      rankingSorting
     }
   );
 
@@ -355,4 +353,14 @@ export const updateNewComment = ({
   });
 
   return res.data;
+};
+
+// TOGGLE------------------------------
+
+export const TOGGLE_INDICATOR = 'TOGGLE_INDICATOR';
+export const toggleIndicator = value => async dispatch => {
+  dispatch({
+    type: TOGGLE_INDICATOR,
+    payload: value
+  });
 };
