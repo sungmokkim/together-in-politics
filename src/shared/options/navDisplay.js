@@ -20,12 +20,12 @@ export const navDisplay = {
     index: 'rankings',
     linkTo: '/rankings'
   },
-  // ,
-  // freeboard: {
-  //   korean: '게시판',
-  //   index: 'freeboard',
-  //   linkTo: '/freeboard'
-  // },
+
+  freeboard: {
+    korean: '게시판',
+    index: 'freeboard',
+    linkTo: '/freeboard'
+  },
   about: {
     korean: 'About',
     index: 'about',
