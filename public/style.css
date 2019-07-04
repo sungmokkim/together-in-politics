@@ -1999,10 +1999,8 @@ textarea:focus {
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper {
-  position: absolute;
-  top: 15%;
-  left: 50%;
   width: 80%;
+  margin: 15rem auto 0 auto;
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container {
