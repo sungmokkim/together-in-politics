@@ -116,7 +116,11 @@ class CalendarModule extends Component {
 
     return (
       <React.Fragment>
-        <span className='indicator-btn-wrapper'>
+        <span
+          className={`indicator-btn-wrapper ${
+            this.props.btnClicked ? 'selection-fade-in' : 'selection-fade-out'
+          }`}
+        >
           <span
             className='indicator-btn'
             style={{
