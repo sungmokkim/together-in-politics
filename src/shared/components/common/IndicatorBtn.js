@@ -90,6 +90,7 @@ class IndicatorBtn extends Component {
     });
   }
 
+  componentWillUnmount() {}
   handleSelectionClick = value => {
     this.props.handleClick(this.props.type, value);
     this.toggleSelection();
@@ -156,6 +157,7 @@ class IndicatorBtn extends Component {
     //   });
     // }
   };
+
   render() {
     {
       this.handleClickingBody();
@@ -165,7 +167,11 @@ class IndicatorBtn extends Component {
       ? this.props.dashboardManager.active[this.props.type].index
       : this.props.dashboardManager.active[this.props.type];
     return (
-      <span className='indicator-btn-wrapper'>
+      <span
+        className={`indicator-btn-wrapper ${
+          this.props.btnClicked ? 'selection-fade-in' : 'selection-fade-out'
+        }`}
+      >
         <span
           className={`indicator-btn ${this.state.toggle ? 'btn-fade-out' : ''}`}
           style={{
