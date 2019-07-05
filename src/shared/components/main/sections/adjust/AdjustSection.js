@@ -9,6 +9,7 @@ import {
 } from '../../../../actions/actions';
 import IndicatorBtn from '../../../common/IndicatorBtn';
 import CalendarModule from '../../../common/CalendarModule';
+import withModal from '../../../hoc/withModal';
 
 class DateAdjust extends Component {
   state = {
@@ -65,12 +66,14 @@ class DateAdjust extends Component {
             latestDate={latestDate}
             currentDate={currentDate}
             handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
+            btnClicked={this.props.btnClicked}
           />
 
           <IndicatorBtn
             handleClick={this.handleCommunityChange}
             type='community'
             valueIsObject={true}
+            btnClicked={this.props.btnClicked}
           />
         </div>
       </section>
@@ -84,13 +87,18 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    changeCurrentDate,
-    fetchTodayIndicators,
-    changeActive,
-    fetchTodayRankings,
-    fetchDashboardData
-  }
-)(DateAdjust);
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(
+  connect(
+    mapStateToProps,
+    {
+      changeCurrentDate,
+      fetchTodayIndicators,
+      changeActive,
+      fetchTodayRankings,
+      fetchDashboardData
+    }
+  )(DateAdjust)
+);
