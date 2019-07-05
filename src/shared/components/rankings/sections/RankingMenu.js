@@ -7,6 +7,7 @@ import {
 } from '../../../actions/actions';
 import IndicatorBtn from '../../common/IndicatorBtn';
 import CalendarModule from '../../common/CalendarModule';
+import withModal from '../../hoc/withModal';
 
 class RankingMenu extends Component {
   state = {
@@ -34,12 +35,14 @@ class RankingMenu extends Component {
             handleDateChangeFromCalendar={
               this.props.handleDateChangeFromCalendar
             }
+            btnClicked={this.props.btnClicked}
           />
 
           <IndicatorBtn
             handleClick={this.props.handleSortingChange}
             type='rankingSorting'
             valueIsObject={true}
+            btnClicked={this.props.btnClicked}
           />
         </div>
       </section>
@@ -53,11 +56,16 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    changeCurrentDate,
-    changeActive,
-    fetchTodayRankings
-  }
-)(RankingMenu);
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(
+  connect(
+    mapStateToProps,
+    {
+      changeCurrentDate,
+      changeActive,
+      fetchTodayRankings
+    }
+  )(RankingMenu)
+);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import withModal from '../../../hoc/withModal';
 import { connect } from 'react-redux';
 import IndicatorBtn from '../../../common/IndicatorBtn';
 import CheckBtn from '../../../common/CheckBtn';
@@ -12,17 +12,20 @@ class MainBoardMenu extends Component {
           handleClick={this.props.handleClick}
           type='chart'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='community'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
 
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='barPeriod'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
       </React.Fragment>
     );
@@ -35,29 +38,34 @@ class MainBoardMenu extends Component {
           handleClick={this.props.handleClick}
           type='chart'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
 
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='community'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
 
         <CheckBtn
           handleClick={this.props.handleCheck}
           type='indicator'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='range'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         {this.props.dashboardManager.active.indicator !== 'popularity' ? (
           <IndicatorBtn
             handleClick={this.props.handleClick}
             type='mentionPortion'
             valueIsObject={true}
+            btnClicked={this.props.btnClicked}
           />
         ) : null}
       </React.Fragment>
@@ -71,11 +79,13 @@ class MainBoardMenu extends Component {
           handleClick={this.props.handleClick}
           type='chart'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         <IndicatorBtn
           handleClick={this.props.handleClick}
           type='bubblePeriod'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
       </React.Fragment>
     );
@@ -98,10 +108,16 @@ class MainBoardMenu extends Component {
     return <React.Fragment>{this.getMenus()}</React.Fragment>;
   }
 }
+
 function mapStateToProps(state) {
   return {
     dashboardManager: state.dashboardManager,
     data: state.dashboardData
   };
 }
-export default connect(mapStateToProps)(MainBoardMenu);
+
+// wrap this component with modal hoc
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(connect(mapStateToProps)(MainBoardMenu));
