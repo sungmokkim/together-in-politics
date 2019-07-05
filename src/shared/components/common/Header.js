@@ -61,7 +61,9 @@ class Header extends Component {
       <nav className='main-nav-wrapper'>
         <div className='section-global main-nav-container'>
           <Link to='/'>
-            <span className='nav-title'>모두의 정치</span>
+            <span className='nav-title'>
+              모두의 정치 <span className='beta'>Beta</span>
+            </span>
           </Link>
 
           <HeaderMenu
