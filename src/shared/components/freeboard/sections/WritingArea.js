@@ -194,6 +194,9 @@ class WritingArea extends Component {
                   }`
                 }}
               />
+              {this.props.newPostCount
+                ? `${this.props.newPostCount}개의 새 게시물`
+                : null}
             </span>
           </span>
         </span>

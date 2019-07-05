@@ -3,8 +3,40 @@ import { connect } from 'react-redux';
 
 class SinglePost extends Component {
   state = {
-    commentFormIsOn: false
+    commentFormIsOn: false,
+    newCommentCount: 0
   };
+
+  incrementNewCommentCount = () => {
+    this.setState({
+      ...this.state,
+      newCommentCount: this.state.newCommentCount + 1
+    });
+  };
+
+  resetNewCommentCount = () => {
+    this.setState({
+      ...this.state,
+      newCommentCount: 0
+    });
+  };
+  componentDidMount() {
+    this.props.socket.emit('open-single-post', this.props.currentId);
+
+    // when this post gets a new comment, set comment count state +1
+    this.props.socket.on('new-comment', this.incrementNewCommentCount);
+    // when the user fetches comment data , reset comment count state to 0
+    this.props.socket.on('clear-comment-count', this.resetNewCommentCount);
+  }
+
+  componentWillUnmount() {
+    // when this component unmounts, tell socket to leave the room
+    this.props.socket.emit('close-single-post', this.props.currentId);
+
+    // detach socket event listeners when the component unmounts
+    this.props.socket.off('new-comment', this.incrementNewCommentCount);
+    this.props.socket.off('clear-comment-count', this.resetNewCommentCount);
+  }
 
   getAdmin = post => {
     return post.admin ? <span className='user-admin'>Admin</span> : null;

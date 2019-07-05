@@ -10,7 +10,7 @@ class PostAreas extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchFreeboard();
+    this.props.fetchFreeboard(this.props.socket);
 
     const fullWidth = document.getElementById('root').offsetWidth;
     this.setState({
@@ -101,19 +101,22 @@ class PostAreas extends Component {
           <div
             className='single-post-wrapper'
             id='single-post-wrapper'
-            style={{
-              marginLeft: 0 - (this.state.fullWidth * 0.8) / 2
-            }}
+            // style={{
+            //   marginLeft: 0 - (this.state.fullWidth * 0.8) / 2
+            // }}
           >
-            <SinglePost
-              currentId={this.props.currentId}
-              handleChange={this.props.handleChange}
-              handleSubmit={this.props.handleSubmit}
-              inputs={this.props.inputs}
-              inputErrorCodes={this.props.inputErrorCodes}
-              submitErrorCodes={this.props.submitErrorCodes}
-              errorAnimation={this.props.errorAnimation}
-            />
+            {this.props.modalIsOpen ? (
+              <SinglePost
+                currentId={this.props.currentId}
+                handleChange={this.props.handleChange}
+                handleSubmit={this.props.handleSubmit}
+                inputs={this.props.inputs}
+                inputErrorCodes={this.props.inputErrorCodes}
+                submitErrorCodes={this.props.submitErrorCodes}
+                errorAnimation={this.props.errorAnimation}
+                socket={this.props.socket}
+              />
+            ) : null}
           </div>
         </div>
       </div>
