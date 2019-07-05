@@ -32,13 +32,13 @@ export default setting => WrappedComponent => {
             document.body.style.overflow = 'hidden';
           } else {
             this.controlModalFadeOut();
-            document.body.style.overflow = 'auto';
           }
         }
       );
     };
 
     controlModalFadeOut = () => {
+      document.body.style.overflow = 'auto';
       this.setState(
         {
           ...this.state,

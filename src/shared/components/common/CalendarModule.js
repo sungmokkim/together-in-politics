@@ -148,7 +148,6 @@ class CalendarModule extends Component {
                 ...this.state,
                 toggled: false
               });
-              document.body.style.overflow = 'scroll';
             }
           }}
         >
