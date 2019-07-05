@@ -126,7 +126,7 @@ class RankingMain extends Component {
   handleDateChangeFromCalendar = ({ year, month, date }) => {
     // when date is changed, modal closes,
     // so browser scroll must be restored
-    document.body.style.overflow = 'scroll';
+    document.body.style.overflow = 'auto';
 
     // change current date based on given data, and fetch data again, and map it again
     this.props
