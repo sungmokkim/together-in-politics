@@ -21,6 +21,10 @@ import {
   rankingSortingDefault,
   rankingSortingOptions
 } from '../options/rankingSorting';
+import {
+  indicatorOptionDefault,
+  indicatorOptions
+} from '../options/indicatorOptions';
 import { lineChartIndicatorOptions } from '../options/lineChartIndicator';
 import { todayIndicators } from '../options/todayIndicators';
 
@@ -42,7 +46,7 @@ const initialState = {
       index: 'months'
     },
     bubblePeriod: bubblePeriodDefault,
-    chart: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
+    chart: { korean: '기간별 지표 변화', koreanShort: '지표', index: 'line' },
     keywordPeriod: {
       korean: '최근 6개월 키워드',
       koreanShort: '6개월',
@@ -54,7 +58,8 @@ const initialState = {
       defaultSplitRange: 30
     },
     mentionPortion: mentionPortionDefault,
-    rankingSorting: rankingSortingDefault
+    rankingSorting: rankingSortingDefault,
+    indicatorOption: indicatorOptionDefault
   },
 
   barPeriodOptions: {
@@ -195,7 +200,7 @@ const initialState = {
   },
 
   chartName: {
-    bar: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
+    // bar: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
     line: { korean: '기간별 지표 변화', koreanShort: '지표', index: 'line' },
     bubble: {
       korean: '커뮤니티 지형도',
@@ -206,7 +211,9 @@ const initialState = {
 
   todayIndicators: todayIndicators,
 
-  maxValues: {}
+  maxValues: {},
+
+  indicatorOptions: indicatorOptions
 };
 
 export default (state = initialState, action) => {
