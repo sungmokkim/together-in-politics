@@ -22,7 +22,7 @@ export default setting => WrappedComponent => {
               modalDisplay: 'block',
               componentDisplay: true
             });
-            document.body.style.overflow = 'hidden';
+            // document.body.style.overflow = 'hidden';
           } else {
             this.controlModalFadeOut();
           }
@@ -32,7 +32,7 @@ export default setting => WrappedComponent => {
 
     controlModalFadeOut = () => {
       // give delay of 0.3s to perform fade-out animation
-      document.body.style.overflow = 'auto';
+      // document.body.style.overflow = 'auto';
       this.setState(
         {
           ...this.state,
@@ -87,7 +87,10 @@ export default setting => WrappedComponent => {
 
             {/* config button  */}
             {setting.configBtn ? (
-              <ConfigBtn handleClick={this.toggleBtn} />
+              <ConfigBtn
+                handleClick={this.toggleBtn}
+                btnClicked={this.state.btnClicked}
+              />
             ) : null}
           </div>
         </React.Fragment>
