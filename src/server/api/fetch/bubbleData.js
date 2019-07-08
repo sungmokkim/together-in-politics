@@ -75,6 +75,9 @@ const fetchBubbleData = ({ latestDate, period }, callback) => {
             w_count: '$w_count_avg',
             femi_ratio: {
               $divide: ['$femi_count_sum', '$w_count_sum']
+            },
+            popularity: {
+              $divide: ['$m_count_sum', '$w_count_sum']
             }
           }
         }
