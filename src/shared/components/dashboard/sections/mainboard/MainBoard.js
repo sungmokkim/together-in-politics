@@ -245,12 +245,11 @@ class MainBoard extends Component {
     return (
       <React.Fragment>
         <div className='mainboard-wrapper'>
-          <div className='mainboard-menu-container'>
-            <MainBoardMenu
-              handleClick={this.handleButtonClick}
-              handleCheck={this.handleCheck}
-            />
-          </div>
+          <MainBoardMenu
+            handleClick={this.handleButtonClick}
+            handleCheck={this.handleCheck}
+          />
+
           <div
             className='mainboard-content-container'
             id='mainboard-content-container'
