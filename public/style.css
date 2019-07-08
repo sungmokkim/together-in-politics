@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Jua|Noto+Sans+KR:400,700|Oswald");
+@import url("https://fonts.googleapis.com/css?family=Itim|Jua|Noto+Sans+KR:400,700|Oswald");
 body,
 * {
   color: black;
@@ -246,13 +246,13 @@ textarea:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .indicator-btn-wrapper .indicator-btn {
@@ -291,13 +291,11 @@ textarea:focus {
   font-size: 2rem;
 }
 
-.indicator-btn-wrapper .except {
-  position: fixed;
-  top: 90%;
-  left: 10%;
-  z-index: 2;
-  padding: 2rem 2rem;
-  border-radius: 50%;
+.indicator-btn-wrapper .indicator-mark {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f78886;
+  margin: 0 0.7rem;
 }
 
 .indicator-btn-wrapper .selector-container {
@@ -315,6 +313,8 @@ textarea:focus {
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
   background: white;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .indicator-btn-wrapper .selector-container:hover {
@@ -370,7 +370,7 @@ textarea:focus {
 
 .slide-notification {
   font-size: 6rem;
-  color: #adadad;
+  color: #4d6e9b;
   position: fixed;
   right: 10%;
   top: 50vh;
@@ -384,6 +384,83 @@ textarea:focus {
 .meter-bar-container .value-bar {
   -webkit-transition: 1s all ease-in-out;
   transition: 1s all ease-in-out;
+}
+
+.config-button,
+.writing-btn {
+  height: 7rem;
+  width: 7rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  background: #f78886;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.config-button:hover,
+.writing-btn:hover {
+  background: #f9a09e;
+}
+
+@media (max-width: 800px) {
+  .config-button,
+  .writing-btn {
+    height: 8rem;
+    width: 8rem;
+  }
+}
+
+.config-button .config-icon,
+.writing-btn .config-icon {
+  color: white;
+  font-size: 4rem;
+}
+
+@media (max-width: 800px) {
+  .config-button .config-icon,
+  .writing-btn .config-icon {
+    font-size: 5rem;
+  }
+}
+
+.config-button .writing-icon,
+.writing-btn .writing-icon {
+  color: white;
+  font-size: 3rem;
+}
+
+@media (max-width: 800px) {
+  .config-button .writing-icon,
+  .writing-btn .writing-icon {
+    font-size: 3.5rem;
+  }
+}
+
+.setting-container,
+.writing-container {
+  position: fixed;
+  z-index: 4;
+  left: 12%;
+  bottom: 10%;
+}
+
+@media (max-width: 1000px) {
+  .setting-container,
+  .writing-container {
+    left: 3%;
+    bottom: 5%;
+  }
 }
 
 .selection-fade-in {
@@ -417,6 +494,37 @@ textarea:focus {
   }
 }
 
+.selection-fade-out {
+  -webkit-animation: selection-fade-out 0.3s ease-in forwards;
+          animation: selection-fade-out 0.3s ease-in forwards;
+}
+
+@-webkit-keyframes selection-fade-out {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-70%);
+            transform: translateX(-70%);
+  }
+}
+
+@keyframes selection-fade-out {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-70%);
+            transform: translateX(-70%);
+  }
+}
+
 .menu-fade-in {
   -webkit-animation: menu-fade-in 0.3s ease-in forwards;
           animation: menu-fade-in 0.3s ease-in forwards;
@@ -445,6 +553,37 @@ textarea:focus {
     opacity: 1;
     -webkit-transform: translateX(0%);
             transform: translateX(0%);
+  }
+}
+
+.menu-fade-out {
+  -webkit-animation: menu-fade-out 0.3s ease-in forwards;
+          animation: menu-fade-out 0.3s ease-in forwards;
+}
+
+@-webkit-keyframes menu-fade-out {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(40%);
+            transform: translateX(40%);
+  }
+}
+
+@keyframes menu-fade-out {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0%);
+            transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(40%);
+            transform: translateX(40%);
   }
 }
 
@@ -715,6 +854,10 @@ textarea:focus {
   color: gray;
 }
 
+.error-code {
+  color: #f75467;
+}
+
 .site-title {
   font-size: 10rem;
   font-family: "Jua", sans-serif;
@@ -756,7 +899,13 @@ textarea:focus {
   font-size: 3.5rem;
 }
 
-.main-nav-wrapper .menu-wrapper {
+.main-nav-wrapper .nav-title .beta {
+  font-size: 1.8rem;
+  color: white;
+  font-family: "Itim", cursive;
+}
+
+.menu-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -770,7 +919,7 @@ textarea:focus {
 }
 
 @media (max-width: 600px) {
-  .main-nav-wrapper .menu-wrapper {
+  .menu-wrapper {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -780,7 +929,7 @@ textarea:focus {
   }
 }
 
-.main-nav-wrapper .menu-wrapper .nav-menu-container {
+.menu-wrapper .nav-menu-container {
   font-size: 1.6rem;
   color: white;
   display: -webkit-box;
@@ -800,7 +949,7 @@ textarea:focus {
 }
 
 @media (max-width: 1000px) {
-  .main-nav-wrapper .menu-wrapper .nav-menu-container {
+  .menu-wrapper .nav-menu-container {
     position: absolute;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -812,7 +961,7 @@ textarea:focus {
   }
 }
 
-.main-nav-wrapper .menu-wrapper .nav-menu-container .menu-btn {
+.menu-wrapper .nav-menu-container .menu-btn {
   font-size: 1.6rem;
   margin: 0 1rem;
   font-weight: bold;
@@ -821,13 +970,13 @@ textarea:focus {
 }
 
 @media (max-width: 1000px) {
-  .main-nav-wrapper .menu-wrapper .nav-menu-container .menu-btn {
+  .menu-wrapper .nav-menu-container .menu-btn {
     margin-bottom: 1rem;
     margin-top: 1rem;
   }
 }
 
-.main-nav-wrapper .menu-wrapper .menu-toggler-container .menu-toggler {
+.menu-wrapper .menu-toggler-container .menu-toggler {
   color: white;
   cursor: pointer;
   margin-left: 2rem;
@@ -1258,7 +1407,6 @@ textarea:focus {
 
 .keywords-table tbody tr td .word-link {
   font-size: 1.4rem;
-  border: 2px solid #4386f9;
   padding: 1rem 1.8rem;
   border-radius: 30px;
   cursor: pointer;
@@ -1266,15 +1414,46 @@ textarea:focus {
   transition: 0.3s ease-in-out;
 }
 
-.keywords-table tbody tr td .word-link:hover {
-  background: #4386f9;
-  color: white;
-}
-
 @media (max-width: 600px) {
   .keywords-table tbody tr td .word-link {
     font-size: 1.6rem;
   }
+}
+
+.keywords-table .anti_ratio {
+  border: 1.5px solid #f75467;
+}
+
+.keywords-table .anti_ratio:hover {
+  background: #f75467;
+  color: white;
+}
+
+.keywords-table .femi_ratio {
+  border: 1.5px solid #583b8b;
+}
+
+.keywords-table .femi_ratio:hover {
+  background: #583b8b;
+  color: white;
+}
+
+.keywords-table .popularity {
+  border: 1.5px solid #4386f9;
+}
+
+.keywords-table .popularity:hover {
+  background: #4386f9;
+  color: white;
+}
+
+.keywords-table .problem_ratio {
+  border: 1.5px solid #f6ac5b;
+}
+
+.keywords-table .problem_ratio:hover {
+  background: #f6ac5b;
+  color: white;
 }
 
 .keywords-table .first {
@@ -1424,10 +1603,6 @@ textarea:focus {
   padding: 1rem 6rem;
 }
 
-.ranking-table .td-highlight {
-  background: #ebebeb;
-}
-
 .keywords-table-container {
   display: block;
   overflow-x: auto;
@@ -1480,7 +1655,7 @@ textarea:focus {
   height: 30px;
 }
 
-.date-adj-container .calendar-wrapper {
+.calendar-wrapper {
   bottom: 0;
   left: 0;
   overflow: auto;
@@ -1491,7 +1666,7 @@ textarea:focus {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.date-adj-container .calendar-wrapper .calendar {
+.calendar {
   background: white;
   padding: 10px;
   max-width: 100%;
@@ -1988,7 +2163,7 @@ textarea:focus {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 3;
+  z-index: 5;
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -1999,8 +2174,14 @@ textarea:focus {
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper {
-  width: 80%;
+  width: 60%;
   margin: 15vh auto 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper {
+    width: 80%;
+  }
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container {
@@ -2143,7 +2324,6 @@ textarea:focus {
   margin-bottom: 1rem;
   font-weight: bold;
   color: #3a3a3a;
-  border-bottom: 0.3px solid lightgray;
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .no-comment {
@@ -2191,7 +2371,7 @@ textarea:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area i {
@@ -2209,7 +2389,7 @@ textarea:focus {
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .upper-container .user-area i {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   color: #f78886;
   margin-right: 1.3rem;
 }
@@ -2250,7 +2430,6 @@ textarea:focus {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 1.5rem;
-  border-bottom: 0.3px solid lightgray;
 }
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .comment-container .comment-area .lower-container .text-area {
@@ -2503,6 +2682,10 @@ textarea:focus {
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .submit-btn-area .submit-btn:hover {
   background: #f78886;
   color: white;
+}
+
+.writing-post-area {
+  z-index: 3;
 }
 
 .writing-area {
