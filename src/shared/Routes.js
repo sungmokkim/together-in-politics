@@ -20,11 +20,11 @@ export default [
         ...DashBoardPage,
         path: '/dashboard'
       },
-      // ,
-      // {
-      //   ...FreeBoardPage,
-      //   path: '/freeboard'
-      // },
+      ,
+      {
+        ...FreeBoardPage,
+        path: '/freeboard'
+      },
       {
         ...KeywordsPage,
         path: '/keywords'
