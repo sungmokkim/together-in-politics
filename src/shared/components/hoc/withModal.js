@@ -6,16 +6,9 @@ export default setting => WrappedComponent => {
     state = {
       btnClicked: false,
       modalDisplay: 'none',
-      isMounted: false,
       componentDisplay: false
     };
 
-    componentDidMount() {
-      this.setState({
-        ...this.state,
-        isMounted: true
-      });
-    }
     toggleBtn = () => {
       this.setState(
         {
@@ -38,6 +31,7 @@ export default setting => WrappedComponent => {
     };
 
     controlModalFadeOut = () => {
+      // give delay of 0.3s to perform fade-out animation
       document.body.style.overflow = 'auto';
       this.setState(
         {
@@ -90,6 +84,7 @@ export default setting => WrappedComponent => {
                 {...this.props}
               />
             ) : null}
+
             {/* config button  */}
             {setting.configBtn ? (
               <ConfigBtn handleClick={this.toggleBtn} />
