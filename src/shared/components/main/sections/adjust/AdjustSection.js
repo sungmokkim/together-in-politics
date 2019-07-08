@@ -26,7 +26,6 @@ class DateAdjust extends Component {
   }
 
   handleDateChangeFromCalendar = ({ year, month, date }) => {
-    document.body.style.overflow = 'auto';
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
@@ -60,23 +59,21 @@ class DateAdjust extends Component {
     const { latestDate, currentDate } = this.props.dashboardManager;
 
     return (
-      <section className='section-global'>
-        <div className='date-adj-container'>
-          <CalendarModule
-            latestDate={latestDate}
-            currentDate={currentDate}
-            handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
-            btnClicked={this.props.btnClicked}
-          />
+      <React.Fragment>
+        <CalendarModule
+          latestDate={latestDate}
+          currentDate={currentDate}
+          handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
+          btnClicked={this.props.btnClicked}
+        />
 
-          <IndicatorBtn
-            handleClick={this.handleCommunityChange}
-            type='community'
-            valueIsObject={true}
-            btnClicked={this.props.btnClicked}
-          />
-        </div>
-      </section>
+        <IndicatorBtn
+          handleClick={this.handleCommunityChange}
+          type='community'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+      </React.Fragment>
     );
   }
 }
