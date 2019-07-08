@@ -37,11 +37,7 @@ class KeywordsMenu extends Component {
   };
 
   render() {
-    return (
-      <React.Fragment>
-        <div className='section-global'> {this.getMenus()}</div>
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.getMenus()}</React.Fragment>;
   }
 }
 function mapStateToProps(state) {

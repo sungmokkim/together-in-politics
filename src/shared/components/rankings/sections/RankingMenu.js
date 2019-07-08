@@ -27,25 +27,21 @@ class RankingMenu extends Component {
     const { latestDate, currentDate, active } = this.props.dashboardManager;
 
     return (
-      <section className='section-global'>
-        <div className='date-adj-container'>
-          <CalendarModule
-            latestDate={latestDate}
-            currentDate={currentDate}
-            handleDateChangeFromCalendar={
-              this.props.handleDateChangeFromCalendar
-            }
-            btnClicked={this.props.btnClicked}
-          />
+      <React.Fragment>
+        <CalendarModule
+          latestDate={latestDate}
+          currentDate={currentDate}
+          handleDateChangeFromCalendar={this.props.handleDateChangeFromCalendar}
+          btnClicked={this.props.btnClicked}
+        />
 
-          <IndicatorBtn
-            handleClick={this.props.handleSortingChange}
-            type='rankingSorting'
-            valueIsObject={true}
-            btnClicked={this.props.btnClicked}
-          />
-        </div>
-      </section>
+        <IndicatorBtn
+          handleClick={this.props.handleSortingChange}
+          type='rankingSorting'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+      </React.Fragment>
     );
   }
 }
