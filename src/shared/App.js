@@ -5,7 +5,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import SiteTitle from './components/common/SiteTitle';
 
-import { fetchLatestDate } from './actions/actions';
+import { fetchLatestDate, fetchMaxValues } from './actions/actions';
 
 class App extends Component {
   constructor(props) {
@@ -33,13 +33,13 @@ const mapStateToProps = state => {
 
 // this is to fetch latest(most recent) date before it renders on client(latest date is needed for many other data fetching)
 const fetchDataFromServerSide = store => {
-  return [store.dispatch(fetchLatestDate())];
+  return [store.dispatch(fetchLatestDate()), store.dispatch(fetchMaxValues())];
 };
 
 export default {
   component: connect(
     mapStateToProps,
-    { fetchLatestDate }
+    { fetchLatestDate, fetchMaxValues }
   )(App),
   fetchDataFromServerSide
 };
