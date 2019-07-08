@@ -36,7 +36,7 @@ class FreeBoardSection extends Component {
       newPostModalToggled: false,
       loading: false,
       modalDisplay: 'none',
-      fullWidth: 0,
+
       newPostCount: 0
     };
     // set socket object here so that it can be referenced throughout other actions and functions
@@ -44,13 +44,6 @@ class FreeBoardSection extends Component {
   }
 
   componentDidMount() {
-    const fullWidth = document.getElementById('root').offsetWidth;
-    this.setState({
-      ...this.state,
-      fullWidth,
-      modalDisplay: 'none'
-    });
-
     // following code is to add eventListener to the websocket created in constructor method.
     this.socket.on('new-post', newPostCount => {
       // when someone writes new post, set new post count value
@@ -193,9 +186,7 @@ class FreeBoardSection extends Component {
       () => {
         postId ? this.props.fetchComments(postId, this.socket) : null;
 
-        this.props.siteManager.isFromClient
-          ? (document.body.style.overflow = 'hidden')
-          : null;
+        document.body.style.overflow = 'hidden';
       }
     );
   };
@@ -212,9 +203,8 @@ class FreeBoardSection extends Component {
       () => {
         this.props.fetchFreeboard(this.socket);
         this.props.fetchHotPosts();
-        if (this.props.siteManager.isFromClient) {
-          document.body.style.overflow = 'auto';
-        }
+
+        document.body.style.overflow = 'auto';
       }
     );
   };
@@ -292,13 +282,41 @@ class FreeBoardSection extends Component {
   handleRefresh = type => {
     switch (type) {
       case 'posts':
-        this.props.fetchFreeboard(this.socket);
-        this.props.fetchHotPosts();
+        this.setState(
+          {
+            ...this.state,
+            loading: true
+          },
+          async () => {
+            await this.props.fetchFreeboard(this.socket);
+            await this.props.fetchHotPosts();
+
+            this.setState({
+              ...this.state,
+              loading: false
+            });
+          }
+        );
+
         break;
       case 'comments':
-        this.props.fetchComments(this.state.currentId, this.socket);
-        this.props.fetchFreeboard(this.socket);
-        this.props.fetchHotPosts();
+        this.setState(
+          {
+            ...this.state,
+            loading: true
+          },
+          async () => {
+            await this.props.fetchComments(this.state.currentId, this.socket);
+            await this.props.fetchFreeboard(this.socket);
+            await this.props.fetchHotPosts();
+
+            this.setState({
+              ...this.state,
+              loading: false
+            });
+          }
+        );
+
         break;
     }
   };
