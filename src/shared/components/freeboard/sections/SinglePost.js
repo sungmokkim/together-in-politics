@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RefreshBtn from '../../common/RefreshBtn';
 
 class SinglePost extends Component {
   state = {
@@ -127,11 +128,40 @@ class SinglePost extends Component {
             </span>
           )}
         </div>
+
+        {this.state.newCommentCount > 0 ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <RefreshBtn
+              loading={this.props.loading}
+              handleRefresh={this.props.handleRefresh}
+              type='comments'
+              suffix='개의 새 댓글'
+              count={this.state.newCommentCount}
+            />
+          </div>
+        ) : null}
+
         <span
           className='indicator-btn-wrapper'
-          style={{ justifyContent: 'left' }}
+          style={{ justifyContent: 'center' }}
         >
-          <span className='indicator-btn' onClick={this.handleClick}>
+          <span
+            className='indicator-btn'
+            onClick={this.handleClick}
+            style={{ fontSize: '1.8rem' }}
+          >
+            <i
+              className={`${
+                this.state.commentFormIsOn ? 'fas fa-times' : 'fas fa-pen'
+              } indicator-mark`}
+              style={{ fontSize: '1.8rem' }}
+            />
             {this.state.commentFormIsOn
               ? this.props.freeboard.hideElement['korean']
               : this.props.freeboard.writeComment['korean']}
@@ -200,6 +230,7 @@ class SinglePost extends Component {
                   );
                 })}
             </span>
+
             <button className='submit-btn'>
               {this.props.freeboard.submit['korean']}
             </button>
