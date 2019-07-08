@@ -98,13 +98,7 @@ class PostAreas extends Component {
         }}
       >
         <div className='single-post-relative'>
-          <div
-            className='single-post-wrapper'
-            id='single-post-wrapper'
-            // style={{
-            //   marginLeft: 0 - (this.state.fullWidth * 0.8) / 2
-            // }}
-          >
+          <div className='single-post-wrapper' id='single-post-wrapper'>
             {this.props.modalIsOpen ? (
               <SinglePost
                 currentId={this.props.currentId}
@@ -115,6 +109,7 @@ class PostAreas extends Component {
                 submitErrorCodes={this.props.submitErrorCodes}
                 errorAnimation={this.props.errorAnimation}
                 socket={this.props.socket}
+                handleRefresh={this.props.handleRefresh}
               />
             ) : null}
           </div>
