@@ -146,7 +146,7 @@ class RankingMain extends Component {
         <RankingTable
           data={this.state.rankingTableData}
           fieldOrder={this.state.fieldOrder}
-          fieldNames={this.props.dashboardManager.todayIndicators}
+          fieldNames={this.props.dashboardManager.rankingSortingOptions}
           contentIsLoading={this.state.contentIsLoading}
           indicators={this.props.dashboardManager.todayIndicators}
         />
