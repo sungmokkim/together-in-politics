@@ -55,6 +55,9 @@ class DateAdjust extends Component {
     });
   };
 
+  handleChange = (type, value) => {
+    this.props.changeActive(type, value);
+  };
   render() {
     const { latestDate, currentDate } = this.props.dashboardManager;
 
@@ -70,6 +73,13 @@ class DateAdjust extends Component {
         <IndicatorBtn
           handleClick={this.handleCommunityChange}
           type='community'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+
+        <IndicatorBtn
+          handleClick={this.handleChange}
+          type='indicatorOption'
           valueIsObject={true}
           btnClicked={this.props.btnClicked}
         />
