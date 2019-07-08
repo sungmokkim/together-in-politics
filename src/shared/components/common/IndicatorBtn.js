@@ -77,6 +77,13 @@ class IndicatorBtn extends Component {
           names: this.props.dashboardManager.rankingSortingOptions,
           shape: 'normal',
           toggle: this.toggleSelection
+        },
+        indicatorOption: {
+          toMap: this.mapSelections,
+          icon: 'fas fa-tachometer-alt',
+          names: this.props.dashboardManager.indicatorOptions,
+          shape: 'normal',
+          toggle: this.toggleSelection
         }
       }
     };
