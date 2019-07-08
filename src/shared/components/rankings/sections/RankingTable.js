@@ -46,7 +46,7 @@ class RankingTable extends Component {
     return this.props.fieldOrder.map(field => {
       return (
         <th className='center ranking-fixed-header' key={field}>
-          {this.props.fieldNames[field]['korean']}
+          {this.props.fieldNames[field]['koreanShort']}
         </th>
       );
     });
