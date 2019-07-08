@@ -21,8 +21,8 @@ export const lineChartIndicatorOptions = {
     lineColor: '#583b8b'
   },
   problem_ratio: {
-    korean: '반발 지수',
-    koreanShort: '반발',
+    korean: '시니컬 지수',
+    koreanShort: '시니컬',
     checked: false,
     index: 'problem_ratio',
 
