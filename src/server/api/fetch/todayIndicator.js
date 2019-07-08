@@ -50,22 +50,10 @@ const fetchTodayIndicator = (
               dates: 1,
               w_count: 1,
               m_count: 1,
-              popularity: {
-                $divide: ['$popularity', popularityWeight] // divide popularity by corresponding weight
-              },
-              femi_ratio: {
-                $divide: ['$femi_ratio', femiWeight] // divide femi_ratio by corresponding weight
-              },
-              anti_popularity: {
-                $divide: [{ $divide: ['$anti_count', '$w_count'] }, antiWeight] // divide anti_popularity by corresponding weight
-              },
-
-              problem_ratio: {
-                $divide: [
-                  { $divide: ['$problem_count', '$w_count'] }, // divide problem_ratio by corresponding weight
-                  problemWeight
-                ]
-              },
+              popularity: '$popularity',
+              femi_ratio: '$femi_ratio',
+              anti_popularity: { $divide: ['$anti_count', '$w_count'] },
+              problem_ratio: '$problem_ratio',
               femi_count: 1,
               anti_ratio: 1,
               anti_count: 1,
@@ -111,21 +99,10 @@ const fetchTodayIndicator = (
               dates: 1,
               w_count: 1,
               m_count: 1,
-              popularity: {
-                $divide: ['$popularity', popularityWeight] // divide popularity by corresponding weight
-              },
-              femi_ratio: {
-                $divide: ['$femi_ratio', femiWeight] // divide popularity by corresponding weight
-              },
-              anti_popularity: {
-                $divide: [{ $divide: ['$anti_count', '$w_count'] }, antiWeight] // divide anti_popularity by corresponding weight
-              },
-              problem_ratio: {
-                $divide: [
-                  { $divide: ['$problem_count', '$w_count'] },
-                  problemWeight
-                ]
-              },
+              popularity: '$popularity',
+              femi_ratio: '$femi_ratio',
+              anti_popularity: { $divide: ['$anti_count', '$w_count'] },
+              problem_ratio: '$problem_ratio',
               femi_count: 1,
               anti_ratio: 1,
               anti_count: 1,
