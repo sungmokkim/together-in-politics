@@ -56,35 +56,62 @@ class RankingMain extends Component {
   }
 
   mapAndSortRankings = data => {
-    const { communities, active } = this.props.dashboardManager;
+    const { communities, active, maxValues } = this.props.dashboardManager;
 
     // ranking sorting option (coming from redux state)
     const indicatorToSortBy = active.rankingSorting.index;
 
-    // map weights to the indicators for each community
-    const dataMapped = data.map(dt => {
-      return {
-        ...dt,
-        // divide each indicator by respective weights and multiply by 100
-        popularity: parseFloat(
-          (
-            (dt.popularity / communities[dt.name].popularityWeight) *
-            100
-          ).toFixed(2)
-        ),
-        femi_ratio: parseFloat(
-          ((dt.femi_ratio / communities[dt.name].femiWeight) * 100).toFixed(2)
-        ),
-        anti_ratio: parseFloat((dt.anti_ratio * 100).toFixed(2)),
-        problem_ratio: parseFloat(
-          (
-            (dt.problem_ratio / communities[dt.name].problemWeight) *
-            100
-          ).toFixed(2)
-        ),
-        name: communities[dt.name]['korean'] // map full names
-      };
-    });
+    let dataMapped;
+
+    if (active.indicatorOption.index === 'relative') {
+      dataMapped = data.map(dt => {
+        return {
+          ...dt,
+          // divide each indicator by respective max value and multiply it by 100
+          popularity: parseFloat(
+            ((dt.popularity / maxValues[dt.name].popularity) * 100).toFixed(2)
+          ),
+          femi_ratio: parseFloat(
+            ((dt.femi_ratio / maxValues[dt.name].femi_ratio) * 100).toFixed(2)
+          ),
+          anti_ratio: parseFloat(
+            ((dt.anti_ratio / maxValues[dt.name].anti_ratio) * 100).toFixed(2)
+          ),
+          problem_ratio: parseFloat(
+            (
+              (dt.problem_ratio / maxValues[dt.name].problem_ratio) *
+              100
+            ).toFixed(2)
+          ),
+          name: communities[dt.name]['korean'] // map full names
+        };
+      });
+    } else {
+      // map weights to the indicators for each community
+      dataMapped = data.map(dt => {
+        return {
+          ...dt,
+          // divide each indicator by respective weights and multiply by 100
+          popularity: parseFloat(
+            (
+              (dt.popularity / communities[dt.name].popularityWeight) *
+              100
+            ).toFixed(2)
+          ),
+          femi_ratio: parseFloat(
+            ((dt.femi_ratio / communities[dt.name].femiWeight) * 100).toFixed(2)
+          ),
+          anti_ratio: parseFloat((dt.anti_ratio * 100).toFixed(2)),
+          problem_ratio: parseFloat(
+            (
+              (dt.problem_ratio / communities[dt.name].problemWeight) *
+              100
+            ).toFixed(2)
+          ),
+          name: communities[dt.name]['korean'] // map full names
+        };
+      });
+    }
 
     // sort by given sorting option
     const dataSorted = dataMapped.sort((a, b) => {
@@ -126,7 +153,7 @@ class RankingMain extends Component {
   handleDateChangeFromCalendar = ({ year, month, date }) => {
     // when date is changed, modal closes,
     // so browser scroll must be restored
-    document.body.style.overflow = 'scroll';
+    document.body.style.overflow = 'auto';
 
     // change current date based on given data, and fetch data again, and map it again
     this.props
@@ -146,9 +173,10 @@ class RankingMain extends Component {
         <RankingTable
           data={this.state.rankingTableData}
           fieldOrder={this.state.fieldOrder}
-          fieldNames={this.props.dashboardManager.todayIndicators}
+          fieldNames={this.props.dashboardManager.rankingSortingOptions}
           contentIsLoading={this.state.contentIsLoading}
           indicators={this.props.dashboardManager.todayIndicators}
+          indicatorOption={this.props.dashboardManager.active.indicatorOption}
         />
       </section>
     );

@@ -135,7 +135,6 @@ class MainBoardContent extends Component {
           labels: '페미 지형도',
           datasets: this.props.bubbleChartData
         }}
-        // plugins={[ChartAnnotation]}
         options={{
           maintainAspectRatio: false,
           legend: {
@@ -167,29 +166,7 @@ class MainBoardContent extends Component {
               }
             ]
           },
-          // ,
-          // annotation: {
-          //   annotations: [
-          //     {
-          //       drawTime: 'afterDraw',
-          //       type: 'line',
-          //       mode: 'horizontal',
-          //       scaleID: 'y-axis-0',
-          //       value: '0.5',
-          //       borderColor: 'rgb(0,0,0,0.5)',
-          //       borderWidth: 1
-          //     },
-          //     {
-          //       drawTime: 'afterDraw',
-          //       type: 'line',
-          //       mode: 'vertical',
-          //       scaleID: 'x-axis-0',
-          //       value: '50',
-          //       borderColor: 'rgb(0,0,0,0.5)',
-          //       borderWidth: 1
-          //     }
-          //   ]
-          // }
+
           tooltips: {
             callbacks: {
               label: function(tooltipItem, data) {
@@ -197,11 +174,9 @@ class MainBoardContent extends Component {
                   dashboardIndicatorsName.anti_ratio['koreanShort']
                 }: ${tooltipItem.xLabel}% ${
                   dashboardIndicatorsName.femi_ratio['koreanShort']
-                }: ${tooltipItem.yLabel}% 게시판 규모 : ${
-                  data.datasets[tooltipItem.datasetIndex].data[
-                    tooltipItem.index
-                  ].r
-                })`;
+                }: ${tooltipItem.yLabel}% 대통령 지분율 : ${data.datasets[
+                  tooltipItem.datasetIndex
+                ].data[tooltipItem.index].r * 2})`;
               }
             }
           }

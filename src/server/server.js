@@ -44,6 +44,42 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(5000, () => {
+const server = app.listen(5000, () => {
   console.log('Listening on Port 5000');
+});
+
+// wrap socket io in express server
+const io = require('socket.io')(server);
+io.on('connection', socket => {
+  // when user connects, initialize post count to 0
+  // this number increases when certain actions occur
+  let postCount = 0;
+
+  // when a user writes a new post, broadcast that event (except the user)
+  // so that each client can notify that there's a new post written
+  socket.on('new-post', () => {
+    socket.broadcast.emit('new-post', postCount);
+  });
+
+  // when a user fetches post list, it should be up-to-date (because it is from db)
+  // so currently accumulated new post count should be 0
+  socket.on('clear-post-count', () => {
+    socket.emit('clear-post-count', postCount);
+  });
+
+  socket.on('open-single-post', currentId => {
+    socket.join(currentId);
+  });
+
+  socket.on('close-single-post', currentId => {
+    socket.leave(currentId);
+  });
+
+  socket.on('new-comment', currentId => {
+    socket.to(currentId).emit('new-comment');
+  });
+
+  socket.on('clear-comment-count', currentId => {
+    socket.emit('clear-comment-count', currentId);
+  });
 });

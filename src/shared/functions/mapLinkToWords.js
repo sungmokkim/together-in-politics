@@ -25,7 +25,7 @@ export const fixWords = word => {
 };
 
 // this function maps <a> tag to the word given
-export default (word, community) => {
+export default (word, community, index) => {
   const fixedWord = fixWords(word);
 
   switch (community) {
@@ -35,7 +35,7 @@ export default (word, community) => {
         <a
           href={`https://www.ygosu.com/community/?bid=yeobgi&searcht=s&add_search_log=Y&search=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -45,7 +45,7 @@ export default (word, community) => {
         <a
           href={`http://mlbpark.donga.com/mp/b.php?select=sct&m=search&b=bullpen&select=sct&query=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -55,7 +55,7 @@ export default (word, community) => {
         <a
           href={`https://www.82cook.com/entiz/enti.php?bn=15&searchType=search&search1=1&keys=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -65,7 +65,7 @@ export default (word, community) => {
         <a
           href={`https://www.ilbe.com/list/politics?listStyle=list&searchType=title_content&search=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -75,7 +75,7 @@ export default (word, community) => {
         <a
           href={`https://www.clien.net/service/search?sort=recency&boardCd=park&isBoard=true&q=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -85,7 +85,7 @@ export default (word, community) => {
         <a
           href={`http://bbs.ruliweb.com/community/board/300148?search_type=subject_content&search_key=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>
@@ -96,7 +96,7 @@ export default (word, community) => {
         <a
           href={`https://www.google.com/search?q=${fixedWord}`}
           target='_blank'
-          className='word-link'
+          className={`word-link ${index}`}
         >
           {fixedWord}
         </a>

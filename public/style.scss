@@ -1,8 +1,9 @@
 // -------------------------------------------------------
-@import url('https://fonts.googleapis.com/css?family=Jua|Noto+Sans+KR:400,700|Oswald');
+@import url('https://fonts.googleapis.com/css?family=Itim|Jua|Noto+Sans+KR:400,700|Oswald');
 $big-font: 'Jua', sans-serif;
 $main-font: 'Noto Sans KR', sans-serif;
 $eng-big-font: 'Jua', sans-serif;
+$beta-font: 'Itim', cursive;
 // -------------------------------------------------------
 
 //  variables
@@ -432,9 +433,9 @@ textarea {
 
 .indicator-btn-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 
   .indicator-btn {
     @include btn-common(white);
@@ -457,13 +458,11 @@ textarea {
       }
     }
   }
-  .except {
-    position: fixed;
-    top: 90%;
-    left: 10%;
-    z-index: 2;
-    padding: 2rem 2rem;
-    border-radius: 50%;
+  .indicator-mark {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $point-color;
+    margin: 0 0.7rem;
   }
 
   .selector-container {
@@ -474,7 +473,7 @@ textarea {
     align-items: center;
     transition: 0.3s ease-in;
     background: white;
-
+    box-shadow: $box-shadow;
     &:hover {
       background: darken(white, 15%);
     }
@@ -525,7 +524,7 @@ textarea {
 
 .slide-notification {
   font-size: 6rem;
-  color: darken(lightgrey, 15%);
+  color: $bg-color;
   position: fixed;
   right: 10%;
   top: 50vh;
@@ -539,6 +538,59 @@ textarea {
 
   .value-bar {
     transition: 1s all ease-in-out;
+  }
+}
+
+.config-button,
+.writing-btn {
+  height: 7rem;
+  width: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+
+  box-shadow: $box-shadow;
+  cursor: pointer;
+  background: $point-color;
+  transition: 0.3s ease-in;
+
+  &:hover {
+    background: lighten($point-color, 5%);
+  }
+  @include medium {
+    height: 8rem;
+    width: 8rem;
+  }
+  .config-icon {
+    color: white;
+    font-size: 4rem;
+
+    @include medium {
+      font-size: 5rem;
+    }
+  }
+
+  .writing-icon {
+    color: white;
+    font-size: 3rem;
+
+    @include medium {
+      font-size: 3.5rem;
+    }
+  }
+}
+
+.setting-container,
+.writing-container {
+  position: fixed;
+  z-index: 4;
+  left: 12%;
+  bottom: 10%;
+
+  @include large {
+    left: 3%;
+    bottom: 5%;
   }
 }
 
@@ -561,6 +613,22 @@ textarea {
   }
 }
 
+.selection-fade-out {
+  animation: selection-fade-out 0.3s ease-in forwards;
+}
+
+@keyframes selection-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-70%);
+  }
+}
+
 .menu-fade-in {
   animation: menu-fade-in 0.3s ease-in forwards;
 }
@@ -574,6 +642,22 @@ textarea {
   100% {
     opacity: 1;
     transform: translateX(0%);
+  }
+}
+
+.menu-fade-out {
+  animation: menu-fade-out 0.3s ease-in forwards;
+}
+
+@keyframes menu-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(40%);
   }
 }
 
@@ -755,6 +839,10 @@ textarea {
   color: gray;
 }
 
+.error-code {
+  color: $red;
+}
+
 // -------------------------------------------------------
 
 // sections
@@ -789,60 +877,64 @@ textarea {
     font-family: $big-font;
     color: white;
     font-size: 3.5rem;
-  }
 
-  .menu-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    @include medium-small {
-      flex-direction: column;
-      align-content: center;
-    }
-    .nav-menu-container {
-      font-size: 1.6rem;
-      // position: absolute;
-      // right: 1px;
+    .beta {
+      font-size: 1.8rem;
       color: white;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 7rem;
-
-      @include large {
-        position: absolute;
-        flex-direction: column;
-        z-index: 3;
-        top: 7rem;
-        right: 1.1rem;
-      }
-      .menu-btn {
-        font-size: 1.6rem;
-        margin: 0 1rem;
-        font-weight: bold;
-        min-width: 10rem;
-        text-align: center;
-
-        @include large {
-          margin-bottom: 1rem;
-          margin-top: 1rem;
-        }
-      }
-    }
-
-    .menu-toggler-container {
-      .menu-toggler {
-        color: white;
-        cursor: pointer;
-        margin-left: 2rem;
-        margin-right: 0;
-      }
+      font-family: $beta-font;
     }
   }
 }
+.menu-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
+  @include medium-small {
+    flex-direction: column;
+    align-content: center;
+  }
+  .nav-menu-container {
+    font-size: 1.6rem;
+    // position: absolute;
+    // right: 1px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 7rem;
+
+    @include large {
+      position: absolute;
+      flex-direction: column;
+      z-index: 3;
+      top: 7rem;
+      right: 1.1rem;
+    }
+    .menu-btn {
+      font-size: 1.6rem;
+      margin: 0 1rem;
+      font-weight: bold;
+      min-width: 10rem;
+      text-align: center;
+
+      @include large {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .menu-toggler-container {
+    .menu-toggler {
+      color: white;
+      cursor: pointer;
+      margin-left: 2rem;
+      margin-right: 0;
+    }
+  }
+}
 .hero-wrapper {
   .hero-container {
     text-align: center;
@@ -903,13 +995,6 @@ textarea {
         background: darken(white, 10%);
       }
 
-      // display: flex;
-      // justify-content: space-between;
-      // padding: 3rem 3rem;
-      // margin: 2rem;
-      // align-items: center;
-
-      // text-align: center;
       margin: 2rem;
       padding: 3rem 3rem;
       .indicator-content-container {
@@ -1164,16 +1249,11 @@ textarea {
         }
         .word-link {
           font-size: 1.4rem;
-          border: 2px solid $blue;
+
           padding: 1rem 1.8rem;
           border-radius: 30px;
           cursor: pointer;
           transition: 0.3s ease-in-out;
-
-          &:hover {
-            background: $blue;
-            color: white;
-          }
 
           @include medium-small {
             font-size: 1.6rem;
@@ -1182,7 +1262,37 @@ textarea {
       }
     }
   }
+  .anti_ratio {
+    border: 1.5px solid $anti-color;
+    &:hover {
+      background: $anti-color;
+      color: white;
+    }
+  }
 
+  .femi_ratio {
+    border: 1.5px solid $femi-color;
+    &:hover {
+      background: $femi-color;
+      color: white;
+    }
+  }
+
+  .popularity {
+    border: 1.5px solid $popularity-color;
+    &:hover {
+      background: $popularity-color;
+      color: white;
+    }
+  }
+
+  .problem_ratio {
+    border: 1.5px solid $problem-color;
+    &:hover {
+      background: $problem-color;
+      color: white;
+    }
+  }
   .first {
     font-weight: bold;
     color: $red;
@@ -1321,7 +1431,7 @@ textarea {
   }
 
   .td-highlight {
-    background: rgb(235, 235, 235);
+    // background: rgb(235, 235, 235);
   }
 }
 
@@ -1360,26 +1470,26 @@ textarea {
     width: 7rem;
     height: 30px;
   }
+}
+.calendar-wrapper {
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+}
 
-  .calendar-wrapper {
-    bottom: 0;
-    left: 0;
-    overflow: auto;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.5);
-    .calendar {
-      background: white;
-      padding: 10px;
-      max-width: 100%;
-      transition: 0.4s ease-in-out;
-      opacity: 0;
-      border-radius: 30px;
-      box-shadow: $box-shadow;
-    }
-  }
+.calendar {
+  background: white;
+  padding: 10px;
+  max-width: 100%;
+  transition: 0.4s ease-in-out;
+  opacity: 0;
+  border-radius: 30px;
+  box-shadow: $box-shadow;
 }
 
 .mainboard-wrapper {
@@ -1614,7 +1724,7 @@ textarea {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 3;
+  z-index: 5;
   background: rgba(0, 0, 0, 0.5);
   .single-post-relative {
     position: relative;
@@ -1622,10 +1732,13 @@ textarea {
     height: 100%;
 
     .single-post-wrapper {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      width: 80%;
+      // width varies depending on viewport sizes
+      width: 60%;
+      @include large {
+        width: 80%;
+      }
+
+      margin: 15vh auto 0 auto;
 
       .single-post-container {
         display: flex;
@@ -1675,7 +1788,6 @@ textarea {
             margin-bottom: 1rem;
             font-weight: bold;
             color: darken(lightgrey, 60%);
-            border-bottom: 0.3px solid lightgray;
           }
           .no-comment {
             color: darken(lightgrey, 30%);
@@ -1691,12 +1803,12 @@ textarea {
               .user-area {
                 @include user-area();
                 i {
-                  font-size: 1.8rem;
+                  font-size: 1.3rem;
                   color: $point-color;
                   margin-right: 1.3rem;
                 }
 
-                font-size: 2rem;
+                font-size: 1.5rem;
               }
 
               .date-and-ip-area {
@@ -1706,7 +1818,7 @@ textarea {
 
             .lower-container {
               @include lower-container();
-              border-bottom: 0.3px solid lightgray;
+
               .text-area {
                 font-size: 1.8rem;
               }
@@ -1724,6 +1836,10 @@ textarea {
       }
     }
   }
+}
+
+.writing-post-area {
+  z-index: 3;
 }
 
 .writing-area {

@@ -10,6 +10,7 @@ import fetchComments from '../fetch/comments';
 import fetchBubbleData from '../fetch/bubbleData';
 import fetchKeywordsData from '../fetch/keywordsData';
 import fetchHotPosts from '../fetch/hotPosts';
+import fetchMaxValues from '../fetch/maxValues';
 
 import insertFreeboardPost from '../insert/freeboardPost';
 import updateNewComment from '../update/newComment';
@@ -58,6 +59,12 @@ router.post('/period_data', (req, res) => {
 
 router.post('/bubble_data', (req, res) => {
   fetchBubbleData(req.body, results => {
+    res.json(results);
+  });
+});
+
+router.get('/max_values', (req, res) => {
+  fetchMaxValues(results => {
     res.json(results);
   });
 });

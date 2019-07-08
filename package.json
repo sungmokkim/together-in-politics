@@ -1,6 +1,6 @@
 {
-  "name": "modu_web",
-  "version": "0.0.1",
+  "name": "together-in-politics",
+  "version": "",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,9 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.2",
-    "serialize-javascript": "^1.7.0"
+    "serialize-javascript": "^1.7.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

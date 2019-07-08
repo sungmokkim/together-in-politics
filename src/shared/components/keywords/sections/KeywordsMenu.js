@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import withModal from '../../hoc/withModal';
 import { connect } from 'react-redux';
 import IndicatorBtn from '../../common/IndicatorBtn';
 
@@ -11,33 +11,33 @@ class KeywordsMenu extends Component {
           handleClick={this.props.handleChange}
           type='community'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         <IndicatorBtn
           handleClick={this.props.handleChange}
           type='keywordPeriod'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
 
         <IndicatorBtn
           handleClick={this.props.handleChange}
           type='rankingSorting'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
         <IndicatorBtn
           handleClick={this.props.handleChange}
           type='mentionPortion'
           valueIsObject={true}
+          btnClicked={this.props.btnClicked}
         />
       </React.Fragment>
     );
   };
 
   render() {
-    return (
-      <React.Fragment>
-        <div className='section-global'> {this.getMenus()}</div>
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.getMenus()}</React.Fragment>;
   }
 }
 function mapStateToProps(state) {
@@ -46,4 +46,7 @@ function mapStateToProps(state) {
     data: state.dashboardData
   };
 }
-export default connect(mapStateToProps)(KeywordsMenu);
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(connect(mapStateToProps)(KeywordsMenu));

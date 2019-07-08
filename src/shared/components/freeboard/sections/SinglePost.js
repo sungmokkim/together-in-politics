@@ -1,10 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RefreshBtn from '../../common/RefreshBtn';
 
 class SinglePost extends Component {
   state = {
-    commentFormIsOn: false
+    commentFormIsOn: false,
+    newCommentCount: 0
   };
+
+  incrementNewCommentCount = () => {
+    this.setState({
+      ...this.state,
+      newCommentCount: this.state.newCommentCount + 1
+    });
+  };
+
+  resetNewCommentCount = () => {
+    this.setState({
+      ...this.state,
+      newCommentCount: 0
+    });
+  };
+  componentDidMount() {
+    this.props.socket.emit('open-single-post', this.props.currentId);
+
+    // when this post gets a new comment, set comment count state +1
+    this.props.socket.on('new-comment', this.incrementNewCommentCount);
+    // when the user fetches comment data , reset comment count state to 0
+    this.props.socket.on('clear-comment-count', this.resetNewCommentCount);
+  }
+
+  componentWillUnmount() {
+    // when this component unmounts, tell socket to leave the room
+    this.props.socket.emit('close-single-post', this.props.currentId);
+
+    // detach socket event listeners when the component unmounts
+    this.props.socket.off('new-comment', this.incrementNewCommentCount);
+    this.props.socket.off('clear-comment-count', this.resetNewCommentCount);
+  }
 
   getAdmin = post => {
     return post.admin ? <span className='user-admin'>Admin</span> : null;
@@ -95,11 +128,40 @@ class SinglePost extends Component {
             </span>
           )}
         </div>
+
+        {this.state.newCommentCount > 0 ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <RefreshBtn
+              loading={this.props.loading}
+              handleRefresh={this.props.handleRefresh}
+              type='comments'
+              suffix='개의 새 댓글'
+              count={this.state.newCommentCount}
+            />
+          </div>
+        ) : null}
+
         <span
           className='indicator-btn-wrapper'
-          style={{ justifyContent: 'left' }}
+          style={{ justifyContent: 'center' }}
         >
-          <span className='indicator-btn' onClick={this.handleClick}>
+          <span
+            className='indicator-btn'
+            onClick={this.handleClick}
+            style={{ fontSize: '1.8rem' }}
+          >
+            <i
+              className={`${
+                this.state.commentFormIsOn ? 'fas fa-times' : 'fas fa-pen'
+              } indicator-mark`}
+              style={{ fontSize: '1.8rem' }}
+            />
             {this.state.commentFormIsOn
               ? this.props.freeboard.hideElement['korean']
               : this.props.freeboard.writeComment['korean']}
@@ -168,6 +230,7 @@ class SinglePost extends Component {
                   );
                 })}
             </span>
+
             <button className='submit-btn'>
               {this.props.freeboard.submit['korean']}
             </button>

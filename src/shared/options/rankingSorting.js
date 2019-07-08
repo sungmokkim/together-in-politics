@@ -15,8 +15,8 @@ export const rankingSortingOptions = {
     index: 'femi_ratio'
   },
   problem_ratio: {
-    korean: '반발 지수 순 랭킹',
-    koreanShort: '반발',
+    korean: '시니컬 지수 순 랭킹',
+    koreanShort: '시니컬',
     index: 'problem_ratio'
   }
 };

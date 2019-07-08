@@ -79,7 +79,10 @@ class IndicatorBtn extends Component {
                       ? 'far fa-check-circle'
                       : 'far fa-circle'
                   }`}
-                  style={{ animation: 'opacity-fade-in 0.2s ease-in forwards' }}
+                  style={{
+                    animation: 'opacity-fade-in 0.2s ease-in forwards',
+                    color: names[targetName].lineColor
+                  }}
                 />
                 {names[targetName].koreanShort}
               </span>
@@ -117,7 +120,11 @@ class IndicatorBtn extends Component {
       ? this.props.dashboardManager.active[this.props.type].index
       : this.props.dashboardManager.active[this.props.type];
     return (
-      <span className='indicator-btn-wrapper'>
+      <span
+        className={`indicator-btn-wrapper ${
+          this.props.btnClicked ? 'selection-fade-in' : 'selection-fade-out'
+        }`}
+      >
         <span
           className={`indicator-btn ${this.state.toggle ? 'btn-fade-out' : ''}`}
           style={{

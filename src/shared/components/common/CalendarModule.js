@@ -30,19 +30,21 @@ const WEEKDAYS_SHORT = ['일', '월', '화', '수', '목', '금', '토'];
 class CalendarModule extends Component {
   constructor(props) {
     super(props);
-    const { year, month, date } = this.props.latestDate;
+    const { year, month, date } = this.props.currentDate;
     this.state = {
-      selectedDay: this.props.latestDate
+      selectedDay: this.props.currentDate
         ? dateAndTime.parse(`${year}-${month}-${date}`, 'YYYY-MM-DD', true)
         : null,
       btnOpacity: 0,
       toggled: false,
       clientX: 0,
-      clientY: 0
+      clientY: 0,
+      modalDisplay: 'none'
     };
   }
   componentDidMount() {
     const { year, month, date } = this.props.currentDate;
+
     this.setState({
       ...this.state,
       selectedDay: dateAndTime.parse(
@@ -50,73 +52,140 @@ class CalendarModule extends Component {
         'YYYY-MM-DD',
         true
       ),
-      btnOpacity: 1
+      btnOpacity: 1,
+      modalDisplay: 'none'
     });
   }
   handleDayClick = (inputDate, modifiers = {}) => {
     if (modifiers.disabled) {
       return; // if user clicks disabled date(no data for us)
     }
-    this.setState({
-      ...this.state,
-      selectedDay: modifiers.selected ? undefined : inputDate,
-      toggled: false
-    });
+
+    // this.setState({
+    //   ...this.state,
+    //   selectedDay: inputDate
+    // });
 
     this.props.handleDateChangeFromCalendar({
       year: dateAndTime.format(inputDate, 'YYYY', true),
       month: dateAndTime.format(inputDate, 'MM', true),
       date: dateAndTime.format(inputDate, 'DD', true)
     });
+
+    this.controlModalFadeOut();
   };
 
   handleButtonClick = e => {
-    this.setState({
-      ...this.state,
-      toggled: !this.state.toggled,
-      clientX: e.clientX,
-      clientY: e.clientY
-    });
+    this.setState(
+      {
+        ...this.state,
+        toggled: !this.state.toggled,
+        clientX: e.clientX,
+        clientY: e.clientY
+      },
+      () => {
+        if (this.state.toggled) {
+          // document.body.style.overflow = 'hidden'; // hide scroll when calendar displays
 
-    document.body.style.overflow = 'hidden'; // hide scroll when calendar displays
+          this.setState({
+            ...this.state,
+            modalDisplay: 'block'
+          });
+        } else {
+          this.controlModalFadeOut();
+        }
+      }
+    );
   };
 
-  render() {
-    const { year, month, date } = this.props.latestDate;
+  controlModalFadeOut = () => {
+    this.setState(
+      {
+        ...this.state,
+        modalDisplay: 'block',
+        toggled: false
+      },
+      async () => {
+        await setTimeout(() => {
+          this.setState({
+            ...this.state,
+            modalDisplay: 'none',
+            toggled: false
+          });
+        }, 300);
+
+        // document.body.style.overflow = 'auto';
+      }
+    );
+  };
+
+  getDatesForCalendar = () => {
+    // get current Date
     const { currentDate } = this.props;
-    let latestDateParsed = undefined;
+
+    // format current Date
+    const currentDateFormat = `${currentDate.year}-${currentDate.month}-${
+      currentDate.date
+    }`;
+
+    // parse currentDate to be used in calendar module
+    const currentDateParsed = dateAndTime.parse(
+      currentDateFormat,
+      'YYYY-MM-DD',
+      true
+    );
+
+    // parse latest date to be used in calendar module
+    // this sets a boundary for selectable and unselectable dates
+    let latestDateParsed;
     let monthFormat;
     let initialMonth;
-    if (this.props.latestDate && this.state.selectedDay) {
+    if (this.props.latestDate) {
+      // decontruct latestDate
+      const { year, month, date } = this.props.latestDate;
+
       latestDateParsed = dateAndTime.parse(
         `${year}-${month}-${date}`,
         'YYYY-MM-DD',
         true
       );
-      monthFormat = dateAndTime.format(this.state.selectedDay, 'YYYY-MM');
+      monthFormat = dateAndTime.format(currentDateParsed, 'YYYY-MM');
 
       initialMonth = dateAndTime.parse(monthFormat, 'YYYY-MM', true);
+    } else {
+      latestDateParsed = dateAndTime.parse(`2019-01-01`, 'YYYY-MM-DD', true);
+      monthFormat = dateAndTime.format(currentDateParsed, 'YYYY-MM');
+      initialMonth = dateAndTime.parse(monthFormat, 'YYYY-MM', true);
     }
+
+    return {
+      latestDateParsed,
+      initialMonth,
+      currentDateParsed,
+      currentDateFormat
+    };
+  };
+  render() {
+    const {
+      latestDateParsed,
+      initialMonth,
+      currentDateParsed,
+      currentDateFormat
+    } = this.getDatesForCalendar();
 
     const disabledDays = {
       before: new Date(2017, 4, 1),
       after: latestDateParsed
     };
 
-    const modifiersStyles = {
-      birthday: {
-        color: 'white',
-        backgroundColor: '#ffc107'
-      },
-      thursdays: {
-        color: '#ffc107',
-        backgroundColor: '#fffdee'
-      }
-    };
-
     return (
       <React.Fragment>
-        <span className='indicator-btn-wrapper'>
+        {/*  calendar button */}
+        <span
+          className={`indicator-btn-wrapper ${
+            this.props.btnClicked ? 'selection-fade-in' : 'selection-fade-out'
+          }`}
+        >
           <span
             className='indicator-btn'
             style={{
@@ -130,51 +199,51 @@ class CalendarModule extends Component {
                 className='active-element'
                 style={{ display: this.state.toggled ? 'none' : 'inline' }}
               >
-                {`${currentDate.year}.${currentDate.month}.${currentDate.date}`}
+                {/* displays current date */}
+                {currentDateParsed.toLocaleString('ko-KR', {
+                  timeZone: 'UTC',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
               </span>
             </span>
           </span>
         </span>
+
+        {/* calendar overlay */}
         <div
-          className='calendar-wrapper'
-          style={{ display: this.state.toggled ? 'block' : 'none' }}
-          onClick={e => {
-            if (e.target.className === 'calendar-wrapper') {
-              this.setState({
-                ...this.state,
-                toggled: false
-              });
-              document.body.style.overflow = 'scroll';
-            }
+          className={`calendar-wrapper ${
+            this.state.toggled ? 'opacity-fade-in' : 'opacity-fade-out'
+          }`}
+          style={{ display: this.state.modalDisplay }}
+          onClick={this.controlModalFadeOut}
+        />
+
+        {/* calendar module */}
+        <span
+          className={`calendar ${
+            this.state.toggled ? 'selection-fade-in' : 'selection-fade-out'
+          }`}
+          style={{
+            display: this.state.modalDisplay,
+            opacity: this.state.toggled ? 1 : 0,
+            position: 'fixed',
+            zIndex: '10',
+            left: this.state.clientX,
+            top: this.state.clientY - 200
           }}
         >
-          <span
-            className='calendar selection-fade-in'
-            style={{
-              display: this.state.toggled ? 'block' : 'none',
-              opacity: this.state.toggled ? 1 : 0,
-              position: 'fixed',
-              zIndex: '10',
-              left: this.state.clientX - 120,
-              top: this.state.clientY + 15
-            }}
-          >
-            <DayPicker
-              onDayClick={this.handleDayClick}
-              selectedDays={
-                this.state.selectedDay
-                  ? this.state.selectedDay
-                  : new Date(2019, 1, 1)
-              }
-              disabledDays={disabledDays}
-              month={initialMonth}
-              modifiersStyles={modifiersStyles}
-              months={MONTHS}
-              weekdaysLong={WEEKDAYS_LONG}
-              weekdaysShort={WEEKDAYS_SHORT}
-            />
-          </span>
-        </div>
+          <DayPicker
+            onDayClick={this.handleDayClick}
+            selectedDays={currentDateParsed}
+            disabledDays={disabledDays}
+            month={initialMonth}
+            months={MONTHS}
+            weekdaysLong={WEEKDAYS_LONG}
+            weekdaysShort={WEEKDAYS_SHORT}
+          />
+        </span>
       </React.Fragment>
     );
   }

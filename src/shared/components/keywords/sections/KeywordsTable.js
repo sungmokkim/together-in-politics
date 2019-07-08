@@ -36,7 +36,11 @@ class KeywordsTable extends Component {
                 key={index}
               >
                 {dt.words[index]
-                  ? mapLinkToWords(dt.words[index]['word'], dt.name)
+                  ? mapLinkToWords(
+                      dt.words[index]['word'],
+                      dt.name,
+                      this.props.sorting.index
+                    )
                   : '조건 불충족'}
               </td>
             );

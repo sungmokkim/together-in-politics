@@ -73,7 +73,7 @@ export const communityOptions = {
     korean: '와이고수',
     koreanShort: '와',
     color: '#86331D',
-    popularityWeight: 0.044793733495071354 / 5, // fix weights according to community size
+    popularityWeight: 0.044793733495071354 / 3, // fix weights according to community size
     femiWeight: 0.034967450588000014,
     antiWeight: 0.020568947736082102,
     problemWeight: 0.054315477178662024,

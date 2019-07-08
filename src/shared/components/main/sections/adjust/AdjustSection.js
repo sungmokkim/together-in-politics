@@ -9,6 +9,7 @@ import {
 } from '../../../../actions/actions';
 import IndicatorBtn from '../../../common/IndicatorBtn';
 import CalendarModule from '../../../common/CalendarModule';
+import withModal from '../../../hoc/withModal';
 
 class DateAdjust extends Component {
   state = {
@@ -25,7 +26,6 @@ class DateAdjust extends Component {
   }
 
   handleDateChangeFromCalendar = ({ year, month, date }) => {
-    document.body.style.overflow = 'scroll';
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
@@ -55,25 +55,35 @@ class DateAdjust extends Component {
     });
   };
 
+  handleChange = (type, value) => {
+    this.props.changeActive(type, value);
+  };
   render() {
     const { latestDate, currentDate } = this.props.dashboardManager;
 
     return (
-      <section className='section-global'>
-        <div className='date-adj-container'>
-          <CalendarModule
-            latestDate={latestDate}
-            currentDate={currentDate}
-            handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
-          />
+      <React.Fragment>
+        <CalendarModule
+          latestDate={latestDate}
+          currentDate={currentDate}
+          handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
+          btnClicked={this.props.btnClicked}
+        />
 
-          <IndicatorBtn
-            handleClick={this.handleCommunityChange}
-            type='community'
-            valueIsObject={true}
-          />
-        </div>
-      </section>
+        <IndicatorBtn
+          handleClick={this.handleCommunityChange}
+          type='community'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+
+        <IndicatorBtn
+          handleClick={this.handleChange}
+          type='indicatorOption'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -84,13 +94,18 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    changeCurrentDate,
-    fetchTodayIndicators,
-    changeActive,
-    fetchTodayRankings,
-    fetchDashboardData
-  }
-)(DateAdjust);
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(
+  connect(
+    mapStateToProps,
+    {
+      changeCurrentDate,
+      fetchTodayIndicators,
+      changeActive,
+      fetchTodayRankings,
+      fetchDashboardData
+    }
+  )(DateAdjust)
+);

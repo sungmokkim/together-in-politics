@@ -16,12 +16,17 @@ class Indicator extends Component {
       statusMarks,
       value,
       metric,
-
+      weight,
       title,
       index,
       facialExpressions,
-      isFaceEmoji
+      maxValues,
+      isFaceEmoji,
+      indicatorOption,
+      activeCommunity
     } = this.props;
+
+    const maxValue = maxValues[activeCommunity.index][index];
 
     switch (index) {
       case 'popularity':
@@ -43,8 +48,18 @@ class Indicator extends Component {
       default:
         emoji = 'far fa-angry';
     }
+    let numberValue;
+    if (indicatorOption.index === 'relative') {
+      // if number display is in relative mode,
+      // divide the current value by max value
 
-    const numberValue = (value * 100).toFixed(2);
+      numberValue = ((value / maxValue) * 100).toFixed(2);
+    } else {
+      // if it's not in relative mode,
+      // divide the current value by the corresponding weight
+      numberValue = ((value / weight) * 100).toFixed(2);
+    }
+
     if (numberValue >= statusValues[0]) {
       status = statusNames[0];
       statusMark = statusMarks[0];
@@ -112,7 +127,7 @@ class Indicator extends Component {
             <div>
               <div className='indicator-title'>{title}</div>
               <span className='active-community'>
-                {this.props.activeCommunity}
+                {this.props.activeCommunity['korean']}
               </span>
             </div>
           </div>

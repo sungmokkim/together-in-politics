@@ -10,38 +10,59 @@ import {
   fetchComments,
   fetchHotPosts
 } from '../../../actions/actions';
+import { clientFetchingReference, protocol } from '../../../clientEnv';
+import io from 'socket.io-client';
+
 class FreeBoardSection extends Component {
-  state = {
-    inputs: {
-      text: '',
-      userName: '',
-      password: '',
-      comment: ''
-    },
-    inputErrorCodes: {
-      text: null,
-      userName: null,
-      password: null,
-      comment: null
-    },
-    submitErrorCodes: {},
-    errorAnimation: null,
-    currentId: null,
-    singlePostModalToggled: false,
-    newPostModalToggled: false,
-    loading: false,
-    modalDisplay: 'none',
-    fullWidth: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputs: {
+        text: '',
+        userName: '',
+        password: '',
+        comment: ''
+      },
+      inputErrorCodes: {
+        text: null,
+        userName: null,
+        password: null,
+        comment: null
+      },
+      submitErrorCodes: {},
+      errorAnimation: null,
+      currentId: null,
+      singlePostModalToggled: false,
+      newPostModalToggled: false,
+      loading: false,
+      modalDisplay: 'none',
+
+      newPostCount: 0
+    };
+    // set socket object here so that it can be referenced throughout other actions and functions
+    this.socket = io.connect(`${protocol}://${clientFetchingReference}`);
+  }
 
   componentDidMount() {
-    const fullWidth = document.getElementById('root').offsetWidth;
-    this.setState({
-      ...this.state,
-      fullWidth,
-      modalDisplay: 'none'
+    // following code is to add eventListener to the websocket created in constructor method.
+    this.socket.on('new-post', newPostCount => {
+      // when someone writes new post, set new post count value
+      this.setState({
+        ...this.state,
+        newPostCount: this.state.newPostCount + 1
+      });
+    });
+
+    this.socket.on('clear-post-count', newPostCount => {
+      // set newPostCount to 0
+      this.setState({
+        ...this.state,
+        newPostCount: 0
+      });
     });
   }
+
+  componentWillUnmount() {}
 
   handleChange = e => {
     const { inputIsTooLong } = this.props.freeboard.errorCodes;
@@ -89,21 +110,31 @@ class FreeBoardSection extends Component {
   handlePostSubmit = e => {
     e.preventDefault();
 
+    // when a user presses submit button,
+    // there should be checking process first
     const { minLength, errorCodes } = this.props.freeboard;
+
+    // check if any of input errors exist
+
+    // filter anything but comment error into an array
     const inputErrors = Object.keys(this.state.inputErrorCodes).filter(idx => {
       return idx !== 'comment' && this.state.inputErrorCodes[idx];
     });
 
+    // if the array has a length (it means some errors exist)
     if (inputErrors.length) {
+      // return(don't do anything)
       return;
     }
 
+    // check if input length is shorter than minimun length
     const submissionErrors = Object.keys(this.state.inputs).filter(idx => {
       return (
         idx !== 'comment' && this.state.inputs[idx].length < minLength[idx]
       );
     });
 
+    // if some errors exist, set error message and return(do not do anything)
     if (submissionErrors.length) {
       const submitErrorObj = {};
 
@@ -117,28 +148,29 @@ class FreeBoardSection extends Component {
         errorAnimation: 'error-animation'
       });
       return;
-    } else {
-      this.props.insertInFreeboard(this.state.inputs).then(rs => {
-        if (rs.ok === 1) {
-          this.handleClosingModal();
-
-          this.setState({
-            ...this.state,
-            submitErrorCodes: {},
-            errorAnimation: null,
-            inputs: {
-              ...this.state.inputs,
-              text: ''
-            },
-            inputErrorCodes: {
-              text: null,
-              userName: null,
-              password: null
-            }
-          });
-        }
-      });
     }
+
+    // if nothing happens, post goes to database and posting process is successful
+    this.props.insertInFreeboard(this.state.inputs, this.socket).then(rs => {
+      if (rs.ok === 1) {
+        this.handleClosingModal();
+
+        this.setState({
+          ...this.state,
+          submitErrorCodes: {},
+          errorAnimation: null,
+          inputs: {
+            ...this.state.inputs,
+            text: ''
+          },
+          inputErrorCodes: {
+            text: null,
+            userName: null,
+            password: null
+          }
+        });
+      }
+    });
   };
 
   handleOpeningModal = (postId = null) => {
@@ -152,11 +184,9 @@ class FreeBoardSection extends Component {
         [modalTogglingKey]: true
       },
       () => {
-        postId ? this.props.fetchComments(postId) : null;
+        postId ? this.props.fetchComments(postId, this.socket) : null;
 
-        this.props.siteManager.isFromClient
-          ? (document.body.style.overflow = 'hidden')
-          : null;
+        document.body.style.overflow = 'hidden';
       }
     );
   };
@@ -171,30 +201,39 @@ class FreeBoardSection extends Component {
         errorAnimation: null
       },
       () => {
-        this.props.fetchFreeboard();
+        this.props.fetchFreeboard(this.socket);
         this.props.fetchHotPosts();
-        if (this.props.siteManager.isFromClient) {
-          document.body.style.overflow = 'scroll';
-        }
+
+        document.body.style.overflow = 'auto';
       }
     );
   };
 
   handleCommentSubmit = e => {
     e.preventDefault();
+
+    // when a user presses submit button,
+    // there should be checking process first
     const { minLength, errorCodes } = this.props.freeboard;
+
+    // check if any of input errors exist
+
+    // filter anything but text(post) error into an array
     const inputErrors = Object.keys(this.state.inputErrorCodes).filter(idx => {
       return idx !== 'text' && this.state.inputErrorCodes[idx];
     });
-
+    // if the array has a length (it means some errors exist)
     if (inputErrors.length) {
+      // return (don't do anything)
       return;
     }
 
+    // check if input length is shorter than minimun length
     const submissionErrors = Object.keys(this.state.inputs).filter(idx => {
       return idx !== 'text' && this.state.inputs[idx].length < minLength[idx];
     });
 
+    // if some errors exist, set error message and return(do not do anything)
     if (submissionErrors.length) {
       const submitErrorObj = {};
 
@@ -208,44 +247,76 @@ class FreeBoardSection extends Component {
         errorAnimation: 'error-animation'
       });
       return;
-    } else {
-      this.props
-        .updateNewComment({
+    }
+
+    // if nothing happens, post goes to database and posting process is successful
+    this.props
+      .updateNewComment(
+        {
           ...this.state.inputs,
           inputId: this.state.currentId
-        })
-        .then(rs => {
-          if (rs.ok === 1) {
-            this.props.fetchComments(this.state.currentId);
-            this.setState({
-              ...this.state,
-              submitErrorCodes: {},
-              errorAnimation: null,
-              inputs: {
-                ...this.state.inputs,
-                comment: ''
-              },
-              inputErrorCodes: {
-                comment: null,
-                userName: null,
-                password: null
-              }
-            });
-          }
-        });
-    }
+        },
+        this.socket
+      )
+      .then(rs => {
+        if (rs.ok === 1) {
+          this.props.fetchComments(this.state.currentId, this.socket);
+          this.setState({
+            ...this.state,
+            submitErrorCodes: {},
+            errorAnimation: null,
+            inputs: {
+              ...this.state.inputs,
+              comment: ''
+            },
+            inputErrorCodes: {
+              comment: null,
+              userName: null,
+              password: null
+            }
+          });
+        }
+      });
   };
 
   handleRefresh = type => {
     switch (type) {
       case 'posts':
-        this.props.fetchFreeboard();
-        this.props.fetchHotPosts();
+        this.setState(
+          {
+            ...this.state,
+            loading: true
+          },
+          async () => {
+            await this.props.fetchFreeboard(this.socket);
+            await this.props.fetchHotPosts();
+
+            this.setState({
+              ...this.state,
+              loading: false
+            });
+          }
+        );
+
         break;
       case 'comments':
-        this.props.fetchComments(this.state.currentId);
-        this.props.fetchFreeboard();
-        this.props.fetchHotPosts();
+        this.setState(
+          {
+            ...this.state,
+            loading: true
+          },
+          async () => {
+            await this.props.fetchComments(this.state.currentId, this.socket);
+            await this.props.fetchFreeboard(this.socket);
+            await this.props.fetchHotPosts();
+
+            this.setState({
+              ...this.state,
+              loading: false
+            });
+          }
+        );
+
         break;
     }
   };
@@ -271,6 +342,7 @@ class FreeBoardSection extends Component {
           handleClosingModal={this.handleClosingModal}
           handleRefresh={this.handleRefresh}
           loading={this.state.loading}
+          newPostCount={this.state.newPostCount}
         />
         <PostAreas
           handleChange={this.handleChange}
@@ -285,11 +357,13 @@ class FreeBoardSection extends Component {
           handleClosingModal={this.handleClosingModal}
           handleRefresh={this.handleRefresh}
           loading={this.state.loading}
+          socket={this.socket}
         />
       </React.Fragment>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     freeboard: state.freeboard,

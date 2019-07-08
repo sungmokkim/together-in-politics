@@ -7,6 +7,7 @@ import {
 } from '../../../actions/actions';
 import IndicatorBtn from '../../common/IndicatorBtn';
 import CalendarModule from '../../common/CalendarModule';
+import withModal from '../../hoc/withModal';
 
 class RankingMenu extends Component {
   state = {
@@ -26,23 +27,27 @@ class RankingMenu extends Component {
     const { latestDate, currentDate, active } = this.props.dashboardManager;
 
     return (
-      <section className='section-global'>
-        <div className='date-adj-container'>
-          <CalendarModule
-            latestDate={latestDate}
-            currentDate={currentDate}
-            handleDateChangeFromCalendar={
-              this.props.handleDateChangeFromCalendar
-            }
-          />
+      <React.Fragment>
+        <CalendarModule
+          latestDate={latestDate}
+          currentDate={currentDate}
+          handleDateChangeFromCalendar={this.props.handleDateChangeFromCalendar}
+          btnClicked={this.props.btnClicked}
+        />
 
-          <IndicatorBtn
-            handleClick={this.props.handleSortingChange}
-            type='rankingSorting'
-            valueIsObject={true}
-          />
-        </div>
-      </section>
+        <IndicatorBtn
+          handleClick={this.props.handleSortingChange}
+          type='rankingSorting'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+        <IndicatorBtn
+          handleClick={this.props.handleSortingChange}
+          type='indicatorOption'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+      </React.Fragment>
     );
   }
 }
@@ -53,11 +58,16 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    changeCurrentDate,
-    changeActive,
-    fetchTodayRankings
-  }
-)(RankingMenu);
+export default withModal({
+  configBtn: true,
+  fixedPositionClassName: 'setting-container'
+})(
+  connect(
+    mapStateToProps,
+    {
+      changeCurrentDate,
+      changeActive,
+      fetchTodayRankings
+    }
+  )(RankingMenu)
+);

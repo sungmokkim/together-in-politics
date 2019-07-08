@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RefreshBtn from '../../common/RefreshBtn';
 
 class WritingArea extends Component {
   state = {
     modalDisplay: 'none',
-    fullWidth: 0,
+
     rotation: 'forwards'
   };
-  componentDidMount() {
-    const fullWidth = document.getElementById('root').offsetWidth;
-    this.setState({
-      ...this.state,
-      fullWidth,
-      modalDisplay: 'none'
-    });
-  }
 
   controlModalDisplay = async () => {
     this.setState(
@@ -36,7 +29,7 @@ class WritingArea extends Component {
   toggleNewPostArea = () => {
     return (
       <div
-        className={`single-post-overlay ${
+        className={`single-post-overlay writing-post-area ${
           this.props.modalIsOpen ? 'opacity-fade-in' : 'opacity-fade-out'
         }`}
         style={{
@@ -55,13 +48,7 @@ class WritingArea extends Component {
         }}
       >
         <div className='single-post-relative'>
-          <div
-            className='single-post-wrapper'
-            id='single-post-wrapper'
-            style={{
-              marginLeft: 0 - (this.state.fullWidth * 0.8) / 2
-            }}
-          >
+          <div className='single-post-wrapper' id='single-post-wrapper'>
             <div className='single-post-container'>
               <form className='input-form' onSubmit={this.props.handleSubmit}>
                 <div className='user-and-password'>
@@ -145,67 +132,42 @@ class WritingArea extends Component {
     );
   };
 
-  delayStoppingRotation = () => {
-    this.setState(
-      {
-        ...this.state,
-        rotation: 'infinite'
-      },
-      async () => {
-        await setTimeout(() => {
-          this.setState({
-            ...this.state,
-            rotation: 'forwards'
-          });
-        }, 1000);
-      }
-    );
-  };
   render() {
     return (
-      <div className='section-global writing-area'>
-        <span className='indicator-btn-wrapper' style={{ marginRight: '2rem' }}>
-          <span
-            className='indicator-btn'
-            onClick={() => {
-              this.props.handleOpeningModal();
-            }}
-          >
-            <span className='initial-display-wrapper'>
-              <i className='fas fa-pen  active-element indicator-mark' />
-            </span>
-          </span>
-        </span>
+      <React.Fragment>
+        {/* only display refresh button when new post count > 0 */}
+        {this.props.newPostCount > 0 ? (
+          <RefreshBtn
+            loading={this.props.loading}
+            handleRefresh={this.props.handleRefresh}
+            type='posts'
+            suffix='개의 새 게시물'
+            count={this.props.newPostCount}
+          />
+        ) : null}
 
-        <span className='indicator-btn-wrapper'>
+        <span className='writing-container' style={{ marginRight: '2rem' }}>
           <span
-            className='indicator-btn'
+            className='writing-btn'
             onClick={() => {
-              this.delayStoppingRotation();
-              this.props.handleRefresh('posts');
+              this.props.modalIsOpen
+                ? this.controlModalDisplay().then(() => {
+                    this.props.handleClosingModal();
+                  })
+                : this.props.handleOpeningModal();
             }}
           >
             <span className='initial-display-wrapper'>
               <i
-                className={`fas fa-sync-alt active-element indicator-mark `}
-                style={{
-                  animation: `refresh-rotation 1s ease-in-out ${
-                    this.props.loading ? 'infinite' : this.state.rotation
-                  }`
-                }}
+                className={`${
+                  this.props.modalIsOpen ? 'fas fa-times' : 'fas fa-pen'
+                }  active-element writing-icon`}
               />
             </span>
           </span>
         </span>
-
-        <span
-          className='indicator-btn'
-          onClick={() => {
-            this.props.handleRefresh('posts');
-          }}
-        />
         {this.toggleNewPostArea()}
-      </div>
+      </React.Fragment>
     );
   }
 }

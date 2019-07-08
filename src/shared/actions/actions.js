@@ -22,6 +22,18 @@ export const fetchLatestDate = () => async dispatch => {
   return { year: latestYear, month: latestMonth, date: latestDate };
 };
 
+export const FETCH_MAX_VALUES = 'FETCH_MAX_VALUES';
+export const fetchMaxValues = () => async dispatch => {
+  const res = await axios.get(
+    `${protocol}://${clientFetchingReference}/api/max_values`
+  );
+
+  dispatch({
+    type: FETCH_MAX_VALUES,
+    payload: res.data
+  });
+};
+
 export const FETCH_TODAY_RANKINGS = 'FETCH_TODAY_RANKINGS';
 export const fetchTodayRankings = (
   year,
@@ -167,7 +179,7 @@ export const fetchKeywords = (
 
 //          *********** FREEBOARD
 export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
-export const fetchFreeboard = () => async dispatch => {
+export const fetchFreeboard = socket => async dispatch => {
   const res = await axios.get(
     `${protocol}://${clientFetchingReference}/api/freeboard`
   );
@@ -183,6 +195,9 @@ export const fetchFreeboard = () => async dispatch => {
     };
   });
 
+  // with received socket, emit event
+
+  socket.emit('clear-post-count');
   dispatch({
     type: FETCH_FREEBOARD,
     payload: editedData
@@ -217,7 +232,7 @@ export const fetchHotPosts = () => async dispatch => {
 };
 
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
-export const fetchComments = postId => async dispatch => {
+export const fetchComments = (postId, socket) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/comments`,
     {
@@ -240,6 +255,9 @@ export const fetchComments = postId => async dispatch => {
     type: FETCH_COMMENTS,
     payload: editedData
   });
+
+  // emit events to socket
+  socket.emit('clear-comment-count', postId);
 
   return editedData;
 };
@@ -307,11 +325,10 @@ export const resetCurrentRange = callback => async dispatch => {
 //INSERT -------------------------------------------------------------
 
 export const INSERT_IN_FREEBOARD = 'INSERT_IN_FREEBOARD';
-export const insertInFreeboard = ({
-  text,
-  userName,
-  password
-}) => async dispatch => {
+export const insertInFreeboard = (
+  { text, userName, password },
+  socket
+) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/insert_freeboard`,
     {
@@ -326,17 +343,18 @@ export const insertInFreeboard = ({
     payload: res.data
   });
 
+  // with received socket object, emit event,
+  socket.emit('new-post');
+
   return res.data;
 };
 
 // UPDATE----------------------------------------------------
 export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT';
-export const updateNewComment = ({
-  inputId,
-  comment,
-  userName,
-  password
-}) => async dispatch => {
+export const updateNewComment = (
+  { inputId, comment, userName, password },
+  socket
+) => async dispatch => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/new_comment`,
     {
@@ -351,6 +369,9 @@ export const updateNewComment = ({
     type: UPDATE_NEW_COMMENT,
     payload: res.data
   });
+
+  // with received socket object, emit event,
+  socket.emit('new-comment', inputId);
 
   return res.data;
 };

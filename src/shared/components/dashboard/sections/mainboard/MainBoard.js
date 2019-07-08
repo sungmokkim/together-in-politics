@@ -149,7 +149,10 @@ class MainBoard extends Component {
               (data.femi_ratio / communities[data.name]['femiWeight']) *
               100
             ).toFixed(2),
-            r: (data.w_count / 10000).toFixed(2)
+            r: (
+              (data.popularity / communities[data.name]['popularityWeight']) *
+              50
+            ).toFixed(2)
           }
         ]
       };
@@ -245,12 +248,11 @@ class MainBoard extends Component {
     return (
       <React.Fragment>
         <div className='mainboard-wrapper'>
-          <div className='mainboard-menu-container'>
-            <MainBoardMenu
-              handleClick={this.handleButtonClick}
-              handleCheck={this.handleCheck}
-            />
-          </div>
+          <MainBoardMenu
+            handleClick={this.handleButtonClick}
+            handleCheck={this.handleCheck}
+          />
+
           <div
             className='mainboard-content-container'
             id='mainboard-content-container'
