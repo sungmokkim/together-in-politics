@@ -4,7 +4,8 @@ import {
   CHANGE_ACTIVE,
   RESET_CURRENT_RANGE,
   FETCH_LATEST_DATE,
-  TOGGLE_INDICATOR
+  TOGGLE_INDICATOR,
+  FETCH_MAX_VALUES
 } from '../actions/actions';
 
 import { communityOptions, communityDefault } from '../options/communities';
@@ -184,9 +185,9 @@ const initialState = {
   communities: communityOptions,
 
   dashboardIndicatorsName: {
-    anti_ratio: { korean: '적극 거부율', koreanShort: '거부율' },
-    popularity: { korean: '대통령 지분율', koreanShort: '지분율' },
-    femi_ratio: { korean: '여성 갈등 지수', koreanShort: '여성 지수' }
+    anti_ratio: { korean: '적극 거부율', koreanShort: '거부' },
+    popularity: { korean: '대통령 지분율', koreanShort: '지분' },
+    femi_ratio: { korean: '페미 이슈 지수', koreanShort: '페미' }
     // ,
     // femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
     // ,
@@ -203,7 +204,9 @@ const initialState = {
     }
   },
 
-  todayIndicators: todayIndicators
+  todayIndicators: todayIndicators,
+
+  maxValues: {}
 };
 
 export default (state = initialState, action) => {
@@ -221,6 +224,17 @@ export default (state = initialState, action) => {
           month: action.payload.month,
           date: action.payload.date
         }
+      };
+
+    case FETCH_MAX_VALUES:
+      // restructure it to obj
+      const newObj = action.payload.reduce((acc, val) => {
+        acc[val.name] = val;
+        return acc;
+      }, {});
+      return {
+        ...state,
+        maxValues: newObj
       };
 
     case CHANGE_ACTIVE:
