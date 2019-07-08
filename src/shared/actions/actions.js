@@ -22,6 +22,18 @@ export const fetchLatestDate = () => async dispatch => {
   return { year: latestYear, month: latestMonth, date: latestDate };
 };
 
+export const FETCH_MAX_VALUES = 'FETCH_MAX_VALUES';
+export const fetchMaxValues = () => async dispatch => {
+  const res = await axios.get(
+    `${protocol}://${clientFetchingReference}/api/max_values`
+  );
+
+  dispatch({
+    type: FETCH_MAX_VALUES,
+    payload: res.data
+  });
+};
+
 export const FETCH_TODAY_RANKINGS = 'FETCH_TODAY_RANKINGS';
 export const fetchTodayRankings = (
   year,
