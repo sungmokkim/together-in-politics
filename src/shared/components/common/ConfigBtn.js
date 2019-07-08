@@ -7,7 +7,11 @@ export default props => {
       style={{ animation: 'opacity-fade-in 0.3s ease-in forwards' }}
       onClick={props.handleClick}
     >
-      <i className='fas fa-cog config-icon' />
+      <i
+        className={`${
+          props.btnClicked ? 'fas fa-times' : 'fas fa-cog'
+        } config-icon`}
+      />
     </div>
   );
 };
