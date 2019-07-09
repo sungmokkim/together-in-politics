@@ -2,6 +2,14 @@ export const todayIndicators = {
   popularity: {
     korean: '대통령 게시판 지분율',
     index: 'popularity',
+    indicatorOption: {
+      relative: {
+        korean: '상대적 지분율'
+      },
+      absolute: {
+        korean: '절대적 지분율'
+      }
+    },
     statusValues: [60, 40, 20, 10],
     statusNames: {
       korean: [
@@ -23,6 +31,14 @@ export const todayIndicators = {
   anti_ratio: {
     korean: '대통령 적극 거부율 ',
     index: 'anti_ratio',
+    indicatorOption: {
+      relative: {
+        korean: '상대적 거부율'
+      },
+      absolute: {
+        korean: '절대적 거부율'
+      }
+    },
     statusValues: [60, 40, 20, 10],
     statusNames: {
       korean: [
@@ -52,6 +68,14 @@ export const todayIndicators = {
   anti_popularity: {
     korean: '대통령 혐오 지분율 ',
     index: 'anti_popularity',
+    indicatorOption: {
+      relative: {
+        korean: '상대적 지분율'
+      },
+      absolute: {
+        korean: '절대적 지분율'
+      }
+    },
     statusValues: [20, 15, 10, 5],
     statusNames: {
       korean: [
@@ -83,6 +107,14 @@ export const todayIndicators = {
     korean: '페미 이슈 지수',
     index: 'femi_ratio',
     statusValues: [20, 15, 10, 5],
+    indicatorOption: {
+      relative: {
+        korean: '상대적 지수'
+      },
+      absolute: {
+        korean: '절대적 지수'
+      }
+    },
     statusNames: {
       korean: [
         '이슈 매우 높음',
@@ -104,6 +136,14 @@ export const todayIndicators = {
   problem_ratio: {
     korean: '시니컬 지수',
     index: 'problem_ratio',
+    indicatorOption: {
+      relative: {
+        korean: '상대적 지수'
+      },
+      absolute: {
+        korean: '절대적 지수'
+      }
+    },
     statusValues: [20, 15, 10, 5],
     statusNames: {
       korean: [
