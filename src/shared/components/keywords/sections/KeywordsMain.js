@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchKeywords, changeActive } from '../../../actions/actions';
 import KeywordsTable from './KeywordsTable';
 import KeywordsMenu from './KeywordsMenu';
+import CurrentStatus from '../../common/CurrentStatus';
 
 class KeywordsMain extends Component {
   state = {
@@ -48,8 +49,25 @@ class KeywordsMain extends Component {
   };
 
   render() {
+    const { active } = this.props.dashboardManager;
     return (
       <section>
+        <CurrentStatus
+          list={[
+            {
+              icon: 'fas fa-tasks',
+              status: active.community['korean']
+            },
+            {
+              icon: 'fas fa-sort-numeric-down',
+              status: active.rankingSorting['korean']
+            },
+            {
+              icon: 'far fa-clock',
+              status: active.keywordPeriod['koreanShort']
+            }
+          ]}
+        />
         <KeywordsMenu handleChange={this.handleChange} />
 
         <KeywordsTable
