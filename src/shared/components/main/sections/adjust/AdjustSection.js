@@ -18,25 +18,12 @@ class DateAdjust extends Component {
     calendarClicked: false
   };
 
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      opacity: 1
-    });
-  }
-
   handleDateChangeFromCalendar = ({ year, month, date }) => {
     this.props
       .changeCurrentDate(year, month, date)
       .then(({ year, month, date }) => {
         const { active } = this.props.dashboardManager;
-        this.props.fetchTodayIndicators(
-          year,
-          month,
-          date,
-          false,
-          active.community
-        );
+        this.props.fetchTodayIndicators(year, month, date, false, active);
       });
   };
 
@@ -44,14 +31,8 @@ class DateAdjust extends Component {
     this.props.changeActive(type, value, () => {
       const { year, month, date } = this.props.dashboardManager.currentDate;
       const { active } = this.props.dashboardManager;
-      this.props.fetchTodayIndicators(
-        year,
-        month,
-        date,
-        false,
-        value,
-        active.community
-      );
+
+      this.props.fetchTodayIndicators(year, month, date, false, active);
     });
   };
 
@@ -80,6 +61,13 @@ class DateAdjust extends Component {
         <IndicatorBtn
           handleClick={this.handleChange}
           type='indicatorOption'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
+
+        <IndicatorBtn
+          handleClick={this.handleChange}
+          type='mentionPortion'
           valueIsObject={true}
           btnClicked={this.props.btnClicked}
         />

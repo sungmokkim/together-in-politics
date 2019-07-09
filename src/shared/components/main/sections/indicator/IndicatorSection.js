@@ -36,6 +36,7 @@ class IndicatorSection extends Component {
 
   getValue = key => {
     const { today } = this.props;
+
     return today.indicators.length ? today.indicators[0][key] : null;
   };
 
@@ -53,20 +54,17 @@ class IndicatorSection extends Component {
       <div className='indicator-container'>
         <Link to='/dashboard'>
           <Indicator
-            title={todayIndicators.popularity['korean']}
+            currentMCount={this.getValue('m_count')}
+            todayIndicator={todayIndicators}
             index='popularity'
             value={this.getValue('popularity')}
             isNumber={true}
-            statusValues={todayIndicators.popularity.statusValues}
-            statusNames={todayIndicators.popularity.statusNames['korean']}
-            statusMarks={todayIndicators.popularity.statusMarks}
             isFaceEmoji={false}
             metric='%'
-            activeCommunity={active.community}
+            active={active}
             handleClick={this.handleChange}
             emojiMarginRight='1rem'
             emojiMarginLeft='0rem'
-            indicatorOption={active.indicatorOption}
             weight={active.community.popularityWeight}
             maxValues={maxValues}
           />
@@ -74,21 +72,17 @@ class IndicatorSection extends Component {
 
         <Link to='/dashboard'>
           <Indicator
-            title={todayIndicators.anti_ratio['korean']}
+            currentMCount={this.getValue('m_count')}
+            todayIndicator={todayIndicators}
             index='anti_ratio'
             value={this.getValue('anti_ratio')}
             isNumber={true}
-            statusValues={todayIndicators.anti_ratio.statusValues}
-            statusNames={todayIndicators.anti_ratio.statusNames['korean']}
-            statusMarks={todayIndicators.anti_ratio.statusMarks}
             isFaceEmoji={true}
-            facialExpressions={todayIndicators.anti_ratio.facialExpressions}
             metric='%'
-            activeCommunity={active.community}
+            active={active}
             handleClick={this.handleChange}
             emojiMarginRight='2rem'
             emojiMarginLeft='0rem'
-            indicatorOption={active.indicatorOption}
             weight={1}
             maxValues={maxValues}
           />
@@ -96,20 +90,17 @@ class IndicatorSection extends Component {
 
         <Link to='/dashboard'>
           <Indicator
-            title={todayIndicators.femi_ratio['korean']}
+            currentMCount={this.getValue('m_count')}
+            todayIndicator={todayIndicators}
             index='femi_ratio'
             value={this.getValue('femi_ratio')}
             isNumber={true}
-            statusValues={todayIndicators.femi_ratio.statusValues}
-            statusNames={todayIndicators.femi_ratio.statusNames['korean']}
-            statusMarks={todayIndicators.femi_ratio.statusMarks}
             isFaceEmoji={false}
             metric='%'
-            activeCommunity={active.community}
+            active={active}
             handleClick={this.handleChange}
             emojiMarginRight='1rem'
             emojiMarginLeft='0rem'
-            indicatorOption={active.indicatorOption}
             weight={active.community.femiWeight}
             maxValues={maxValues}
           />
@@ -117,20 +108,17 @@ class IndicatorSection extends Component {
 
         <Link to='/dashboard'>
           <Indicator
-            title={todayIndicators.problem_ratio['korean']}
+            currentMCount={this.getValue('m_count')}
+            todayIndicator={todayIndicators}
             index='problem_ratio'
             value={this.getValue('problem_ratio')}
             isNumber={true}
-            statusValues={todayIndicators.problem_ratio.statusValues}
-            statusNames={todayIndicators.problem_ratio.statusNames['korean']}
-            statusMarks={todayIndicators.problem_ratio.statusMarks}
             isFaceEmoji={false}
             metric='%'
-            activeCommunity={active.community}
+            active={active}
             handleClick={this.handleChange}
             emojiMarginRight='3rem'
             emojiMarginLeft='1.5rem'
-            indicatorOption={active.indicatorOption}
             weight={active.community.problemWeight}
             maxValues={maxValues}
           />
