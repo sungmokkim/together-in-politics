@@ -5,8 +5,10 @@ import {
   changeCurrentDate,
   changeActive
 } from '../../../actions/actions';
+import CurrentStatus from '../../common/CurrentStatus';
 import RankingTable from './RankingTable';
 import RankingMenu from './RankingMenu';
+import dateAndTime from 'date-and-time';
 
 class RankingMain extends Component {
   state = {
@@ -83,7 +85,8 @@ class RankingMain extends Component {
               100
             ).toFixed(2)
           ),
-          name: communities[dt.name]['korean'] // map full names
+          name: communities[dt.name]['korean'], // map full names,,
+          commIndex: dt.name
         };
       });
     } else {
@@ -164,8 +167,44 @@ class RankingMain extends Component {
   };
 
   render() {
+    const {
+      active,
+      rankingSortingOptions,
+      todayIndicators,
+      communities,
+      currentDate
+    } = this.props.dashboardManager;
+
+    const currentDateParsed = dateAndTime
+      .parse(
+        `${currentDate.year}-${currentDate.month}-${currentDate.date}`,
+        'YYYY-MM-DD',
+        true
+      )
+      .toLocaleString('ko-KR', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+      });
     return (
       <section>
+        <CurrentStatus
+          list={[
+            {
+              icon: 'far fa-calendar-alt',
+              status: currentDateParsed
+            },
+            {
+              icon: 'fas fa-tachometer-alt',
+              status: active.indicatorOption['korean']
+            },
+            {
+              icon: 'fas fa-filter',
+              status: active.mentionPortion['korean']
+            }
+          ]}
+        />
         <RankingMenu
           handleDateChangeFromCalendar={this.handleDateChangeFromCalendar}
           handleSortingChange={this.handleSortingChange}
@@ -173,10 +212,12 @@ class RankingMain extends Component {
         <RankingTable
           data={this.state.rankingTableData}
           fieldOrder={this.state.fieldOrder}
-          fieldNames={this.props.dashboardManager.rankingSortingOptions}
+          fieldNames={rankingSortingOptions}
           contentIsLoading={this.state.contentIsLoading}
-          indicators={this.props.dashboardManager.todayIndicators}
-          indicatorOption={this.props.dashboardManager.active.indicatorOption}
+          indicators={todayIndicators}
+          indicatorOption={active.indicatorOption}
+          active={active}
+          communities={communities}
         />
       </section>
     );

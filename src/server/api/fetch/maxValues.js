@@ -11,13 +11,27 @@ const {
   infoCollection
 } = env.mongodb_info;
 
-const fetchMaxValues = callback => {
+const fetchMaxValues = ({ active, communities }, callback) => {
   const url = `mongodb://${user}:${mongopw}@${host}:${port}`;
 
   // Database Name
   const dbName = `${database}`;
 
   const client = new MongoClient(url, { useNewUrlParser: true });
+
+  // map query conditions
+  // each community has its own 'mentionPortion' value
+  // to make it in query, it has to be mapped in an array
+  const mapConditions = Object.keys(communities).map(comm => {
+    return {
+      name: comm,
+      m_count: {
+        // get the current mentionPortion value based on given community name in community object
+        $gte: communities[comm][active.mentionPortion.index]
+      }
+    };
+  });
+
   client.connect(err => {
     assert.equal(null, err);
     const db = client.db(dbName); // declare db
@@ -25,6 +39,11 @@ const fetchMaxValues = callback => {
 
     collection
       .aggregate([
+        {
+          $match: {
+            $or: mapConditions
+          }
+        },
         {
           $group: {
             _id: '$name',
@@ -41,6 +60,11 @@ const fetchMaxValues = callback => {
             popularity: '$popularity',
             femi_ratio: '$femi_ratio',
             problem_ratio: '$problem_ratio'
+          }
+        },
+        {
+          $addFields: {
+            mentionPortion: active.mentionPortion.index
           }
         }
       ])

@@ -76,14 +76,15 @@ export default setting => WrappedComponent => {
             onClick={this.controlModalFadeOut}
           />
           <div className={setting.fixedPositionClassName}>
-            {/* wrappedComponent will display if state's componentDisplay is true */}
-            {/* this is due to fade out animation (wrapped component should execute animation first before it unmounts) */}
-            {this.state.componentDisplay ? (
+            {/* render wrapped Component based via this function */}
+
+            {/* this div is to make display block and none depending on the current state */}
+            <div style={{ display: this.state.modalDisplay }}>
               <WrappedComponent
                 btnClicked={this.state.btnClicked}
                 {...this.props}
               />
-            ) : null}
+            </div>
 
             {/* config button  */}
             {setting.configBtn ? (

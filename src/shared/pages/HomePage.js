@@ -9,7 +9,11 @@ import {
 } from '../actions/actions';
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
+import CurrentStatus from '../components/common/CurrentStatus';
+import dateAndTime from 'date-and-time';
+
 import { logPageView } from '../googleAnalytics';
+
 class HomePage extends Component {
   componentDidMount() {
     logPageView();
@@ -36,14 +40,44 @@ class HomePage extends Component {
         currentDate.month,
         currentDate.date,
         false,
-        active.community
+        active
       );
     }
   }
 
   render() {
+    const { currentDate, active } = this.props.dashboardManager;
+    const currentDateParsed = dateAndTime
+      .parse(
+        `${currentDate.year}-${currentDate.month}-${currentDate.date}`,
+        'YYYY-MM-DD',
+        true
+      )
+      .toLocaleString('ko-KR', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+      });
+
     return (
       <React.Fragment>
+        <CurrentStatus
+          list={[
+            {
+              icon: 'far fa-calendar-alt',
+              status: currentDateParsed
+            },
+            {
+              icon: 'fas fa-tasks',
+              status: active.community['korean']
+            },
+            {
+              icon: 'fas fa-tachometer-alt',
+              status: active.indicatorOption['korean']
+            }
+          ]}
+        />
         <AdjustSection />
         <IndicatorSection />
       </React.Fragment>
@@ -68,7 +102,7 @@ const fetchDataFromServerSide = store => {
         currentDate.month,
         currentDate.date,
         true, // fetch latest. this has to be true since it is the first time loading this page
-        active.community
+        active
       )
     )
   ];

@@ -16,9 +16,21 @@ Sentiment data were collected from several Korean web sites (web communities) an
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.3
+## Release Note - 0.3.1
+* **0.3.1**
+  * New
+    * Status
+      * Each page now contains a status component
+      * This component shows the current/default settings
+  * Improved
+    * Relative Mode
+      * Relative mode now compares daily indicators to maximum values with the current filtering option 
+    * Displaying daily indicators
+      * Colors turn to gray if the current condition does not meet the current filtering option 
+      * This will be active only when it is in relative mode
+      
 
-* **0.3**
+* 0.3
   * New
     * Freeboard
       * Freeboard has been added

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainBoardMenu from './MainBoardMenu';
 import MainBoardContent from './MainBoardContent';
+
 import {
   changeActive,
   fetchDashboardData,
   fetchPeriodData,
   fetchBubbleData,
-  fetchTodayIndicators,
   toggleIndicator
 } from '../../../../actions/actions';
 
@@ -284,7 +284,7 @@ export default connect(
     fetchDashboardData,
     fetchPeriodData,
     fetchBubbleData,
-    fetchTodayIndicators,
+
     toggleIndicator
   }
 )(MainBoard);

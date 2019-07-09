@@ -23,9 +23,10 @@ export const fetchLatestDate = () => async dispatch => {
 };
 
 export const FETCH_MAX_VALUES = 'FETCH_MAX_VALUES';
-export const fetchMaxValues = () => async dispatch => {
-  const res = await axios.get(
-    `${protocol}://${clientFetchingReference}/api/max_values`
+export const fetchMaxValues = (active, communities) => async dispatch => {
+  const res = await axios.post(
+    `${protocol}://${clientFetchingReference}/api/max_values`,
+    { active, communities }
   );
 
   dispatch({
@@ -65,8 +66,17 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  { index, femiWeight, popularityWeight, antiWeight, problemWeight }
+  active
 ) => async dispatch => {
+  // destruct the current obj(active)
+  const {
+    index,
+    femiWeight,
+    popularityWeight,
+    antiWeight,
+    problemWeight
+  } = active.community;
+
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/today_indicator`,
     {

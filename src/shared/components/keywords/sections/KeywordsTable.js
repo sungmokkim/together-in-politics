@@ -26,6 +26,7 @@ class KeywordsTable extends Component {
               statusMarks={
                 this.props.indicators[this.props.sorting.index].statusMarks
               }
+              valid={true}
             />
           </td>
           <td className='center'>{dt.dates.substr(2, 9)}</td>

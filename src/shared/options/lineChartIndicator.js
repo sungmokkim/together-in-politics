@@ -9,7 +9,7 @@ export const lineChartIndicatorOptions = {
   popularity: {
     korean: '대통령 지분율',
     koreanShort: '지분',
-    checked: false,
+    checked: true,
     index: 'popularity',
     lineColor: '#4386f9'
   },

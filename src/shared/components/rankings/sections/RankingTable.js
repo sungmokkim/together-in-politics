@@ -5,7 +5,16 @@ import IndicatorBar from '../../common/IndicatorBar';
 
 class RankingTable extends Component {
   mapTbody = () => {
+    const { active, communities } = this.props;
+
     return this.props.data.map((dt, index) => {
+      // get minimum m_count value
+      // it depends on communities
+
+      const minimumMCount = dt.commIndex
+        ? communities[dt.commIndex][active.mentionPortion.index]
+        : 0;
+
       return (
         <tr key={dt._id}>
           <td
@@ -22,7 +31,13 @@ class RankingTable extends Component {
           {this.props.fieldOrder.map((field, index) => {
             return (
               <td
-                className={`center ${index === 0 ? 'td-highlight' : null}`}
+                className={`center ${index === 0 ? 'td-highlight' : null} ${
+                  dt.m_count >= minimumMCount
+                    ? null
+                    : active.indicatorOption.index === 'relative'
+                    ? 'disabled'
+                    : null
+                }`}
                 key={field}
               >
                 {`${dt[field]}%`}
@@ -33,6 +48,13 @@ class RankingTable extends Component {
                   value={dt[field]}
                   statusValues={this.props.indicators[field].statusValues}
                   statusMarks={this.props.indicators[field].statusMarks}
+                  valid={
+                    dt.m_count >= minimumMCount
+                      ? true
+                      : active.indicatorOption.index === 'relative'
+                      ? false
+                      : true
+                  }
                 />
               </td>
             );

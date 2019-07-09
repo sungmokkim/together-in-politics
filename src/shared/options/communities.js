@@ -78,9 +78,9 @@ export const communityOptions = {
     antiWeight: 0.020568947736082102,
     problemWeight: 0.054315477178662024,
     index: 'ygosu',
-    mentionPortionHigh: 250,
-    mentionPortionMid: 150,
-    mentionPortionLow: 50,
+    mentionPortionHigh: 150,
+    mentionPortionMid: 100,
+    mentionPortionLow: 30,
     mentionPortionNone: 1
   }
 };
