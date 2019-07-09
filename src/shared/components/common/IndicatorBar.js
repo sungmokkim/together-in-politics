@@ -5,6 +5,7 @@ export default props => {
   let statusMark;
 
   const { statusValues, statusMarks, totalWidth, totalHeight } = props;
+  const valid = props.valid ? true : false;
 
   const numberValue = props.value;
   if (numberValue >= statusValues[0]) {
@@ -36,7 +37,7 @@ export default props => {
         height='100%'
       />
       <rect
-        className={`value-bar ${statusMark}`}
+        className={`value-bar ${valid ? statusMark : 'disabled'}`}
         x='0'
         y='0'
         rx='0.5rem'
