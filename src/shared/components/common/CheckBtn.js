@@ -7,7 +7,7 @@ class IndicatorBtn extends Component {
     this.state = {
       body: null,
       opacity: 0,
-      toggle: false,
+      toggle: true,
       hover: false,
       clientX: 0,
       clientY: 0,
