@@ -63,8 +63,8 @@ router.post('/bubble_data', (req, res) => {
   });
 });
 
-router.get('/max_values', (req, res) => {
-  fetchMaxValues(results => {
+router.post('/max_values', (req, res) => {
+  fetchMaxValues(req.body, results => {
     res.json(results);
   });
 });
