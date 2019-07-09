@@ -47,6 +47,13 @@ class RankingMenu extends Component {
           valueIsObject={true}
           btnClicked={this.props.btnClicked}
         />
+
+        <IndicatorBtn
+          handleClick={this.props.handleSortingChange}
+          type='mentionPortion'
+          valueIsObject={true}
+          btnClicked={this.props.btnClicked}
+        />
       </React.Fragment>
     );
   }
