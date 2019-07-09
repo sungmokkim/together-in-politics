@@ -11,10 +11,23 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
+  monitorMaxValues = () => {
+    // this function is to monitor if users change mention portion value
+    // if a change occurs, it will fetch max values again
+    const { active, maxValues, communities } = this.props.dashboardManager;
 
+    if (
+      active.mentionPortion.index !==
+      maxValues[active.community.index].mentionPortion
+    ) {
+      this.props.fetchMaxValues(active, communities);
+    }
+  };
   render() {
     const { route } = this.props;
-
+    {
+      this.monitorMaxValues();
+    }
     return (
       <React.Fragment>
         <div id='bg' />
@@ -33,7 +46,11 @@ const mapStateToProps = state => {
 
 // this is to fetch latest(most recent) date before it renders on client(latest date is needed for many other data fetching)
 const fetchDataFromServerSide = store => {
-  return [store.dispatch(fetchLatestDate()), store.dispatch(fetchMaxValues())];
+  const { communities, active } = store.getState()['dashboardManager'];
+  return [
+    store.dispatch(fetchLatestDate()),
+    store.dispatch(fetchMaxValues(active, communities))
+  ];
 };
 
 export default {
