@@ -1,13 +1,58 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchKeywords, changeActive } from '../../../actions/actions';
+import {
+  fetchKeywords,
+  changeActive,
+  toggleStatus
+} from '../../../actions/actions';
 import KeywordsTable from './KeywordsTable';
 import KeywordsMenu from './KeywordsMenu';
 import CurrentStatus from '../../common/CurrentStatus';
 
 class KeywordsMain extends Component {
   state = {
-    contentIsLoading: true
+    contentIsLoading: true,
+    modalDisplay: 'none',
+    componentDisplay: false
+  };
+
+  // below 2 functions are needed to display modal(dark overlay) when one of the two conditions is met
+  // 1. a user clicks a setting (config ) button
+  // 2. a user clicks a status card
+  // to do both, these functions need to be where these 2 conditions can be controlled
+  toggleBtn = () => {
+    if (this.props.site.statusClicked) {
+      this.controlModalFadeOut();
+    } else {
+      this.props.toggleStatus();
+      this.setState({
+        ...this.state,
+        modalDisplay: 'block',
+        componentDisplay: true
+      });
+    }
+  };
+
+  controlModalFadeOut = () => {
+    // document.body.style.overflow = 'auto';
+    this.props.toggleStatus();
+    // give delay of 0.3s to perform fade-out animation
+    this.setState(
+      {
+        ...this.state,
+        modalDisplay: 'block',
+        componentDisplay: true
+      },
+      async () => {
+        const delayModal = await setTimeout(() => {
+          this.setState({
+            ...this.state,
+            modalDisplay: 'none',
+            componentdisplay: false
+          });
+        }, 300);
+      }
+    );
   };
 
   fetchAndUpdate = () => {
@@ -67,8 +112,16 @@ class KeywordsMain extends Component {
               status: active.keywordPeriod['koreanShort']
             }
           ]}
+          handleClick={this.toggleBtn}
         />
-        <KeywordsMenu handleChange={this.handleChange} />
+        <KeywordsMenu
+          handleChange={this.handleChange}
+          clicked={this.props.site.statusClicked}
+          modalDisplay={this.state.modalDisplay}
+          componentDisplay={this.state.componentDisplay}
+          controlModalFadeOut={this.controlModalFadeOut}
+          toggleBtn={this.toggleBtn}
+        />
 
         <KeywordsTable
           data={this.props.data.keywords}
@@ -83,6 +136,7 @@ class KeywordsMain extends Component {
 
 const mapStateToProps = state => {
   return {
+    site: state.siteManager,
     data: state.dashboardData,
     dashboardManager: state.dashboardManager
   };
@@ -90,5 +144,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchKeywords, changeActive }
+  { fetchKeywords, changeActive, toggleStatus }
 )(KeywordsMain);

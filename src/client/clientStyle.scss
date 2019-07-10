@@ -1,33 +1,61 @@
-// @mixin large {
-//   @media (max-width: 1000px) {
-//     @content;
-//   }
-// }
+.photo-anti_ratio {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(img/moon_anti_ratio.jpeg) no-repeat;
+  background-size: cover;
 
-// @mixin medium {
-//   @media (max-width: 800px) {
-//     @content;
-//   }
-// }
+  background-position: 0% 20%;
+  opacity: 0;
+}
 
-// @mixin medium-small {
-//   @media (max-width: 600px) {
-//     @content;
-//   }
-// }
+.photo-popularity {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(img/moon_popularity.jpeg) no-repeat;
+  background-size: cover;
+  opacity: 0;
+}
 
-// @mixin small {
-//   @media (max-width: 420px) {
-//     @content;
-//   }
-// }
-// #bg {
-//   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-//     url(mainimage.jpg) no-repeat;
-//   background-size: cover;
-//   background-position: 0% 100%;
+.photo-femi_ratio {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(img/femi_ratio.jpeg) no-repeat;
+  background-size: cover;
 
-//   @include large {
-//     background-position: 0% -20%;
-//   }
-// }
+  background-position: 0% 100%;
+  opacity: 0;
+}
+
+@keyframes photo-in-out {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes photo-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes photo-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

@@ -14,16 +14,20 @@ export default props => {
     });
   };
   return (
-    <div
-      className='section-global'
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1.5rem 3rem 0rem 3rem'
-      }}
-    >
-      <div className='status-card'>{mapLists()}</div>
+    <div className='section-global'>
+      {/* this div is just to center the component */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        {/*  this div is the actual content */}
+        <div className='status-card' onClick={props.handleClick}>
+          {mapLists()}
+        </div>
+      </div>
     </div>
   );
 };

@@ -5,16 +5,63 @@ import {
   fetchTodayRankings,
   changeCurrentDate,
   resetCurrentDate,
-  fetchLatestDate
+  fetchLatestDate,
+  toggleStatus
 } from '../actions/actions';
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 import CurrentStatus from '../components/common/CurrentStatus';
+import PhotoCard from '../components/common/PhotoCard';
+
 import dateAndTime from 'date-and-time';
 
 import { logPageView } from '../googleAnalytics';
 
 class HomePage extends Component {
+  state = {
+    modalDisplay: 'none',
+    componentDisplay: false
+  };
+
+  // below 2 functions are needed to display modal(dark overlay) when one of the two conditions is met
+  // 1. a user clicks a setting (config ) button
+  // 2. a user clicks a status card
+  // to do both, these functions need to be where these 2 conditions can be controlled
+  toggleBtn = () => {
+    if (this.props.site.statusClicked) {
+      this.controlModalFadeOut();
+    } else {
+      this.props.toggleStatus();
+      this.setState({
+        ...this.state,
+        modalDisplay: 'block',
+        componentDisplay: true
+      });
+    }
+  };
+
+  controlModalFadeOut = () => {
+    // document.body.style.overflow = 'auto';
+    this.props.toggleStatus();
+    // give delay of 0.3s to perform fade-out animation
+    this.setState(
+      {
+        ...this.state,
+        modalDisplay: 'block',
+        componentDisplay: true
+      },
+      async () => {
+        const delayModal = await setTimeout(() => {
+          this.setState({
+            ...this.state,
+            modalDisplay: 'none',
+            componentdisplay: false
+          });
+        }, 300);
+      }
+    );
+  };
+
   componentDidMount() {
     logPageView();
     const { indicators } = this.props.today;
@@ -62,6 +109,7 @@ class HomePage extends Component {
 
     return (
       <React.Fragment>
+        <PhotoCard />
         <CurrentStatus
           list={[
             {
@@ -77,8 +125,15 @@ class HomePage extends Component {
               status: active.indicatorOption['korean']
             }
           ]}
+          handleClick={this.toggleBtn}
         />
-        <AdjustSection />
+        <AdjustSection
+          clicked={this.props.site.statusClicked}
+          modalDisplay={this.state.modalDisplay}
+          componentDisplay={this.state.componentDisplay}
+          controlModalFadeOut={this.controlModalFadeOut}
+          toggleBtn={this.toggleBtn}
+        />
         <IndicatorSection />
       </React.Fragment>
     );
@@ -87,6 +142,7 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
+    site: state.siteManager,
     today: state.today,
     dashboardManager: state.dashboardManager
   };
@@ -116,7 +172,8 @@ export default {
       fetchTodayRankings,
       changeCurrentDate,
       resetCurrentDate,
-      fetchLatestDate
+      fetchLatestDate,
+      toggleStatus
     }
   )(HomePage),
   fetchDataFromServerSide

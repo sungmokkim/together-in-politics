@@ -31,8 +31,8 @@ export default props => {
         className='original-bar'
         x='0'
         y='0'
-        rx='0.5rem'
-        ry='0.5rem'
+        rx='5'
+        ry='5'
         width='100%'
         height='100%'
       />
@@ -40,8 +40,8 @@ export default props => {
         className={`value-bar ${valid ? statusMark : 'disabled'}`}
         x='0'
         y='0'
-        rx='0.5rem'
-        ry='0.5rem'
+        rx='5'
+        ry='5'
         width={`${numberValue}%`}
         height='100%'
       />

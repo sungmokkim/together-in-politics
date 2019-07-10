@@ -46,7 +46,7 @@ ul {
 }
 
 .section-global {
-  padding: 1.5rem 3rem;
+  padding: 1rem 3rem;
   width: 1000px;
   margin: 0 auto;
   -webkit-box-sizing: border-box;
@@ -78,7 +78,7 @@ ul {
   .section-global {
     max-width: 420px;
     width: 100%;
-    padding: 1rem 2.3rem;
+    padding: 0.5rem 2.3rem;
   }
 }
 
@@ -476,13 +476,13 @@ textarea:focus {
   -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   background: white;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 100%;
   cursor: pointer;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
   margin: 0 2rem;
-  padding: 3rem 3rem;
+  padding: 1.5rem 0rem;
 }
 
 .status-card:hover {
@@ -494,10 +494,9 @@ textarea:focus {
 }
 
 .status-card .status-container {
-  padding: 1rem 2rem;
+  padding: 0.5rem 1.5rem;
   background: white;
   border-radius: 30px;
-  margin: 0 1rem;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
 }
@@ -513,7 +512,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .status-card .status-container .status-icon i {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
   }
 }
 
@@ -524,8 +523,119 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .status-card .status-container .current-status {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
   }
+}
+
+.photo-card-container a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.photo-card-container a .photo-card {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  margin: 2rem;
+  width: 100%;
+  border-radius: 15px;
+  min-height: 30rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+}
+
+.photo-card-container a .photo-card .photo-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  z-index: -1;
+}
+
+.photo-card-container a .photo-card .phrase-container {
+  color: white;
+  height: 30rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.photo-card-container a .photo-card .phrase-container .title {
+  font-size: 3rem;
+  text-align: center;
+  font-family: "Jua", sans-serif;
+  color: white;
+  font-weight: 400;
+}
+
+.photo-card-container a .photo-card .status-container .status-bar {
+  width: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.8)), to(black));
+  background: linear-gradient(rgba(0, 0, 0, 0.8), black);
+  height: 10rem;
+  border-radius: 0 0 15px 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.photo-card-container a .photo-card .status-container .status-bar .upper-container {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.photo-card-container a .photo-card .status-container .status-bar .lower-container .indicator-name {
+  margin-right: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.photo-card-container a .photo-card .status-container .status-bar .lower-container .value {
+  color: white;
+  font-size: 2rem;
+}
+
+.photo-card-container a .photo-card .status-container .status-bar .lower-container .metric {
+  color: white;
+  font-size: 1.3rem;
 }
 
 .selection-fade-in {
@@ -926,6 +1036,22 @@ textarea:focus {
 .disabled {
   color: #c9c7c7;
   fill: #c9c7c7;
+}
+
+.photo-card-anti_ratio {
+  color: #f75467;
+}
+
+.photo-card-popularity {
+  color: #4386f9;
+}
+
+.photo-card-femi_ratio {
+  color: #583b8b;
+}
+
+.photo-card-problem_ratio {
+  color: #f6ac5b;
 }
 
 .site-title {
