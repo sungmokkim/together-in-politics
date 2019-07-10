@@ -10,6 +10,8 @@ import {
 import IndicatorSection from '../components/main/sections/indicator/IndicatorSection';
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 import CurrentStatus from '../components/common/CurrentStatus';
+import PhotoCard from '../components/common/PhotoCard';
+
 import dateAndTime from 'date-and-time';
 
 import { logPageView } from '../googleAnalytics';
@@ -62,6 +64,7 @@ class HomePage extends Component {
 
     return (
       <React.Fragment>
+        <PhotoCard />
         <CurrentStatus
           list={[
             {
