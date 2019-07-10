@@ -395,3 +395,11 @@ export const toggleIndicator = value => async dispatch => {
     payload: value
   });
 };
+
+// CONTROL SITE COMPONENTS
+export const TOGGLE_STATUS = 'TOGGLE_STATUS';
+export const toggleStatus = () => async dispatch => {
+  dispatch({
+    type: TOGGLE_STATUS
+  });
+};
