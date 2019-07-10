@@ -20,6 +20,8 @@ class PhotoCard extends Component {
 
     this.index = 1;
 
+    // timeout function
+
     this.loopArray = setInterval(() => {
       this.setState(
         {
@@ -30,7 +32,7 @@ class PhotoCard extends Component {
           ]
         },
         () => {
-          setTimeout(() => {
+          global.timer = setTimeout(() => {
             this.setState({
               ...this.state,
               animation: 'photo-out 0.3s ease-in forwards'
@@ -45,6 +47,7 @@ class PhotoCard extends Component {
     // clear interval set in the constructor method
     // causes an error if not cleared
     clearInterval(this.loopArray);
+    clearTimeout(global.timer);
   }
   render() {
     const {
