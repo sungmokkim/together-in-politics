@@ -251,6 +251,11 @@ class MainBoard extends Component {
           <MainBoardMenu
             handleClick={this.handleButtonClick}
             handleCheck={this.handleCheck}
+            clicked={this.props.clicked}
+            modalDisplay={this.props.modalDisplay}
+            componentDisplay={this.props.componentDisplay}
+            controlModalFadeOut={this.props.controlModalFadeOut}
+            toggleBtn={this.props.toggleBtn}
           />
 
           <div

@@ -24,7 +24,9 @@ export default props => {
         }}
       >
         {/*  this div is the actual content */}
-        <div className='status-card'>{mapLists()}</div>
+        <div className='status-card' onClick={props.handleClick}>
+          {mapLists()}
+        </div>
       </div>
     </div>
   );
