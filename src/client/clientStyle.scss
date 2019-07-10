@@ -1,37 +1,3 @@
-// @mixin large {
-//   @media (max-width: 1000px) {
-//     @content;
-//   }
-// }
-
-// @mixin medium {
-//   @media (max-width: 800px) {
-//     @content;
-//   }
-// }
-
-// @mixin medium-small {
-//   @media (max-width: 600px) {
-//     @content;
-//   }
-// }
-
-// @mixin small {
-//   @media (max-width: 420px) {
-//     @content;
-//   }
-// }
-// #photo-bg {
-//   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-//     url(img/femi_ratio.jpeg) no-repeat;
-//   background-size: cover;
-//   //   background-position: 0% 100%;
-
-//   //   @include large {
-//   //     background-position: 0% -20%;
-//   //   }
-// }
-
 .photo-anti_ratio {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(img/moon_anti_ratio.jpeg) no-repeat;
