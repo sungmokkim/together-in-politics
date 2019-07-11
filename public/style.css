@@ -498,7 +498,6 @@ textarea:focus {
   border-radius: 30px;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
-  width: 100%;
 }
 
 .status-card .status-container .status-icon {
