@@ -32,7 +32,7 @@ const commonConfig = {
             options: {
               mozjpeg: {
                 progressive: true,
-                quality: 70
+                quality: 65
               },
               // optipng.enabled: false will disable optipng
               optipng: {
@@ -47,7 +47,8 @@ const commonConfig = {
               },
               // the webp option will enable WEBP
               webp: {
-                quality: 75
+                // quality: 75
+                enabled: false
               }
             }
           }
