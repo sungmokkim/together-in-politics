@@ -498,6 +498,7 @@ textarea:focus {
   border-radius: 30px;
   -webkit-transition: 0.3s ease-in;
   transition: 0.3s ease-in;
+  width: 100%;
 }
 
 .status-card .status-container .status-icon {
@@ -511,7 +512,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .status-card .status-container .status-icon i {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -522,7 +523,7 @@ textarea:focus {
 
 @media (max-width: 600px) {
   .status-card .status-container .current-status {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 }
 
