@@ -494,7 +494,6 @@ textarea:focus {
 }
 
 .status-card .status-container {
-  padding: 0.5rem 1.5rem;
   background: white;
   border-radius: 30px;
   -webkit-transition: 0.3s ease-in;
@@ -502,7 +501,7 @@ textarea:focus {
 }
 
 .status-card .status-container .status-icon {
-  margin-right: 1rem;
+  margin-right: 0.7rem;
 }
 
 .status-card .status-container .status-icon i {
