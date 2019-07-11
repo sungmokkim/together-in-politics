@@ -506,24 +506,24 @@ textarea:focus {
 }
 
 .status-card .status-container .status-icon i {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   color: #f78886;
 }
 
 @media (max-width: 600px) {
   .status-card .status-container .status-icon i {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 }
 
 .status-card .status-container .current-status {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   color: black;
 }
 
 @media (max-width: 600px) {
   .status-card .status-container .current-status {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 }
 
