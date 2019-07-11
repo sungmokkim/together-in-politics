@@ -11,7 +11,7 @@ import thunk from 'redux-thunk';
 import reducers from '../shared/reducers/reducers';
 import { initGA } from '../shared/googleAnalytics';
 
-import './clientStyle.css';
+import './clientStyle.scss';
 
 const initialState = window.__INITIAL_STATE__ || {};
 delete window.__INITIAL_STATE__;

@@ -19,7 +19,8 @@ const commonConfig = {
             loader: 'css-loader'
           },
           {
-            loader: 'sass-loader'
+            loader: 'sass-loader',
+            options: { sourceMap: false }
           }
         ]
       },
