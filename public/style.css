@@ -1077,7 +1077,7 @@ textarea:focus {
   height: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   .main-nav-wrapper .main-nav-container {
     padding-top: 3rem;
     padding-bottom: 5rem;
@@ -1141,6 +1141,8 @@ textarea:focus {
       -ms-flex-align: center;
           align-items: center;
   min-height: 7rem;
+  position: relative;
+  z-index: 4;
 }
 
 @media (max-width: 1000px) {
@@ -1158,7 +1160,7 @@ textarea:focus {
 
 .menu-wrapper .nav-menu-container .menu-btn {
   font-size: 1.6rem;
-  margin: 0 1rem;
+  margin: 0 0.8rem;
   font-weight: bold;
   min-width: 10rem;
   text-align: center;
@@ -1176,6 +1178,8 @@ textarea:focus {
   cursor: pointer;
   margin-left: 2rem;
   margin-right: 0;
+  position: relative;
+  z-index: 4;
 }
 
 .hero-wrapper {

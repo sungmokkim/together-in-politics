@@ -1031,7 +1031,7 @@ textarea {
     align-items: center;
     height: 100%;
 
-    @include medium-small {
+    @include large {
       padding-top: 3rem;
       padding-bottom: 5rem;
     }
@@ -1074,7 +1074,10 @@ textarea {
     justify-content: space-between;
     align-items: center;
     min-height: 7rem;
-
+    position: relative;
+    z-index: 4;
+    // top: 7rem;
+    // right: 20rem;
     @include large {
       position: absolute;
       flex-direction: column;
@@ -1084,7 +1087,7 @@ textarea {
     }
     .menu-btn {
       font-size: 1.6rem;
-      margin: 0 1rem;
+      margin: 0 0.8rem;
       font-weight: bold;
       min-width: 10rem;
       text-align: center;
@@ -1102,6 +1105,8 @@ textarea {
       cursor: pointer;
       margin-left: 2rem;
       margin-right: 0;
+      position: relative;
+      z-index: 4;
     }
   }
 }

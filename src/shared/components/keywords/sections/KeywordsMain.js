@@ -83,6 +83,9 @@ class KeywordsMain extends Component {
   };
 
   componentDidMount() {
+    // reset scroll to the top
+    // (when it is redirected from the main page, the scroll position was at the middle of the viewport)
+    window.scrollTo(0, 0);
     //  fetch and update keywords when component is mounted
     this.fetchAndUpdate();
   }

@@ -8,7 +8,7 @@ class HeaderMenu extends Component {
     modalDisplay: 'none',
     menuIsOn: false,
     portView: null,
-    menuStatus: null
+    menuStatus: 'hide'
   };
 
   renderMenus = () => {
@@ -16,7 +16,7 @@ class HeaderMenu extends Component {
       return (
         <NavLink exact to={this.props.site.navDisplay[menu].linkTo} key={menu}>
           <span
-            className={`menu-btn for-desktop ${this.state.menuStatus}`}
+            className={`menu-btn  ${this.state.menuStatus}`}
             style={{
               opacity: 0,
               animation: `menu-fade-in 0.2s ease-in ${0.1 *
@@ -36,6 +36,7 @@ class HeaderMenu extends Component {
     if (this.state.menuIsOn) {
       this.handleClosingMenu();
     } else {
+      document.body.style.overflowX = 'hidden';
       this.setState({
         ...this.state,
         menuIsOn: true,
@@ -60,7 +61,7 @@ class HeaderMenu extends Component {
           this.setState({
             ...this.state,
             menuIsOn: false,
-            menuStatus: null,
+            menuStatus: 'hide',
             modalDisplay: 'none',
             btnClicked: false
           });
@@ -92,7 +93,7 @@ class HeaderMenu extends Component {
         />
         <div className='menu-wrapper'>
           <div className='menu-toggler-container'>
-            <span className='menu-toggler for-mobile'>
+            <span className='menu-toggler'>
               <i
                 className={this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'}
                 style={{ fontSize: '4rem', color: 'white' }}
@@ -100,7 +101,13 @@ class HeaderMenu extends Component {
               />
             </span>
           </div>
-          <div className={`nav-menu-container `}>{this.renderMenus()}</div>
+          <div
+            className={`nav-menu-container ${
+              this.state.btnClicked ? null : 'menu-fade-out'
+            }`}
+          >
+            {this.renderMenus()}
+          </div>
         </div>
       </React.Fragment>
     );

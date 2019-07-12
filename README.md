@@ -16,9 +16,18 @@ Sentiment data were collected from several Korean web sites (web communities) an
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.3.2
+## Release Note - 0.3.3
 
-* **0.3.2**
+* **0.3.3**
+  * Improved & Fixed
+    * Following were fixed or improved
+      * Photo card on the main page
+      * Navigation bar
+      * Status card
+  * Added
+    * Meta tags for Search Engine Optimization were added
+    
+* 0.3.2
   * New 
     * Photo card on main page
       * A new photo card was added on main page

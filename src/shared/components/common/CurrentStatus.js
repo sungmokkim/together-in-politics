@@ -3,14 +3,14 @@ import React from 'react';
 export default props => {
   const mapLists = () => {
     return props.list.map(obj => {
-      return (
+      return obj ? (
         <div className='status-container' key={obj.status}>
           <span className='status-icon'>
             <i className={obj.icon} />
           </span>
           <span className='current-status'>{obj.status}</span>
         </div>
-      );
+      ) : null;
     });
   };
   return (
