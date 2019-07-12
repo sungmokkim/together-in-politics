@@ -8,7 +8,6 @@ export default {
     periodDataTable: '',
     keywordsDataTable: ''
   },
-  ga: '',
   mongodb: {
     host: '',
     port: '',
