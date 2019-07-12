@@ -19,14 +19,20 @@ const commonConfig = {
             loader: 'css-loader'
           },
           {
-            loader: 'sass-loader',
-            options: { sourceMap: false }
+            loader: 'sass-loader'
           }
         ]
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
-        use: ['file-loader']
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'img'
+            }
+          }
+        ]
       }
     ]
   }
