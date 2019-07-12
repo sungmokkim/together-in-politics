@@ -59,14 +59,22 @@ class MainBoardSection extends Component {
               icon: 'fas fa-chart-bar',
               status: active.chart['korean']
             },
-            {
-              icon: 'fas fa-tasks',
-              status: active.community['korean']
-            },
-            {
-              icon: 'fas fa-filter',
-              status: active.mentionPortion['korean']
-            }
+
+            active.chart.index === 'line'
+              ? {
+                  icon: 'fas fa-tasks',
+                  status: active.community['korean']
+                }
+              : {
+                  icon: 'far fa-clock',
+                  status: active.bubblePeriod['korean']
+                },
+            active.chart.index === 'line'
+              ? {
+                  icon: 'fas fa-filter',
+                  status: active.mentionPortion['korean']
+                }
+              : null
           ]}
           handleClick={this.toggleBtn}
         />
