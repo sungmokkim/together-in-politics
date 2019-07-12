@@ -27,13 +27,14 @@ const renderer = (req, store) => {
           name="description"
           content="모두의 정치에서는 우리나라 커뮤니티의 여론의 추이를 분석하여 지금까지 제대로 알기 힘들었던 10대에서 40대까지의 생각을 볼 수 있습니다.모두의 정치에서만 볼 수 있는 다양한 지표는 대통령에 대한 호감이나 지지율 그리고 뜨거운 이슈로 떠오른 페미니즘에 대한 여론을 짐작할 수 있게 합니다" />
           <meta property="url" content="https://togetherinpolitics.com" />
+          <meta property="og:type" content="website" />
           <meta property="og:url" content="https://togetherinpolitics.com" />
         <meta property="og:title" content="모두의 정치 | 인터넷 커뮤니티 여론은 어떨까?" />
         <meta
           property="og:description"
           content="모두의 정치에서는 우리나라 커뮤니티의 여론의 추이를 분석하여 지금까지 제대로 알기 힘들었던 10대에서 40대까지의 생각을 볼 수 있습니다.모두의 정치에서만 볼 수 있는 다양한 지표는 대통령에 대한 호감이나 지지율 그리고 뜨거운 이슈로 떠오른 페미니즘에 대한 여론을 짐작할 수 있게 합니다"
         />
-        <meta property="og:image" content="img/site.jpg" />
+        <meta property="og:image" content="https://togetherinpolitics.com/img/site.jpg" />
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
         
