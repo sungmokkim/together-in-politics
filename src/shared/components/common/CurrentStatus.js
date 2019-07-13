@@ -24,7 +24,12 @@ export default props => {
         }}
       >
         {/*  this div is the actual content */}
-        <div className='status-card' onClick={props.handleClick}>
+        <div
+          className='status-card'
+          onClick={() => {
+            props.handleClick(props.toggleType);
+          }}
+        >
           {mapLists()}
         </div>
       </div>
