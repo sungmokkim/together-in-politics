@@ -447,6 +447,49 @@ textarea:focus {
   }
 }
 
+.desc-button {
+  height: 4rem;
+  width: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  background: gray;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.desc-button:hover {
+  background: #8d8d8d;
+}
+
+@media (max-width: 800px) {
+  .desc-button {
+    height: 4rem;
+    width: 4rem;
+  }
+}
+
+.desc-button .desc-icon {
+  color: white;
+  font-size: 2rem;
+}
+
+@media (max-width: 800px) {
+  .desc-button .desc-icon {
+    font-size: 2rem;
+  }
+}
+
 .setting-container,
 .writing-container {
   position: fixed;
@@ -461,6 +504,94 @@ textarea:focus {
     left: 3%;
     bottom: 5%;
   }
+}
+
+.button-container {
+  position: absolute;
+  z-index: 4;
+  top: 7%;
+  left: 12%;
+}
+
+@media (max-width: 1000px) {
+  .button-container {
+    left: 3%;
+    bottom: 5%;
+  }
+}
+
+.description-container {
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.index-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.index-wrapper .index-container {
+  background: white;
+  border-radius: 15px;
+  width: 60%;
+  margin: 0 auto;
+  min-height: 30rem;
+  padding: 2rem;
+}
+
+@media (max-width: 1000px) {
+  .index-wrapper .index-container {
+    width: 80%;
+  }
+}
+
+.index-wrapper .index-container .indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.index-wrapper .index-container .indicator .upper-container {
+  margin-bottom: 1rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .icon {
+  margin-right: 0.8rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .icon i {
+  font-size: 2rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.index-wrapper .index-container .indicator .lower-container p {
+  font-size: 1.7rem;
+  margin-bottom: 2rem;
 }
 
 .status-card {
@@ -1022,6 +1153,10 @@ textarea:focus {
 .femi-status-5 {
   color: #6f4aaf;
   fill: #6f4aaf;
+}
+
+.normal-status {
+  color: #f78886;
 }
 
 .status-number {
