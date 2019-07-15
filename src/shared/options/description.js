@@ -23,7 +23,7 @@ export const descriptionOptions = {
     icon: 'fas fa-venus-mars',
     colorClassName: 'femi-status-3',
     desc: {
-      korean: '커뮤니티 게시글 중 페미 이슈과 관련된 글의 비율입니다.'
+      korean: '커뮤니티 게시글 중 페미 이슈와 관련된 글의 비율입니다.'
     }
   },
   problem_ratio: {
