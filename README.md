@@ -16,9 +16,16 @@ Sentiment data were collected from several Korean web sites (web communities) an
 
 You can click [Here](https://togetherinpolitics.com) to take a look.
 
-## Release Note - 0.3.3
+## Release Note - 0.3.4
 
-* **0.3.3**
+* **0.3.4**
+  * Added
+    * New button for indicator descriptions
+      * Users can click this button and see the definition of each indicator
+  * Changed
+    * Nav menu button design
+    
+* 0.3.3
   * Improved & Fixed
     * Following were fixed or improved
       * Photo card on the main page
