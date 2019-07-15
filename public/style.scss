@@ -195,9 +195,15 @@ ul {
 
     input {
       padding: 1rem 0rem;
-      font-size: 1.8rem;
+      // fix font size to 17px (iphone issue)
+      font-size: 17px;
       width: 30rem;
-      margin-right: 4rem;
+      margin-right: 2rem;
+
+      @include medium-small {
+        margin-right: 1rem;
+        width: 100%;
+      }
     }
 
     @include medium-small {
@@ -210,7 +216,8 @@ ul {
     textarea {
       width: 100%;
       padding: 1rem 0rem;
-      font-size: 2rem;
+      // fix font size to 17px (iphone issue)
+      font-size: 17px;
       cursor: text;
 
       resize: none;
@@ -582,8 +589,8 @@ textarea {
 }
 
 .desc-button {
-  height: 4rem;
-  width: 4rem;
+  height: 5rem;
+  width: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -591,23 +598,16 @@ textarea {
 
   box-shadow: $box-shadow;
   cursor: pointer;
-  background: gray;
+  border: 0.3rem solid white;
   transition: 0.3s ease-in;
 
   &:hover {
     background: lighten(gray, 5%);
   }
-  @include medium {
-    height: 4rem;
-    width: 4rem;
-  }
+
   .desc-icon {
     color: white;
-    font-size: 2rem;
-
-    @include medium {
-      font-size: 2rem;
-    }
+    font-size: 2.5rem;
   }
 }
 
@@ -624,15 +624,8 @@ textarea {
   }
 }
 .button-container {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  top: 7%;
-  left: 12%;
-
-  @include large {
-    left: 3%;
-    bottom: 5%;
-  }
 }
 
 .description-container {
@@ -1165,14 +1158,9 @@ textarea {
   flex-direction: row;
   align-items: center;
 
-  @include medium-small {
-    flex-direction: column;
-    align-content: center;
-  }
   .nav-menu-container {
     font-size: 1.6rem;
-    // position: absolute;
-    // right: 1px;
+
     color: white;
     display: flex;
     flex-direction: row;
@@ -1181,8 +1169,7 @@ textarea {
     min-height: 7rem;
     position: relative;
     z-index: 4;
-    // top: 7rem;
-    // right: 20rem;
+
     @include large {
       position: absolute;
       flex-direction: column;
@@ -1192,26 +1179,46 @@ textarea {
     }
     .menu-btn {
       font-size: 1.6rem;
-      margin: 0 0.8rem;
+      margin: 0 0.6rem;
       font-weight: bold;
-      min-width: 10rem;
+      min-width: 8rem;
       text-align: center;
 
       @include large {
-        margin-bottom: 1rem;
-        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        margin-top: 2rem;
+        min-width: 10rem;
+        margin-right: 0.8rem;
+        margin-left: 0.8rem;
       }
     }
   }
 
   .menu-toggler-container {
     .menu-toggler {
-      color: white;
       cursor: pointer;
       margin-left: 2rem;
       margin-right: 0;
       position: relative;
       z-index: 4;
+      height: 5rem;
+      width: 5rem;
+      border: 0.3rem solid white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: $box-shadow;
+
+      transition: 0.3s ease-in;
+
+      &:hover {
+        background: lighten(gray, 5%);
+      }
+      i {
+        color: white;
+        font-size: 3rem;
+      }
     }
   }
 }
