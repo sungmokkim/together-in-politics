@@ -1193,6 +1193,7 @@ textarea:focus {
 @media (max-width: 1000px) {
   .main-nav-wrapper .main-nav-container {
     padding-top: 3rem;
+    padding-bottom: 2rem;
   }
 }
 
