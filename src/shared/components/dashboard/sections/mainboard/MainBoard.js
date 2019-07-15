@@ -256,6 +256,7 @@ class MainBoard extends Component {
             componentDisplay={this.props.componentDisplay}
             controlModalFadeOut={this.props.controlModalFadeOut}
             toggleBtn={this.props.toggleBtn}
+            toggleType={this.props.toggleType}
           />
 
           <div

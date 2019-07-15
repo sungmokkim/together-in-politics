@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import DescriptionBtn from './DescriptionBtn';
+import { toggleStatus } from '../../actions/actions';
 
 class HeaderMenu extends Component {
-  state = {
-    btnClicked: false,
-    modalDisplay: 'none',
-    menuIsOn: false,
-    portView: null,
-    menuStatus: 'hide'
-  };
-
   renderMenus = () => {
     return Object.keys(this.props.site.navDisplay).map((menu, index) => {
       return (
         <NavLink exact to={this.props.site.navDisplay[menu].linkTo} key={menu}>
           <span
-            className={`menu-btn  ${this.state.menuStatus}`}
+            className={`menu-btn  ${
+              this.props.site.menu.componentDisplay ? 'show' : 'hide'
+            }`}
             style={{
               opacity: 0,
               animation: `menu-fade-in 0.2s ease-in ${0.1 *
                 (Object.keys(this.props.site.navDisplay).length -
                   (index + 1))}s forwards`
             }}
-            onClick={this.handleClosingMenu}
+            onClick={() => {
+              this.props.controlModalFadeOut('menu');
+            }}
           >
             {this.props.site.navDisplay[menu]['korean']}
           </span>
@@ -32,51 +30,15 @@ class HeaderMenu extends Component {
     });
   };
 
-  handleClickingToggle = () => {
-    if (this.state.menuIsOn) {
-      this.handleClosingMenu();
-    } else {
-      document.body.style.overflowX = 'hidden';
-      this.setState({
-        ...this.state,
-        menuIsOn: true,
-        menuStatus: 'show',
-        modalDisplay: 'block',
-        btnClicked: true
-      });
-    }
-  };
-
-  handleClosingMenu = () => {
-    this.setState(
-      {
-        ...this.state,
-        menuIsOn: true,
-        menuStatus: 'show',
-        modalDisplay: 'block',
-        btnClicked: false
-      },
-      async () => {
-        await setTimeout(() => {
-          this.setState({
-            ...this.state,
-            menuIsOn: false,
-            menuStatus: 'hide',
-            modalDisplay: 'none',
-            btnClicked: false
-          });
-        }, 300);
-      }
-    );
-  };
-
   render() {
     return (
       <React.Fragment>
         <div
           className={
             //render different animation depending on the current state
-            this.state.btnClicked ? 'opacity-fade-in' : 'opacity-fade-out'
+            this.props.site.menu.clicked
+              ? 'opacity-fade-in'
+              : 'opacity-fade-out'
           }
           style={{
             background: 'rgba(0, 0, 0, 0.5)',
@@ -87,23 +49,39 @@ class HeaderMenu extends Component {
             right: '0',
             bottom: '0',
             // only display dark overlay when button is clicked
-            display: this.state.modalDisplay
+            display: this.props.site.menu.modalDisplay ? 'block' : 'none'
           }}
-          onClick={this.handleClosingMenu}
+          onClick={() => {
+            this.props.controlModalFadeOut('menu');
+          }}
         />
         <div className='menu-wrapper'>
+          {/* description(about)button */}
+          <DescriptionBtn
+            btnClicked={this.props.site.description.clicked}
+            hide={this.props.site.menu.modalDisplay} // hide this button when menu modal displays
+            handleClick={this.props.toggleBtn}
+            toggleType='description'
+          />
+          {/* menu toggle button */}
           <div className='menu-toggler-container'>
-            <span className='menu-toggler'>
+            <div
+              className='menu-toggler'
+              onClick={() => {
+                this.props.toggleBtn('menu');
+              }}
+            >
               <i
-                className={this.state.menuIsOn ? 'fas fa-times' : 'fas fa-bars'}
-                style={{ fontSize: '4rem', color: 'white' }}
-                onClick={this.handleClickingToggle}
+                className={
+                  this.props.site.menu.clicked ? 'fas fa-times' : 'fas fa-bars'
+                }
               />
-            </span>
+            </div>
           </div>
+          {/* actual menu display */}
           <div
             className={`nav-menu-container ${
-              this.state.btnClicked ? null : 'menu-fade-out'
+              this.props.site.menu.clicked ? null : 'menu-fade-out'
             }`}
           >
             {this.renderMenus()}
@@ -119,4 +97,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(HeaderMenu);
+export default connect(
+  mapStateToProps,
+  { toggleStatus }
+)(HeaderMenu);

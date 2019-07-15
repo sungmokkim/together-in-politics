@@ -398,8 +398,13 @@ export const toggleIndicator = value => async dispatch => {
 
 // CONTROL SITE COMPONENTS
 export const TOGGLE_STATUS = 'TOGGLE_STATUS';
-export const toggleStatus = () => async dispatch => {
+export const toggleStatus = ({
+  toggleType,
+  toggleComponent
+}) => async dispatch => {
   dispatch({
-    type: TOGGLE_STATUS
+    type: TOGGLE_STATUS,
+    toggleType,
+    toggleComponent
   });
 };

@@ -21,15 +21,19 @@ export default setting => WrappedComponent => {
               right: '0',
               bottom: '0',
               // only display dark overlay when button is clicked
-              display: this.props.modalDisplay
+              display: this.props.modalDisplay ? 'block' : 'none'
             }}
-            onClick={this.props.controlModalFadeOut}
+            onClick={() => {
+              this.props.controlModalFadeOut(this.props.toggleType);
+            }}
           />
           <div className={setting.fixedPositionClassName}>
             {/* render wrapped Component based via this function */}
 
             {/* this div is to make display block and none depending on the current state */}
-            <div style={{ display: this.props.modalDisplay }}>
+            <div
+              style={{ display: this.props.modalDisplay ? 'block' : 'none' }}
+            >
               <WrappedComponent
                 btnClicked={this.props.clicked}
                 {...this.props}
@@ -39,7 +43,9 @@ export default setting => WrappedComponent => {
             {/* config button  */}
             {setting.configBtn ? (
               <ConfigBtn
-                handleClick={this.props.toggleBtn}
+                handleClick={() => {
+                  this.props.toggleBtn(this.props.toggleType);
+                }}
                 btnClicked={this.props.clicked}
               />
             ) : null}

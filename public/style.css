@@ -447,6 +447,36 @@ textarea:focus {
   }
 }
 
+.desc-button {
+  height: 5rem;
+  width: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  border: 0.3rem solid white;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.desc-button:hover {
+  background: #8d8d8d;
+}
+
+.desc-button .desc-icon {
+  color: white;
+  font-size: 2.5rem;
+}
+
 .setting-container,
 .writing-container {
   position: fixed;
@@ -461,6 +491,85 @@ textarea:focus {
     left: 3%;
     bottom: 5%;
   }
+}
+
+.button-container {
+  position: relative;
+  z-index: 4;
+}
+
+.description-container {
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.index-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.index-wrapper .index-container {
+  background: white;
+  border-radius: 15px;
+  width: 60%;
+  margin: 0 auto;
+  min-height: 30rem;
+  padding: 2rem;
+}
+
+@media (max-width: 1000px) {
+  .index-wrapper .index-container {
+    width: 80%;
+  }
+}
+
+.index-wrapper .index-container .indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.index-wrapper .index-container .indicator .upper-container {
+  margin-bottom: 1rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .icon {
+  margin-right: 0.8rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .icon i {
+  font-size: 2rem;
+}
+
+.index-wrapper .index-container .indicator .upper-container .name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.index-wrapper .index-container .indicator .lower-container p {
+  font-size: 1.7rem;
+  margin-bottom: 2rem;
 }
 
 .status-card {
@@ -1024,6 +1133,10 @@ textarea:focus {
   fill: #6f4aaf;
 }
 
+.normal-status {
+  color: #f78886;
+}
+
 .status-number {
   color: gray;
 }
@@ -1080,7 +1193,6 @@ textarea:focus {
 @media (max-width: 1000px) {
   .main-nav-wrapper .main-nav-container {
     padding-top: 3rem;
-    padding-bottom: 5rem;
   }
 }
 
@@ -1111,17 +1223,6 @@ textarea:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-@media (max-width: 600px) {
-  .menu-wrapper {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -ms-flex-line-pack: center;
-        align-content: center;
-  }
 }
 
 .menu-wrapper .nav-menu-container {
@@ -1160,26 +1261,54 @@ textarea:focus {
 
 .menu-wrapper .nav-menu-container .menu-btn {
   font-size: 1.6rem;
-  margin: 0 0.8rem;
+  margin: 0 0.6rem;
   font-weight: bold;
-  min-width: 10rem;
+  min-width: 8rem;
   text-align: center;
 }
 
 @media (max-width: 1000px) {
   .menu-wrapper .nav-menu-container .menu-btn {
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 2rem;
+    min-width: 10rem;
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
   }
 }
 
 .menu-wrapper .menu-toggler-container .menu-toggler {
-  color: white;
   cursor: pointer;
   margin-left: 2rem;
   margin-right: 0;
   position: relative;
   z-index: 4;
+  height: 5rem;
+  width: 5rem;
+  border: 0.3rem solid white;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+
+.menu-wrapper .menu-toggler-container .menu-toggler:hover {
+  background: #8d8d8d;
+}
+
+.menu-wrapper .menu-toggler-container .menu-toggler i {
+  color: white;
+  font-size: 3rem;
 }
 
 .hero-wrapper {
@@ -2659,9 +2788,16 @@ textarea:focus {
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .user-and-password input {
   padding: 1rem 0rem;
-  font-size: 1.8rem;
+  font-size: 17px;
   width: 30rem;
-  margin-right: 4rem;
+  margin-right: 2rem;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .user-and-password input {
+    margin-right: 1rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2677,7 +2813,7 @@ textarea:focus {
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .input-form .text-input-area textarea {
   width: 100%;
   padding: 1rem 0rem;
-  font-size: 2rem;
+  font-size: 17px;
   cursor: text;
   resize: none;
 }
@@ -2783,9 +2919,16 @@ textarea:focus {
 
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .user-and-password input {
   padding: 1rem 0rem;
-  font-size: 1.8rem;
+  font-size: 17px;
   width: 30rem;
-  margin-right: 4rem;
+  margin-right: 2rem;
+}
+
+@media (max-width: 600px) {
+  .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .user-and-password input {
+    margin-right: 1rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2801,7 +2944,7 @@ textarea:focus {
 .single-post-overlay .single-post-relative .single-post-wrapper .single-post-container .new-post-form .text-input-area textarea {
   width: 100%;
   padding: 1rem 0rem;
-  font-size: 2rem;
+  font-size: 17px;
   cursor: text;
   resize: none;
 }

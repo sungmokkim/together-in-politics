@@ -4,7 +4,17 @@ import { TOGGLE_STATUS } from '../actions/actions';
 const initialState = {
   isFromClient: false,
   navDisplay: navDisplay,
-  statusClicked: false
+  status: { clicked: false, modalDisplay: false, componentDisplay: false },
+  description: {
+    clicked: false,
+    modalDisplay: false,
+    componentDisplay: false
+  },
+  menu: {
+    clicked: false,
+    modalDisplay: false,
+    componentDisplay: false
+  }
 };
 
 export default (state = initialState, action) => {
@@ -12,8 +22,14 @@ export default (state = initialState, action) => {
     case TOGGLE_STATUS:
       return {
         ...state,
-        statusClicked: !state.statusClicked
+        [action.toggleType]: {
+          ...state[action.toggleType],
+          [action.toggleComponent]: !state[action.toggleType][
+            action.toggleComponent
+          ]
+        }
       };
+
     default:
       try {
         return {
