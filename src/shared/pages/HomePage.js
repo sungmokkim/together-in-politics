@@ -12,54 +12,45 @@ import IndicatorSection from '../components/main/sections/indicator/IndicatorSec
 import AdjustSection from '../components/main/sections/adjust/AdjustSection';
 import CurrentStatus from '../components/common/CurrentStatus';
 import PhotoCard from '../components/common/PhotoCard';
-
 import dateAndTime from 'date-and-time';
 
 import { logPageView } from '../googleAnalytics';
 
 class HomePage extends Component {
-  state = {
-    modalDisplay: 'none',
-    componentDisplay: false
-  };
-
   // below 2 functions are needed to display modal(dark overlay) when one of the two conditions is met
-  // 1. a user clicks a setting (config ) button
+  // 1. a user clicks a  button
   // 2. a user clicks a status card
   // to do both, these functions need to be where these 2 conditions can be controlled
-  toggleBtn = () => {
-    if (this.props.site.statusClicked) {
-      this.controlModalFadeOut();
+  toggleBtn = toggleType => {
+    if (this.props.site[toggleType].clicked) {
+      // if it's already clicked, execute closing function
+      this.controlModalFadeOut(toggleType);
     } else {
-      this.props.toggleStatus();
-      this.setState({
-        ...this.state,
-        modalDisplay: 'block',
-        componentDisplay: true
+      // if it is not clicked, activate all these three
+      this.props.toggleStatus({ toggleType, toggleComponent: 'clicked' });
+      this.props.toggleStatus({ toggleType, toggleComponent: 'modalDisplay' });
+      this.props.toggleStatus({
+        toggleType,
+        toggleComponent: 'componentDisplay'
       });
     }
   };
 
-  controlModalFadeOut = () => {
-    // document.body.style.overflow = 'auto';
-    this.props.toggleStatus();
+  controlModalFadeOut = async toggleType => {
+    // this is closing function
+
+    // change 'clicked' status first (to perform 'fade-out' animation first)
+    this.props.toggleStatus({ toggleType, toggleComponent: 'clicked' });
+
     // give delay of 0.3s to perform fade-out animation
-    this.setState(
-      {
-        ...this.state,
-        modalDisplay: 'block',
-        componentDisplay: true
-      },
-      async () => {
-        const delayModal = await setTimeout(() => {
-          this.setState({
-            ...this.state,
-            modalDisplay: 'none',
-            componentdisplay: false
-          });
-        }, 300);
-      }
-    );
+    const delayModal = await setTimeout(() => {
+      // deactivate these two after the time out
+      this.props.toggleStatus({ toggleType, toggleComponent: 'modalDisplay' });
+      this.props.toggleStatus({
+        toggleType,
+        toggleComponent: 'componentDisplay'
+      });
+    }, 300);
   };
 
   componentDidMount() {
@@ -126,13 +117,15 @@ class HomePage extends Component {
             }
           ]}
           handleClick={this.toggleBtn}
+          toggleType='status'
         />
         <AdjustSection
-          clicked={this.props.site.statusClicked}
-          modalDisplay={this.state.modalDisplay}
-          componentDisplay={this.state.componentDisplay}
+          clicked={this.props.site.status.clicked}
+          modalDisplay={this.props.site.status.modalDisplay}
+          componentDisplay={this.props.site.status.componentDisplay}
           controlModalFadeOut={this.controlModalFadeOut}
           toggleBtn={this.toggleBtn}
+          toggleType='status'
         />
         <IndicatorSection />
       </React.Fragment>
