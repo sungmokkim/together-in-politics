@@ -27,6 +27,7 @@ import {
 } from '../options/indicatorOptions';
 import { lineChartIndicatorOptions } from '../options/lineChartIndicator';
 import { todayIndicators } from '../options/todayIndicators';
+import { descriptionOptions } from '../options/description';
 
 const initialState = {
   active: {
@@ -213,7 +214,8 @@ const initialState = {
 
   maxValues: {},
 
-  indicatorOptions: indicatorOptions
+  indicatorOptions: indicatorOptions,
+  descriptionOptions: descriptionOptions
 };
 
 export default (state = initialState, action) => {
