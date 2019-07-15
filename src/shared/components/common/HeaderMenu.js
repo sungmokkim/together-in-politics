@@ -20,7 +20,7 @@ class HeaderMenu extends Component {
                   (index + 1))}s forwards`
             }}
             onClick={() => {
-              this.controlModalFadeOut('menu');
+              this.props.controlModalFadeOut('menu');
             }}
           >
             {this.props.site.navDisplay[menu]['korean']}
@@ -28,42 +28,6 @@ class HeaderMenu extends Component {
         </NavLink>
       );
     });
-  };
-
-  // below 2 functions are needed to display modal(dark overlay) when one of the two conditions is met
-  // 1. a user clicks a  button
-  // 2. a user clicks a status card
-  // to do both, these functions need to be where these 2 conditions can be controlled
-  toggleBtn = toggleType => {
-    if (this.props.site[toggleType].clicked) {
-      // if it's already clicked, execute closing function
-      this.controlModalFadeOut(toggleType);
-    } else {
-      // if it is not clicked, activate all these three
-      this.props.toggleStatus({ toggleType, toggleComponent: 'clicked' });
-      this.props.toggleStatus({ toggleType, toggleComponent: 'modalDisplay' });
-      this.props.toggleStatus({
-        toggleType,
-        toggleComponent: 'componentDisplay'
-      });
-    }
-  };
-
-  controlModalFadeOut = async toggleType => {
-    // this is closing function
-
-    // change 'clicked' status first (to perform 'fade-out' animation first)
-    this.props.toggleStatus({ toggleType, toggleComponent: 'clicked' });
-
-    // give delay of 0.3s to perform fade-out animation
-    const delayModal = await setTimeout(() => {
-      // deactivate these two after the time out
-      this.props.toggleStatus({ toggleType, toggleComponent: 'modalDisplay' });
-      this.props.toggleStatus({
-        toggleType,
-        toggleComponent: 'componentDisplay'
-      });
-    }, 300);
   };
 
   render() {
@@ -88,15 +52,15 @@ class HeaderMenu extends Component {
             display: this.props.site.menu.modalDisplay ? 'block' : 'none'
           }}
           onClick={() => {
-            this.controlModalFadeOut('menu');
+            this.props.controlModalFadeOut('menu');
           }}
         />
         <div className='menu-wrapper'>
           {/* description(about)button */}
           <DescriptionBtn
             btnClicked={this.props.site.description.clicked}
-            hide={this.props.site.menu.modalDisplay} // hide this button when modal displays
-            handleClick={this.toggleBtn}
+            hide={this.props.site.menu.modalDisplay} // hide this button when menu modal displays
+            handleClick={this.props.toggleBtn}
             toggleType='description'
           />
           {/* menu toggle button */}
@@ -104,7 +68,7 @@ class HeaderMenu extends Component {
             <div
               className='menu-toggler'
               onClick={() => {
-                this.toggleBtn('menu');
+                this.props.toggleBtn('menu');
               }}
             >
               <i
