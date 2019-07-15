@@ -10,7 +10,7 @@ export const communityOptions = {
     index: 'mlbpark',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
-    mentionPortionLow: 50,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   },
   ruli: {
@@ -24,7 +24,7 @@ export const communityOptions = {
     index: 'ruli',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
-    mentionPortionLow: 50,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   },
   ilbe: {
@@ -38,7 +38,7 @@ export const communityOptions = {
     index: 'ilbe',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
-    mentionPortionLow: 50,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   },
   clien: {
@@ -52,7 +52,7 @@ export const communityOptions = {
     index: 'clien',
     mentionPortionHigh: 250,
     mentionPortionMid: 150,
-    mentionPortionLow: 50,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   },
   cook: {
@@ -66,7 +66,7 @@ export const communityOptions = {
     index: 'cook',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
-    mentionPortionLow: 50,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   },
   ygosu: {
@@ -80,7 +80,7 @@ export const communityOptions = {
     index: 'ygosu',
     mentionPortionHigh: 150,
     mentionPortionMid: 100,
-    mentionPortionLow: 30,
+    mentionPortionLow: 40,
     mentionPortionNone: 1
   }
 };
