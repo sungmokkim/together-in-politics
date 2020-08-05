@@ -44,9 +44,9 @@ class SinglePost extends Component {
   };
 
   mapPost = () => {
-    const toMap = this.props.freeboard.data.filter(post => {
+    const toMap = this.props.freeboard.data?.filter(post => {
       return post._id === this.props.currentId;
-    }).length
+    })?.length
       ? this.props.freeboard.data.filter(post => {
           return post._id === this.props.currentId;
         })
@@ -120,7 +120,7 @@ class SinglePost extends Component {
           <div className='comment-count'>
             {`Comments (${this.props.freeboard.comments['length']})`}
           </div>
-          {this.props.freeboard.comments.length ? (
+          {this.props.freeboard.comments?.length ? (
             this.mapComments()
           ) : (
             <span className='no-comment'>

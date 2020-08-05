@@ -64,6 +64,7 @@ class RankingMain extends Component {
     // 7. fetched content will display
 
     const { currentDate } = this.props.dashboardManager;
+
     this.setState(
       {
         ...this.state,
@@ -95,7 +96,7 @@ class RankingMain extends Component {
 
   mapAndSortRankings = data => {
     const { communities, active, maxValues } = this.props.dashboardManager;
-
+  
     // ranking sorting option (coming from redux state)
     const indicatorToSortBy = active.rankingSorting.index;
 
@@ -128,6 +129,7 @@ class RankingMain extends Component {
     } else {
       // map weights to the indicators for each community
       dataMapped = data.map(dt => {
+      
         return {
           ...dt,
           // divide each indicator by respective weights and multiply by 100
@@ -151,7 +153,7 @@ class RankingMain extends Component {
         };
       });
     }
-
+    
     // sort by given sorting option
     const dataSorted = dataMapped.sort((a, b) => {
       return b[indicatorToSortBy] - a[indicatorToSortBy];

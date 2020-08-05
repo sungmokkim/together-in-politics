@@ -69,7 +69,7 @@ class HomePage extends Component {
     // case 3 :web app's current community and dataset's current community do not match(most likely due to change in other pages)
     // in these cases, there should be data fetching
     if (
-      !indicators.length ||
+      !indicators?.length ||
       indicators[0].name !== active.community.index ||
       indicators[0].dates !== currentDateString
     ) {

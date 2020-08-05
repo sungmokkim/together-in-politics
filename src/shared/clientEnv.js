@@ -1,3 +1,3 @@
-export const clientFetchingReference = 'togetherinpolitics.com';
-export const protocol = 'https';
+export const clientFetchingReference = 'localhost:5000';
+export const protocol = 'http';
 export const ga = '';

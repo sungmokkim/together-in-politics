@@ -3,9 +3,9 @@ import { clientFetchingReference, protocol } from '../clientEnv';
 
 // FETCH ----------------------------------------------------------------------------
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
-export const fetchLatestDate = () => async dispatch => {
+export const fetchLatestDate = () => async (dispatch) => {
   const res = await axios.get(
-    `${protocol}://${clientFetchingReference}/api/latest_date`
+    `${protocol}://${clientFetchingReference}/api/info/latest-date`,
   );
 
   const latestDateArray = res.data[0].dates.split('-');
@@ -16,22 +16,22 @@ export const fetchLatestDate = () => async dispatch => {
 
   dispatch({
     type: FETCH_LATEST_DATE,
-    payload: { year: latestYear, month: latestMonth, date: latestDate }
+    payload: { year: latestYear, month: latestMonth, date: latestDate },
   });
 
   return { year: latestYear, month: latestMonth, date: latestDate };
 };
 
 export const FETCH_MAX_VALUES = 'FETCH_MAX_VALUES';
-export const fetchMaxValues = (active, communities) => async dispatch => {
+export const fetchMaxValues = (active, communities) => async (dispatch) => {
   const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/max_values`,
-    { active, communities }
+    `${protocol}://${clientFetchingReference}/api/info/max-values`,
+    { active, communities },
   );
 
   dispatch({
     type: FETCH_MAX_VALUES,
-    payload: res.data
+    payload: res.data,
   });
 };
 
@@ -40,21 +40,23 @@ export const fetchTodayRankings = (
   year,
   month,
   date,
-  get_latest = false
-) => async dispatch => {
-  const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/ranking`,
+  get_latest = false,
+) => async (dispatch) => {
+  const res = await axios.get(
+    `${protocol}://${clientFetchingReference}/api/info/ranking`,
     {
-      year,
-      month,
-      date,
-      get_latest
-    }
+      params: {
+        year,
+        month,
+        date,
+        get_latest,
+      },
+    },
   );
 
   dispatch({
     type: FETCH_TODAY_RANKINGS,
-    payload: res.data
+    payload: res.data,
   });
 
   return res.data; // return data for other actions
@@ -66,80 +68,74 @@ export const fetchTodayIndicators = (
   month,
   date,
   getLatest = false,
-  active
-) => async dispatch => {
+  active,
+) => async (dispatch) => {
   // destruct the current obj(active)
   const {
     index,
-    femiWeight,
-    popularityWeight,
-    antiWeight,
-    problemWeight
   } = active.community;
 
-  const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/today_indicator`,
+  const res = await axios.get(
+    `${protocol}://${clientFetchingReference}/api/info/today-indicator`,
     {
-      year,
-      month,
-      date,
-      get_latest: getLatest,
-      community: index,
-      popularityWeight,
-      femiWeight,
-      antiWeight,
-      problemWeight
-    }
+      params: {
+        year,
+        month,
+        date,
+        get_latest: getLatest,
+        community: index,
+      },
+    },
   );
 
   dispatch({
     type: FETCH_TODAY_INDICATORS,
-    payload: res.data
+    payload: res.data,
   });
 };
 
 //      ***********DASHBOARD
 export const FETCH_DASHBOARD_DATA = 'FETCH_DASHBOARD_DATA';
 export const fetchDashboardData = (
-  { community, range, mentionPortion, indicator },
-  latestDate
-) => async dispatch => {
+  {
+    community, range, mentionPortion, indicator,
+  },
+  latestDate,
+) => async (dispatch) => {
   const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/dashboard_data`,
+    `${protocol}://${clientFetchingReference}/api/info/dashboard-data`,
     {
       community,
       mentionPortion,
       indicator,
       range,
-      latestDate
-    }
+      latestDate,
+    },
   );
 
-  const editedData = res.data.map(dt => {
-    return {
-      ...dt,
-      real_rank: dt['total_community'] - dt['rank'] + 1
-    };
-  });
+  const editedData = (res.data || []).map((dt) => ({
+    ...dt,
+    real_rank: dt.total_community - dt.rank + 1,
+  }));
 
   dispatch({
     type: FETCH_DASHBOARD_DATA,
-    payload: editedData
+    payload: editedData,
   });
 
   return editedData;
 };
 
 export const FETCH_PERIOD_DATA = 'FETCH_PERIOD_DATA';
-export const fetchPeriodData = ({ community, barPeriod }) => async dispatch => {
+export const fetchPeriodData = ({ community, barPeriod }) => async (dispatch) => {
   const res = await axios.post(
     `${protocol}://${clientFetchingReference}/api/period_data`,
-    { community: community.index, period: barPeriod }
+    { community: community.index, period: barPeriod },
   );
 
   dispatch({
     type: FETCH_PERIOD_DATA,
-    payload: res.data
+    payload: res.data,
   });
 
   return res.data;
@@ -148,16 +144,23 @@ export const fetchPeriodData = ({ community, barPeriod }) => async dispatch => {
 export const FETCH_BUBBLE_DATA = 'FETCH_BUBBLE_DATA';
 export const fetchBubbleData = (
   { bubblePeriod },
-  latestDate
-) => async dispatch => {
-  const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/bubble_data`,
-    { latestDate: latestDate, period: bubblePeriod }
+  latestDate,
+) => async (dispatch) => {
+  const { type, value } = bubblePeriod;
+
+  const res = await axios.get(
+    `${protocol}://${clientFetchingReference}/api/info/bubble-chart-data`,
+    {
+      params: {
+        type,
+        value,
+      },
+    },
   );
 
   dispatch({
     type: FETCH_BUBBLE_DATA,
-    payload: res.data
+    payload: res.data,
   });
 
   return res.data;
@@ -165,23 +168,25 @@ export const fetchBubbleData = (
 
 export const FETCH_KEYWORDS = 'FETCH_KEYWORDS';
 export const fetchKeywords = (
-  { community, keywordPeriod, mentionPortion, rankingSorting },
-  latestDate
-) => async dispatch => {
+  {
+    community, keywordPeriod, mentionPortion, rankingSorting,
+  },
+  latestDate,
+) => async (dispatch) => {
   const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/keywords`,
+    `${protocol}://${clientFetchingReference}/api/info/keyword-data`,
     {
       community,
-      latestDate: latestDate,
+      latestDate,
       period: keywordPeriod,
       mentionPortion,
-      rankingSorting
-    }
+      rankingSorting,
+    },
   );
 
   dispatch({
     type: FETCH_KEYWORDS,
-    payload: res.data
+    payload: res.data,
   });
 
   return res.data;
@@ -189,19 +194,19 @@ export const fetchKeywords = (
 
 //          *********** FREEBOARD
 export const FETCH_FREEBOARD = 'FETCH_FREEBOARD';
-export const fetchFreeboard = socket => async dispatch => {
+export const fetchFreeboard = (socket) => async (dispatch) => {
   const res = await axios.get(
-    `${protocol}://${clientFetchingReference}/api/freeboard`
+    `${protocol}://${clientFetchingReference}/api/freeboard`,
   );
 
-  const editedData = res.data.map(dt => {
+  const editedData = res.data.map((dt) => {
     const ipArray = dt.ip.split('.');
     ipArray.splice(-2, 2, '*', '*');
     const newIp = ipArray.join('.');
 
     return {
       ...dt,
-      ip: dt.admin ? 'together.in.politics.com' : newIp
+      ip: dt.admin ? 'together.in.politics.com' : newIp,
     };
   });
 
@@ -210,60 +215,55 @@ export const fetchFreeboard = socket => async dispatch => {
   socket.emit('clear-post-count');
   dispatch({
     type: FETCH_FREEBOARD,
-    payload: editedData
+    payload: editedData,
   });
 
   return editedData;
 };
 
 export const FETCH_HOT_POSTS = 'FETCH_HOT_POSTS';
-export const fetchHotPosts = () => async dispatch => {
+export const fetchHotPosts = () => async (dispatch) => {
   const res = await axios.get(
-    `${protocol}://${clientFetchingReference}/api/hot_posts`
+    `${protocol}://${clientFetchingReference}/api/freeboard/hot-posts`,
   );
 
-  const editedData = res.data.map(dt => {
+  const editedData = res.data.map((dt) => {
     const ipArray = dt.ip.split('.');
     ipArray.splice(-2, 2, '*', '*');
     const newIp = ipArray.join('.');
 
     return {
       ...dt,
-      ip: dt.admin ? 'together.in.politics.com' : newIp
+      ip: dt.admin ? 'together.in.politics.com' : newIp,
     };
   });
 
   dispatch({
     type: FETCH_HOT_POSTS,
-    payload: editedData
+    payload: editedData,
   });
 
   return editedData;
 };
 
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
-export const fetchComments = (postId, socket) => async dispatch => {
-  const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/comments`,
-    {
-      postId
-    }
-  );
+export const fetchComments = (postId, socket) => async (dispatch) => {
+  const res = await axios.get(`${protocol}://${clientFetchingReference}/api/freeboard/${postId}/comments`);
 
-  const editedData = res.data[0].comments.map(comment => {
+  const editedData = res.data[0].comments.map((comment) => {
     const ipArray = comment.ip.split('.');
     ipArray.splice(-2, 2, '*', '*');
     const newIp = ipArray.join('.');
 
     return {
       ...comment,
-      ip: comment.admin ? 'together.in.politics.com' : newIp
+      ip: comment.admin ? 'together.in.politics.com' : newIp,
     };
   });
 
   dispatch({
     type: FETCH_COMMENTS,
-    payload: editedData
+    payload: editedData,
   });
 
   // emit events to socket
@@ -273,20 +273,20 @@ export const fetchComments = (postId, socket) => async dispatch => {
 };
 
 export const FETCHED_FROM_SERVER = 'FETCHED_FROM_SERVER';
-export const fetchedFromServer = () => async dispatch => {
+export const fetchedFromServer = () => async (dispatch) => {
   dispatch({
     type: FETCHED_FROM_SERVER,
-    payload: true
+    payload: true,
   });
 };
 
 // CHANGE -----------------------------------------------------------
 export const CHANGE_ACTIVE = 'CHANGE_ACTIVE';
-export const changeActive = (key, value, callback) => async dispatch => {
+export const changeActive = (key, value, callback) => async (dispatch) => {
   await dispatch({
     type: CHANGE_ACTIVE,
     key,
-    value
+    value,
   });
 
   callback ? callback() : null;
@@ -297,11 +297,11 @@ export const changeCurrentDate = (
   year,
   month,
   date,
-  callback
-) => async dispatch => {
+  callback,
+) => async (dispatch) => {
   await dispatch({
     type: CHANGE_CURRENT_DATE,
-    payload: { year, month, date }
+    payload: { year, month, date },
   });
 
   callback ? callback() : null;
@@ -309,48 +309,48 @@ export const changeCurrentDate = (
   return {
     year,
     month,
-    date
+    date,
   };
 };
 
 // RESET ------------------------------------------------------------
 export const RESET_CURRENT_DATE = 'RESET_CURRENT_DATE';
-export const resetCurrentDate = callback => async dispatch => {
+export const resetCurrentDate = (callback) => async (dispatch) => {
   await dispatch({
-    type: RESET_CURRENT_DATE
+    type: RESET_CURRENT_DATE,
   });
 
   callback ? callback() : null;
 };
 
 export const RESET_CURRENT_RANGE = 'RESET_CURRENT_RANGE';
-export const resetCurrentRange = callback => async dispatch => {
+export const resetCurrentRange = (callback) => async (dispatch) => {
   await dispatch({
-    type: RESET_CURRENT_RANGE
+    type: RESET_CURRENT_RANGE,
   });
 
   callback ? callback() : null;
 };
 
-//INSERT -------------------------------------------------------------
+// INSERT -------------------------------------------------------------
 
 export const INSERT_IN_FREEBOARD = 'INSERT_IN_FREEBOARD';
 export const insertInFreeboard = (
   { text, userName, password },
-  socket
-) => async dispatch => {
+  socket,
+) => async (dispatch) => {
   const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/insert_freeboard`,
+    `${protocol}://${clientFetchingReference}/api/freeboard`,
     {
       text,
       userName,
-      password
-    }
+      password,
+    },
   );
 
   dispatch({
     type: INSERT_IN_FREEBOARD,
-    payload: res.data
+    payload: res.data,
   });
 
   // with received socket object, emit event,
@@ -362,22 +362,23 @@ export const insertInFreeboard = (
 // UPDATE----------------------------------------------------
 export const UPDATE_NEW_COMMENT = 'UPDATE_NEW_COMMENT';
 export const updateNewComment = (
-  { inputId, comment, userName, password },
-  socket
-) => async dispatch => {
-  const res = await axios.post(
-    `${protocol}://${clientFetchingReference}/api/new_comment`,
+  {
+    inputId, comment, userName, password,
+  },
+  socket,
+) => async (dispatch) => {
+  const res = await axios.put(
+    `${protocol}://${clientFetchingReference}/api/freeboard/${inputId}/comment`,
     {
-      inputId,
       comment,
       userName,
-      password
-    }
+      password,
+    },
   );
 
   dispatch({
     type: UPDATE_NEW_COMMENT,
-    payload: res.data
+    payload: res.data,
   });
 
   // with received socket object, emit event,
@@ -389,10 +390,10 @@ export const updateNewComment = (
 // TOGGLE------------------------------
 
 export const TOGGLE_INDICATOR = 'TOGGLE_INDICATOR';
-export const toggleIndicator = value => async dispatch => {
+export const toggleIndicator = (value) => async (dispatch) => {
   dispatch({
     type: TOGGLE_INDICATOR,
-    payload: value
+    payload: value,
   });
 };
 
@@ -400,11 +401,11 @@ export const toggleIndicator = value => async dispatch => {
 export const TOGGLE_STATUS = 'TOGGLE_STATUS';
 export const toggleStatus = ({
   toggleType,
-  toggleComponent
-}) => async dispatch => {
+  toggleComponent,
+}) => async (dispatch) => {
   dispatch({
     type: TOGGLE_STATUS,
     toggleType,
-    toggleComponent
+    toggleComponent,
   });
 };

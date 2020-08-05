@@ -47,7 +47,7 @@ class MainBoardContent extends Component {
       case 'real_rank':
         return {
           min: 1,
-          max: Object.keys(communities).length
+          max: Object.keys(communities)?.length ?? 1
         };
 
       default:

@@ -16,7 +16,7 @@ class HeaderMenu extends Component {
             style={{
               opacity: 0,
               animation: `menu-fade-in 0.2s ease-in ${0.1 *
-                (Object.keys(this.props.site.navDisplay).length -
+                (Object.keys(this.props.site.navDisplay)?.length ?? 0 -
                   (index + 1))}s forwards`
             }}
             onClick={() => {

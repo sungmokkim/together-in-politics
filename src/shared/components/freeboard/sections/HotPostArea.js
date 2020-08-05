@@ -34,7 +34,7 @@ class HotPostArea extends Component {
 
           <span className='lower-container'>
             <span className='text-area'>
-              {post.text.length > 20
+              {post.text?.length > 20
                 ? `${post.text.slice(0, 20)}...`
                 : post.text}
             </span>

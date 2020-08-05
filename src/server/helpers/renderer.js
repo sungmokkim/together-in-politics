@@ -2,9 +2,9 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import Routes from '../../shared/Routes';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
+import Routes from '../../shared/Routes';
 
 const renderer = (req, store) => {
   const content = renderToString(
@@ -12,7 +12,7 @@ const renderer = (req, store) => {
       <StaticRouter location={req.path} context={{}}>
         {renderRoutes(Routes)}
       </StaticRouter>
-    </Provider>
+    </Provider>,
   );
 
   return `
@@ -40,7 +40,8 @@ const renderer = (req, store) => {
         
           <link rel="stylesheet" href="style.css">
           <link rel="stylesheet" href="calendarStyle.css">
-       
+          <link rel="icon" href="favicon.ico" type="image/x-icon">
+
           <title>모두의 정치</title>
 
   
@@ -51,8 +52,8 @@ const renderer = (req, store) => {
           </div>
 
           <script id ="initial-state">window.__INITIAL_STATE__ = ${serialize(
-            store.getState()
-          )}</script>
+    store.getState(),
+  )}</script>
   
           <script src = "bundle.js"></script>
 

@@ -21,7 +21,7 @@ class RankingTable extends Component {
             className={`center ${
               index + 1 === 1
                 ? 'first rank left'
-                : index + 1 === this.props.data.length
+                : index + 1 === this.props.data?.length
                 ? 'last rank left'
                 : 'rank left'
             }`}
@@ -81,7 +81,7 @@ class RankingTable extends Component {
   renderSlideIcon = () => {
     // render slide icon only after data loading is completed
     // also, only display icon when coming dataset has more than one row
-    return this.props.contentIsLoading ? null : this.props.data.length ? (
+    return this.props.contentIsLoading ? null : this.props.data?.length ? (
       <SlideNotification />
     ) : null;
   };

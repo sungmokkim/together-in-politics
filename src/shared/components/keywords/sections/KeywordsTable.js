@@ -60,7 +60,7 @@ class KeywordsTable extends Component {
   renderSlideIcon = () => {
     // render slide icon only after data loading is completed
     // also, only display icon when coming dataset has more than one row
-    return this.props.contentIsLoading ? null : this.props.data.length ? (
+    return this.props.contentIsLoading ? null : this.props.data?.length ? (
       <SlideNotification />
     ) : null;
   };
