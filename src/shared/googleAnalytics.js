@@ -11,7 +11,9 @@ export const logPageView = () => {
     ReactGA.set({ page: window.location.pathname });
 
     ReactGA.pageview(window.location.pathname);
-  } catch (error) {}
+  } catch (error) {
+    // handle error
+  }
 };
 
 export const attachAnalytics = () => {

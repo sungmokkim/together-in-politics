@@ -37,7 +37,7 @@ class IndicatorSection extends Component {
   getValue = key => {
     const { today } = this.props;
 
-    return today.indicators.length ? today.indicators[0][key] : null;
+    return today.indicators?.length ? today.indicators[0][key] : null;
   };
 
   renderIndicators = () => {

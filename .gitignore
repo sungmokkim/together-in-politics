@@ -6,3 +6,4 @@ build
 public/bundle.js
 package-lock.json
 test.html
+.env

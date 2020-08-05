@@ -101,7 +101,7 @@ class Indicator extends Component {
 
     // this function is to display actual content or loading component
     const renderContent = () => {
-      return value || value === 0 ? (
+      return  (
         <React.Fragment>
           <span
             className={`value ${
@@ -150,9 +150,7 @@ class Indicator extends Component {
             {indicatorOption[active.indicatorOption.index]['korean']}
           </div>
         </React.Fragment>
-      ) : (
-        <ContentLoading />
-      );
+      )
     };
 
     // this is actual rendering

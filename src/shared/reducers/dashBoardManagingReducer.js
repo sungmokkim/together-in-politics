@@ -5,25 +5,25 @@ import {
   RESET_CURRENT_RANGE,
   FETCH_LATEST_DATE,
   TOGGLE_INDICATOR,
-  FETCH_MAX_VALUES
+  FETCH_MAX_VALUES,
 } from '../actions/actions';
 
 import { communityOptions, communityDefault } from '../options/communities';
 import {
   mentionPortionOptions,
-  mentionPortionDefault
+  mentionPortionDefault,
 } from '../options/mentionPortion';
 import {
   bubblePeriodDefault,
-  bubblePeriodOptions
+  bubblePeriodOptions,
 } from '../options/bubblePeriod';
 import {
   rankingSortingDefault,
-  rankingSortingOptions
+  rankingSortingOptions,
 } from '../options/rankingSorting';
 import {
   indicatorOptionDefault,
-  indicatorOptions
+  indicatorOptions,
 } from '../options/indicatorOptions';
 import { lineChartIndicatorOptions } from '../options/lineChartIndicator';
 import { todayIndicators } from '../options/todayIndicators';
@@ -39,12 +39,12 @@ const initialState = {
       koreanShort: '1년',
       duration: 'years',
       number: 1,
-      split: 7
+      split: 7,
     },
     barPeriod: {
       korean: '월간',
       koreanShort: '월간',
-      index: 'months'
+      index: 'months',
     },
     bubblePeriod: bubblePeriodDefault,
     chart: { korean: '기간별 지표 변화', koreanShort: '지표', index: 'line' },
@@ -56,34 +56,34 @@ const initialState = {
       value: 6,
       limit: 30,
       splitRange: [10, 30],
-      defaultSplitRange: 30
+      defaultSplitRange: 30,
     },
     mentionPortion: mentionPortionDefault,
     rankingSorting: rankingSortingDefault,
-    indicatorOption: indicatorOptionDefault
+    indicatorOption: indicatorOptionDefault,
   },
 
   barPeriodOptions: {
     years: {
       korean: '연간',
       koreanShort: '연간',
-      index: 'years'
+      index: 'years',
     },
     months: {
       korean: '월간',
       koreanShort: '월간',
-      index: 'months'
+      index: 'months',
     },
     weeks: {
       korean: '주간',
       koreanShort: '주간',
-      index: 'weeks'
-    }
+      index: 'weeks',
+    },
   },
-  rankingSortingOptions: rankingSortingOptions,
-  mentionPortionOptions: mentionPortionOptions,
+  rankingSortingOptions,
+  mentionPortionOptions,
 
-  bubblePeriodOptions: bubblePeriodOptions,
+  bubblePeriodOptions,
 
   keywordPeriodOptions: {
     total: {
@@ -94,7 +94,7 @@ const initialState = {
       value: 0,
       limit: 100,
       splitRange: [10, 30, 50, 100],
-      defaultSplitRange: 50
+      defaultSplitRange: 50,
     },
 
     '1y': {
@@ -105,7 +105,7 @@ const initialState = {
       value: 1,
       limit: 50,
       splitRange: [10, 30, 50],
-      defaultSplitRange: 50
+      defaultSplitRange: 50,
     },
     '6m': {
       korean: '최근 6개월 키워드',
@@ -115,7 +115,7 @@ const initialState = {
       value: 6,
       limit: 30,
       splitRange: [10, 30],
-      defaultSplitRange: 30
+      defaultSplitRange: 30,
     },
     '1m': {
       korean: '최근 1개월 키워드',
@@ -125,7 +125,7 @@ const initialState = {
       value: 1,
       limit: 10,
       splitRange: [],
-      defaultSplitRange: 10
+      defaultSplitRange: 10,
     },
     '1w': {
       korean: '최근 1주 키워드',
@@ -135,11 +135,11 @@ const initialState = {
       value: 6,
       limit: 7,
       splitRange: [],
-      defaultSplitRange: 7
-    }
+      defaultSplitRange: 7,
+    },
   },
 
-  lineChartIndicatorOptions: lineChartIndicatorOptions,
+  lineChartIndicatorOptions,
 
   rangeOptions: {
     total: {
@@ -148,7 +148,7 @@ const initialState = {
       koreanShort: '전체',
       duration: 'total',
       number: 0,
-      split: 7
+      split: 7,
     },
     '2y': {
       index: '2y',
@@ -156,7 +156,7 @@ const initialState = {
       koreanShort: '2년',
       duration: 'years',
       number: 2,
-      split: 7
+      split: 7,
     },
     '1y': {
       index: '1y',
@@ -164,7 +164,7 @@ const initialState = {
       koreanShort: '1년',
       duration: 'years',
       number: 1,
-      split: 7
+      split: 7,
     },
     '6m': {
       index: '6m',
@@ -172,20 +172,20 @@ const initialState = {
       koreanShort: '6개월',
       duration: 'months',
       number: 6,
-      split: 7
-    }
+      split: 7,
+    },
   },
 
   currentDate: {
     year: '2019',
     month: '03',
-    date: '06'
+    date: '06',
   },
 
   latestDate: {
     year: null,
     month: null,
-    date: null
+    date: null,
   },
 
   communities: communityOptions,
@@ -193,29 +193,24 @@ const initialState = {
   dashboardIndicatorsName: {
     anti_ratio: { korean: '적극 거부율', koreanShort: '거부' },
     popularity: { korean: '대통령 지분율', koreanShort: '지분' },
-    femi_ratio: { korean: '페미 이슈 지수', koreanShort: '페미' }
-    // ,
-    // femi_count: { korean: '여성 갈등 빈도', koreanShort: '여성 빈도' }
-    // ,
-    // anti_count: { korean: '대통령 혐오 발언 빈도', koreanShort: '혐오(빈도)' }
+    femi_ratio: { korean: '페미 이슈 지수', koreanShort: '페미' },
   },
 
   chartName: {
-    // bar: { korean: '기간별 혐오 발언', koreanShort: '혐오', index: 'bar' },
     line: { korean: '기간별 지표 변화', koreanShort: '지표', index: 'line' },
     bubble: {
       korean: '커뮤니티 지형도',
       koreanShort: '지형도',
-      index: 'bubble'
-    }
+      index: 'bubble',
+    },
   },
 
-  todayIndicators: todayIndicators,
+  todayIndicators,
 
   maxValues: {},
 
-  indicatorOptions: indicatorOptions,
-  descriptionOptions: descriptionOptions
+  indicatorOptions,
+  descriptionOptions,
 };
 
 export default (state = initialState, action) => {
@@ -226,24 +221,22 @@ export default (state = initialState, action) => {
         latestDate: {
           year: action.payload.year,
           month: action.payload.month,
-          date: action.payload.date
+          date: action.payload.date,
         },
         currentDate: {
           year: action.payload.year,
           month: action.payload.month,
-          date: action.payload.date
-        }
+          date: action.payload.date,
+        },
       };
 
     case FETCH_MAX_VALUES:
-      // restructure it to obj
-      const newObj = action.payload.reduce((acc, val) => {
-        acc[val.name] = val;
-        return acc;
-      }, {});
       return {
         ...state,
-        maxValues: newObj
+        maxValues: action.payload.reduce((acc, val) => {
+          acc[val.name] = val;
+          return acc;
+        }, {}),
       };
 
     case CHANGE_ACTIVE:
@@ -251,8 +244,8 @@ export default (state = initialState, action) => {
         ...state,
         active: {
           ...state.active,
-          [action.key]: action.value
-        }
+          [action.key]: action.value,
+        },
       };
 
     case RESET_CURRENT_RANGE:
@@ -264,9 +257,9 @@ export default (state = initialState, action) => {
             value: '3개월',
             duration: 'months',
             number: 3,
-            label: '3개월'
-          }
-        }
+            label: '3개월',
+          },
+        },
       };
     case RESET_CURRENT_DATE:
       return {
@@ -274,8 +267,8 @@ export default (state = initialState, action) => {
         currentDate: {
           year: '2019',
           month: '01',
-          date: '06'
-        }
+          date: '06',
+        },
       };
     case CHANGE_CURRENT_DATE:
       return {
@@ -283,16 +276,16 @@ export default (state = initialState, action) => {
         currentDate: {
           year: action.payload.year,
           month: action.payload.month,
-          date: action.payload.date
-        }
+          date: action.payload.date,
+        },
       };
     case TOGGLE_INDICATOR:
       return {
         ...state,
         lineChartIndicatorOptions: {
           ...state.lineChartIndicatorOptions,
-          [action.payload.index]: action.payload
-        }
+          [action.payload.index]: action.payload,
+        },
       };
     default:
       return state;

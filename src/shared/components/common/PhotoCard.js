@@ -28,7 +28,7 @@ class PhotoCard extends Component {
           ...this.state,
           animation: 'photo-in 0.3s ease-in forwards',
           currentlyFocused: this.indicatorArray[
-            this.index++ % this.indicatorArray.length
+            this.index++ % this.indicatorArray?.length ?? 0
           ]
         },
         () => {
@@ -57,7 +57,7 @@ class PhotoCard extends Component {
       todayIndicators
     } = this.props.dashboardManager;
 
-    const currentValue = this.props.today.indicators.length
+    const currentValue = this.props.today.indicators?.length
       ? this.props.today.indicators[0][this.state.currentlyFocused]
       : null;
     const currentMaxValue =

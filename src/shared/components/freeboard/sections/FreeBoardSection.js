@@ -69,7 +69,7 @@ class FreeBoardSection extends Component {
 
     const { maxLength, minLength } = this.props.freeboard;
 
-    if (e.target.value.length <= maxLength[e.target.name]) {
+    if (e.target.value?.length  <= maxLength[e.target.name]) {
       this.setState({
         ...this.state,
         inputs: {
@@ -85,7 +85,7 @@ class FreeBoardSection extends Component {
         submitErrorCodes: {
           ...this.state.submitErrorCodes,
           [e.target.name]:
-            e.target.value.length >= minLength[e.target.name]
+            e.target.value?.length >= minLength[e.target.name]
               ? null
               : this.state.submitErrorCodes[e.target.name]
         }
@@ -106,7 +106,7 @@ class FreeBoardSection extends Component {
       });
     }
   };
-
+  
   handlePostSubmit = e => {
     e.preventDefault();
 
@@ -122,7 +122,7 @@ class FreeBoardSection extends Component {
     });
 
     // if the array has a length (it means some errors exist)
-    if (inputErrors.length) {
+    if (inputErrors?.length) {
       // return(don't do anything)
       return;
     }
@@ -130,12 +130,12 @@ class FreeBoardSection extends Component {
     // check if input length is shorter than minimun length
     const submissionErrors = Object.keys(this.state.inputs).filter(idx => {
       return (
-        idx !== 'comment' && this.state.inputs[idx].length < minLength[idx]
+        idx !== 'comment' && this.state.inputs[idx]?.length < minLength[idx]
       );
     });
 
     // if some errors exist, set error message and return(do not do anything)
-    if (submissionErrors.length) {
+    if (submissionErrors?.length) {
       const submitErrorObj = {};
 
       submissionErrors.forEach(idx => {
@@ -151,8 +151,8 @@ class FreeBoardSection extends Component {
     }
 
     // if nothing happens, post goes to database and posting process is successful
-    this.props.insertInFreeboard(this.state.inputs, this.socket).then(rs => {
-      if (rs.ok === 1) {
+   const res = this.props.insertInFreeboard(this.state.inputs, this.socket).then(rs => {
+      if (rs._id) {
         this.handleClosingModal();
 
         this.setState({
@@ -223,18 +223,18 @@ class FreeBoardSection extends Component {
       return idx !== 'text' && this.state.inputErrorCodes[idx];
     });
     // if the array has a length (it means some errors exist)
-    if (inputErrors.length) {
+    if (inputErrors?.length) {
       // return (don't do anything)
       return;
     }
 
     // check if input length is shorter than minimun length
     const submissionErrors = Object.keys(this.state.inputs).filter(idx => {
-      return idx !== 'text' && this.state.inputs[idx].length < minLength[idx];
+      return idx !== 'text' && this.state.inputs[idx]?.length < minLength[idx];
     });
 
     // if some errors exist, set error message and return(do not do anything)
-    if (submissionErrors.length) {
+    if (submissionErrors?.length) {
       const submitErrorObj = {};
 
       submissionErrors.forEach(idx => {
@@ -258,8 +258,8 @@ class FreeBoardSection extends Component {
         },
         this.socket
       )
-      .then(rs => {
-        if (rs.ok === 1) {
+      .then(res => {
+        if (res.ok === 1) {
           this.props.fetchComments(this.state.currentId, this.socket);
           this.setState({
             ...this.state,
