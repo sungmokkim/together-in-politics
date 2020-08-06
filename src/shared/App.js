@@ -11,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  monitorMaxValues() => {
+  monitorMaxValues = () => {
     // this function is to monitor if users change mention portion value
     // if a change occurs, it will fetch max values again
     const { active, maxValues, communities } = this.props.dashboardManager;
