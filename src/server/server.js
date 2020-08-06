@@ -60,7 +60,6 @@ const server = app.listen(process.env.PORT || 5000, () => {
 const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
-  console.log('socket connected');
   // when user connects, initialize post count to 0
   // this number increases when certain actions occur
   const postCount = 0;

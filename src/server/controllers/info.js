@@ -18,9 +18,8 @@ const getTodayIndicator = async (query) => {
 };
 
 const getMaxValues = async (body) => {
-  console.log('max VALUE reached');
   const maxValues = await infoService.getMaxValues(body);
-  console.log('max value is', maxValues);
+
   return maxValues;
 };
 
