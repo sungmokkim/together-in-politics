@@ -8,12 +8,11 @@
     "npm": "6.x"
   },
   "scripts": {
-    "heroku-prebuild": "npm install --dev && npm run production",
     "dev": "npm-run-all --parallel dev:*",
     "dev:server": "nodemon --watch build --exec \"node build/server.js\"",
     "dev:build": "webpack --mode development --watch",
     "production": "webpack --mode production",
-    "start": "node build/server.js"
+    "start": "npm run production && node build/server.js"
   },
   "keywords": [],
   "author": "",
