@@ -88,7 +88,7 @@ export const fetchTodayIndicators = (
       },
     },
   );
-
+  console.log(clientFetchingReference, 'is where I get things');
   dispatch({
     type: FETCH_TODAY_INDICATORS,
     payload: res.data,
