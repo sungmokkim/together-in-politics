@@ -26,7 +26,7 @@ class App extends Component {
   render() {
     const { route } = this.props;
     {
-      this.monitorMaxValues();
+      // this.monitorMaxValues();
     }
     return (
       <React.Fragment>
