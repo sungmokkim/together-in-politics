@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "10.x"
+    "node": "10.x",
+    "npm": "6.x"
   },
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
