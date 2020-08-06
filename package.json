@@ -8,12 +8,12 @@
     "npm": "6.x"
   },
   "scripts": {
-    "heroku-prebuild": "npm install --dev",
+    "heroku-prebuild": "npm install --dev && npm run production",
     "dev": "npm-run-all --parallel dev:*",
     "dev:server": "nodemon --watch build --exec \"node build/server.js\"",
     "dev:build": "webpack --mode development --watch",
     "production": "webpack --mode production",
-    "start": "npm run production && pm2 start build/server.js"
+    "start": "pm2 start build/server.js"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +34,7 @@
     "mongoose": "^5.9.21",
     "mysql": "^2.18.1",
     "node-sass": "^4.14.1",
+    "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-day-picker": "^7.4.8",
