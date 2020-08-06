@@ -11,11 +11,13 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  monitorMaxValues = () => {
+  monitorMaxValues() => {
     // this function is to monitor if users change mention portion value
     // if a change occurs, it will fetch max values again
     const { active, maxValues, communities } = this.props.dashboardManager;
-
+    console.log('active mention portion index', active.mentionPortion.index);
+    console.log('what ever')
+    console.log(maxValues[active.community.index].mentionPortion)
     if (
       active.mentionPortion.index !==
       maxValues[active.community.index].mentionPortion
