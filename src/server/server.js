@@ -53,7 +53,7 @@ app.get('*', (req, res) => {
 });
 
 const server = app.listen(process.env.PORT || 5000, () => {
-  console.log('Listening on Port 5000');
+  console.log(`Listening on Port ${process.env.PORT}`);
 });
 
 // wrap socket io in express server
