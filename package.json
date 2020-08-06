@@ -13,7 +13,7 @@
     "dev:server": "nodemon --watch build --exec \"node build/server.js\"",
     "dev:build": "webpack --mode development --watch",
     "production": "webpack --mode production",
-    "start": "pm2 start build/server.js"
+    "start": "node build/server.js"
   },
   "keywords": [],
   "author": "",
