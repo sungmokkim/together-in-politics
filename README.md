@@ -1,6 +1,6 @@
 # Together In Politics(모두의 정치)
 
-Site URL : <https://togetherinpolitics.com>
+Site URL : <https://together-in-politics.herokuapp.com/>
 
 ## Introduction
 
@@ -14,7 +14,7 @@ _TIPS_ offers unique and diverse indicators to give insights regarding several a
 
 Sentiment data were collected from several Korean web sites (web communities) and no personal data were collected.
 
-You can click [Here](https://togetherinpolitics.com) to take a look.
+You can click [Here](https://together-in-politics.herokuapp.com/) to take a look.
 
 ## Release Note - 0.3.4
 
