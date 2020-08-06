@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { clientFetchingReference, protocol } from '../clientEnv';
 
-console.log(clientFetchingReference);
 // FETCH ----------------------------------------------------------------------------
 export const FETCH_LATEST_DATE = 'FETCH_LATEST_DATE';
 export const fetchLatestDate = () => async (dispatch) => {
