@@ -17,6 +17,7 @@ class App extends Component {
     const { active, maxValues, communities } = this.props.dashboardManager;
     console.log('active mention portion index', active.mentionPortion.index);
     console.log('what ever')
+    console.log(maxValues)
     console.log(maxValues[active.community.index].mentionPortion)
     if (
       active.mentionPortion.index !==
