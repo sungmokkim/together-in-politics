@@ -8,6 +8,7 @@
     "npm": "6.x"
   },
   "scripts": {
+    "heroku-prebuild": "npm install --dev",
     "dev": "npm-run-all --parallel dev:*",
     "dev:server": "nodemon --watch build --exec \"node build/server.js\"",
     "dev:build": "webpack --mode development --watch",
